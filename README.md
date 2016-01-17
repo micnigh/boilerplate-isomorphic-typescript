@@ -26,10 +26,9 @@ node ./npm-scripts/watch-gulp-tasks.js
 
 # Features
 
- - [typescript] - javascript type support, also enables ES6 syntax
+ - [typescript] - javascript type support
  - [jspm] - package manager, browser module loader, bundler
  - [gulp] - automated build system
- - [tslint] - automatic code style guide enforcement
 
 ---
 
