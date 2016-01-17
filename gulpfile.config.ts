@@ -5,33 +5,47 @@ let distPath = isDev ? ".tmp/development" : ".tmp/production";
 
 let config: GulpConfig = {
   distPath: distPath,
-  js: [
-    {
-      taskName: "app",
-      entries: [
-        "client/src/js/*.ts{,x}",
+  js: {
+    libs: {
+      taskName: "lib",
+      entries: [],
+      requires: [
+        "react",
       ],
-      dest: distPath + "/js/",
+      dest: `${distPath}/js/`,
     },
-  ],
-  css: [
-    {
-      taskName: "app",
-      entries: [
-        "client/src/css/*.scss",
-      ],
-      dest: distPath + "/css/",
-    },
-  ],
-  spritesheet: [
-    {
-      taskName: "app",
-      src: [
-        "client/src/sprites/**/*.png",
-      ],
-      dest: distPath + "/css/",
-    },
-  ],
+    builds: [
+      {
+        taskName: "app",
+        dest: `${distPath}/js/`,
+        entries: [
+          "client/src/js/*.ts{,x}",
+        ],
+      },
+    ],
+  },
+  css: {
+    builds: [
+      {
+        taskName: "app",
+        entries: [
+          "client/src/css/*.scss",
+        ],
+        dest: `${distPath}/css/`,
+      },
+    ],
+  },
+  spritesheet: {
+    builds: [
+      {
+        taskName: "app",
+        src: [
+          "client/src/sprites/**/*.png",
+        ],
+        dest: `${distPath}/css/`,
+      },
+    ],
+  }
 };
 
 export default config;
