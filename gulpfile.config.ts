@@ -4,6 +4,7 @@ let isDev = process.env.NODE_ENV === "production" ? false : true;
 let distPath = isDev ? ".tmp/development" : ".tmp/production";
 
 let config: GulpConfig = {
+  isDev: isDev,
   distPath: distPath,
   js: {
     libs: {
@@ -13,6 +14,7 @@ let config: GulpConfig = {
         "react",
       ],
       dest: `${distPath}/js/`,
+      watch: [],
     },
     builds: [
       {
@@ -21,6 +23,7 @@ let config: GulpConfig = {
         entries: [
           "client/src/js/*.ts{,x}",
         ],
+        watch: [],
       },
     ],
   },
@@ -29,9 +32,15 @@ let config: GulpConfig = {
       {
         taskName: "app",
         entries: [
-          "client/src/css/*.scss",
+          "client/css/src/*.scss",
         ],
         dest: `${distPath}/css/`,
+        includePaths: [
+          "client/css/src/",
+          "client/css/libs/",
+          "node_modules/",
+        ],
+        watch: [],
       },
     ],
   },
@@ -43,6 +52,7 @@ let config: GulpConfig = {
           "client/src/sprites/**/*.png",
         ],
         dest: `${distPath}/css/`,
+        watch: [],
       },
     ],
   }

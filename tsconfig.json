@@ -3,7 +3,8 @@
     "typings/tsd.d.ts",
     "*.ts{,x}",
     "tasks/**/*.ts{,x}",
-    "server/**/*.ts{,x}"
+    "server/**/*.ts{,x}",
+    "client/**/*.ts{,x}"
   ],
   "compileOnSave": false,
   "files": [
@@ -11,17 +12,15 @@
     "gulpfile.config.ts",
     "gulpfile.ts",
     "gulpfile.types.ts",
+    "tasks/build/css/index.ts",
     "tasks/build/index.ts",
     "tasks/build/js/client/index.ts",
     "tasks/build/js/index.ts",
     "tasks/build/js/server/index.ts",
     "tasks/index.ts",
     "tasks/serve/index.ts",
-    "tasks/watch/index.ts",
-    "tasks/watch/js/client/index.ts",
-    "tasks/watch/js/index.ts",
-    "tasks/watch/js/server/index.ts",
-    "server/index.ts"
+    "server/index.ts",
+    "client/js/src/app.tsx"
   ],
   "exclude": [
     "node_modules"

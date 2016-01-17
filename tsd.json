@@ -9,7 +9,7 @@
       "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
     },
     "node/node.d.ts": {
-      "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
     },
     "orchestrator/orchestrator.d.ts": {
       "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
@@ -37,6 +37,18 @@
     },
     "gulp-sass/gulp-sass.d.ts": {
       "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
+    },
+    "gulp-autoprefixer/gulp-autoprefixer.d.ts": {
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+    },
+    "chalk/chalk.d.ts": {
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+    },
+    "react/react.d.ts": {
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+    },
+    "react/react-dom.d.ts": {
+      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
     }
   }
 }

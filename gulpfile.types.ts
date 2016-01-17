@@ -2,6 +2,9 @@ declare module "gulpfile.types.config" {
   import { Gulp } from "gulp";
 
   export interface GulpConfig {
+    /** are we in development mode? */
+    isDev: boolean;
+
     /** path to store output */
     distPath: string;
 
@@ -22,7 +25,12 @@ declare module "gulpfile.types.config" {
      * creates task 'build:js:app'
     */
     taskName: string;
+
+    /** path to store output */
     dest: string;
+
+    /** files to watch and trigger rebuild */
+    watch: string[];
   }
 
   export interface JSConfig {
@@ -61,7 +69,11 @@ declare module "gulpfile.types.task" {
   import { Gulp } from "gulp";
   import { GulpConfig } from "gulpfile.types.config";
 
+  export interface GulpTaskReturn {
+    generatedTasks: string[];
+  }
+
   export interface GulpTask {
-    (gulp: Gulp, config: GulpConfig): void;
+    (gulp: Gulp, config: GulpConfig): GulpTaskReturn;
   }
 }
