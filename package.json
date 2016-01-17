@@ -1,0 +1,31 @@
+{
+  "name": "boilerplate-isomorphic-jspm-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "postinstall": "node ./npm-scripts/postinstall.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cross-spawn": "^2.1.4"
+  },
+  "devDependencies": {
+    "babel": "^6.3.26",
+    "babel-plugin-syntax-async-functions": "^6.3.13",
+    "babel-plugin-transform-regenerator": "^6.4.4",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "es5-shim": "^4.4.1",
+    "glob": "^6.0.4",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-insert": "^0.5.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-size": "^2.0.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.10.0",
+    "systemjs": "^0.19.14",
+    "typescript": "^1.7.5"
+  }
+}

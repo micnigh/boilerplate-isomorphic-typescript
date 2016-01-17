@@ -1,0 +1,42 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "q/Q.d.ts": {
+      "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
+    },
+    "node/node.d.ts": {
+      "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
+    },
+    "orchestrator/orchestrator.d.ts": {
+      "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
+    },
+    "gulp/gulp.d.ts": {
+      "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
+    },
+    "gulp-typescript/gulp-typescript.d.ts": {
+      "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
+    },
+    "gulp-sourcemaps/gulp-sourcemaps.d.ts": {
+      "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
+    },
+    "gulp-concat/gulp-concat.d.ts": {
+      "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
+    },
+    "gulp-size/gulp-size.d.ts": {
+      "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
+    },
+    "minimatch/minimatch.d.ts": {
+      "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
+    },
+    "glob/glob.d.ts": {
+      "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
+    },
+    "gulp-sass/gulp-sass.d.ts": {
+      "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
+    }
+  }
+}

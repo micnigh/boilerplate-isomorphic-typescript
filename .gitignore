@@ -1,0 +1,7 @@
+.*/
+*.log
+node_modules
+typings
+/*.js
+tasks/**/*.js
+server/**/*.js

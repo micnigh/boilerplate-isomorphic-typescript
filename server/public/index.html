@@ -1,0 +1,26 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>boilerplate-typescript-gulp</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="favicon.png">
+        <link rel="icon"
+              type="image/png"
+              href="favicon.png">
+        <link rel="stylesheet" type="text/css" href="entry.css">
+    </head>
+    <body>
+        <div id="content"></div>
+        <script src="lib.js"></script>
+        <script src="app.js"></script>
+        <script>
+          System.config({
+            defaultJSExtensions: false,
+          });
+          System.import("./entry");
+        </script>
+    </body>
+</html>

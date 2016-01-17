@@ -1,0 +1,33 @@
+{
+  "filesGlob": [
+    "gulpfile.ts",
+    "typings/tsd.d.ts",
+    "tasks/**/*.ts",
+    "server/**/*.ts"
+  ],
+  "compileOnSave": false,
+  "files": [
+    "gulpfile.ts",
+    "typings/tsd.d.ts",
+    "tasks/build/index.ts",
+    "tasks/build/js/client/index.ts",
+    "tasks/build/js/index.ts",
+    "tasks/build/js/server/index.ts",
+    "tasks/index.ts",
+    "tasks/serve/index.ts",
+    "tasks/watch/index.ts",
+    "tasks/watch/js/client/index.ts",
+    "tasks/watch/js/index.ts",
+    "tasks/watch/js/server/index.ts",
+    "server/index.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "compilerOptions": {
+    "target": "es6"
+  }
+}
