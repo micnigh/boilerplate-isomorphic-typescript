@@ -13,7 +13,7 @@ boilerplate isomorphic jspm typescript
 
 ```bash
 # first time
-npm install -g gulp tsd jspm jspm-server typescript babel-cli
+npm install -g gulp tsd jspm jspm-server
 npm install
 
 # every time

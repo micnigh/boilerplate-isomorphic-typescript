@@ -6,15 +6,15 @@
     "postinstall": "node ./npm-scripts/postinstall.js"
   },
   "license": "MIT",
-  "dependencies": {
-    "cross-spawn": "^2.1.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel": "^6.3.26",
+    "babel-cli": "^6.4.0",
     "babel-plugin-syntax-async-functions": "^6.3.13",
     "babel-plugin-transform-regenerator": "^6.4.4",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
+    "cross-spawn": "^2.1.4",
     "es5-shim": "^4.4.1",
     "glob": "^6.0.4",
     "gulp": "^3.9.0",
