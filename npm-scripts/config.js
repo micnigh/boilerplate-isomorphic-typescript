@@ -8,6 +8,7 @@ let tsFiles = []
 
 let jsFiles = tsFiles
   .filter(f => !/\.d\.tsx?$/.test(f))
+  .filter(f => !/\.types\.tsx?$/.test(f))
   .map(f => f.replace(/tsx?$/,"js"));
 
 module.exports = {
