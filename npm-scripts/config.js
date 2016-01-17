@@ -3,12 +3,12 @@
 let glob = require("glob");
 
 let tsFiles = []
-  .concat([
-    "gulpfile.ts",
-  ])
+  .concat(glob.sync("*.ts{,x}"))
   .concat(glob.sync("tasks/**/*.ts{,x}"));
 
-let jsFiles = tsFiles.map(f => f.replace(/tsx?$/,"js"));
+let jsFiles = tsFiles
+  .filter(f => !/\.d\.tsx?$/.test(f))
+  .map(f => f.replace(/tsx?$/,"js"));
 
 module.exports = {
   "commands": {
@@ -19,12 +19,15 @@ module.exports = {
       "--experimentalDecorators",
       "--moduleResolution", "node",
       "typings/tsd.d.ts",
-    ].concat(tsFiles),
+    ]
+      .concat(glob.sync("*.d.ts{,x}"))
+      .concat(tsFiles),
     "babel": [
       "babel",
       "--out-dir", ".",
       "--presets", "es2015,react",
       "--plugins", "syntax-async-functions,transform-regenerator",
-    ].concat(jsFiles),
+    ]
+      .concat(jsFiles),
   }
 };

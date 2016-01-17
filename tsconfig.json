@@ -1,14 +1,16 @@
 {
   "filesGlob": [
-    "gulpfile.ts",
     "typings/tsd.d.ts",
-    "tasks/**/*.ts",
-    "server/**/*.ts"
+    "*.ts{,x}",
+    "tasks/**/*.ts{,x}",
+    "server/**/*.ts{,x}"
   ],
   "compileOnSave": false,
   "files": [
-    "gulpfile.ts",
     "typings/tsd.d.ts",
+    "gulpfile.config.ts",
+    "gulpfile.ts",
+    "gulpfile.types.ts",
     "tasks/build/index.ts",
     "tasks/build/js/client/index.ts",
     "tasks/build/js/index.ts",

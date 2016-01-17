@@ -1,7 +1,8 @@
 import * as gulp from "gulp";
 import tasks from "./tasks/";
+import config from "./gulpfile.config";
 
-tasks(gulp);
+tasks(gulp, config);
 
 gulp.task("help", [], () => {
   console.log(`
