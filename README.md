@@ -1,4 +1,4 @@
-boilerplate isomorphic jspm typescript
+boilerplate isomorphic typescript
 
 # Requirements/Recommended
 
@@ -13,11 +13,10 @@ boilerplate isomorphic jspm typescript
 
 ```bash
 # first time
-npm install -g gulp tsd jspm jspm-server
+npm install -g gulp tsd webpack webpack-dev-server browsersync
 npm install
 
 # every time
-jspm-server
 gulp watch
 
 # when modifying gulp tasks
@@ -27,7 +26,7 @@ node ./npm-scripts/watch-gulp-tasks.js
 # Features
 
  - [typescript] - javascript type support
- - [jspm] - package manager, browser module loader, bundler
+ - [webpack] - bundles browser js
  - [gulp] - automated build system
 
 ---
@@ -43,4 +42,4 @@ node ./npm-scripts/watch-gulp-tasks.js
 [atom-lint]: https://atom.io/packages/atom-lint
 [linter-tslint]: https://atom.io/packages/linter-tslint
 [es5-shim]: https://github.com/es-shims/es5-shim
-[jspm]: http://jspm.io/
+[webpack]: https://webpack.github.io/

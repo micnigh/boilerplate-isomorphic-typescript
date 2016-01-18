@@ -15,6 +15,7 @@
     "tasks/build/css/index.ts",
     "tasks/build/index.ts",
     "tasks/build/js/client/index.ts",
+    "tasks/build/js/client/webpack.config.ts",
     "tasks/build/js/index.ts",
     "tasks/build/js/server/index.ts",
     "tasks/index.ts",

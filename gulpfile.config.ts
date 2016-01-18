@@ -21,9 +21,11 @@ let config: GulpConfig = {
         taskName: "app",
         dest: `${distPath}/js/`,
         entries: [
-          "client/src/js/*.ts{,x}",
+          "client/js/src/*.ts{,x}",
         ],
-        watch: [],
+        watch: [
+          "client/js/src/**/*.ts{,x}",
+        ],
       },
     ],
   },
