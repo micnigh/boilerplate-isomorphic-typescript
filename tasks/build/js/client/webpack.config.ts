@@ -13,6 +13,10 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
       filename: "[name].js",
       chunkFilename: "[chunkhash].js"
     },
+    externals: {
+      "react": "react",
+      "react-dom": "react-dom",
+    },
     module: {
       loaders: [
         {
@@ -21,7 +25,7 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
             /node_modules/,
           ],
           loaders: [
-            "babel-loader?presets[]=es2015&cacheDirectory",
+            "babel-loader?presets[]=es2015&presets[]=react&cacheDirectory",
             "ts-loader?transpileOnly=true",
           ],
         }
@@ -46,7 +50,7 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
   if (config.isDev) {
     webpackConfig.debug = true;
     webpackConfig.cache = true;
-    webpackConfig.devtool = "#cheap-module-source-map";
+    webpackConfig.devtool = "inline-source-map";
     webpackConfig.plugins = webpackConfig.plugins.concat([
       // TODO: add webpack hot loader middleware
     ]);
