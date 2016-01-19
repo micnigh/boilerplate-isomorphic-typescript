@@ -13,7 +13,7 @@ boilerplate isomorphic typescript
 
 ```bash
 # first time
-npm install -g gulp tsd webpack webpack-dev-server browsersync
+npm install -g gulp tsd webpack webpack-dev-server browser-sync babel-cli typescript
 npm install
 
 # every time

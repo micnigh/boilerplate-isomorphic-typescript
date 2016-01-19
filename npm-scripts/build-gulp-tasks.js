@@ -1,10 +1,10 @@
 "use strict";
-let execSync = require("child_process").execSync;
+let spawnSync = require("cross-spawn").sync;
 
-function execHelper(command) {
+function spawnHelper(command) {
   console.log(command.join(" "));
-  execSync(command.join(" "), { stdio: "inherit" });
+  spawnSync(command[0], command.slice(1), { stdio: "inherit" });
 }
 
-execHelper(require("./config").commands.tsc);
-execHelper(require("./config").commands.babel);
+spawnHelper(require("./config").commands.tsc);
+spawnHelper(require("./config").commands.babel);
