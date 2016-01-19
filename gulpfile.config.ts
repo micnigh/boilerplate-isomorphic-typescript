@@ -16,6 +16,7 @@ let config: GulpConfig = {
         requires: [
           "react",
           "react-dom",
+          "lodash",
         ],
         dest: `${distPath}/js/`,
         destFileName: "lib.js",

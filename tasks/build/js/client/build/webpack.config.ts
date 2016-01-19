@@ -1,5 +1,6 @@
 "use strict";
 import { GulpConfig, JSBuildConfig, JSLibConfig } from "gulpfile.types.config";
+import * as _ from "lodash";
 import * as path from "path";
 import * as webpack from "webpack";
 
@@ -48,7 +49,7 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
     .map(l => l.requires)
     .reduce((a, b) => a.concat(b))
     .forEach((lib: string) => {
-      webpackConfig.externals[lib] = lib;
+      webpackConfig.externals[lib] = _.camelCase(lib);
     });
 
   if (config.isDev) {

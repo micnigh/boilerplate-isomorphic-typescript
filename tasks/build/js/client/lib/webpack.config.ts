@@ -1,5 +1,6 @@
 "use strict";
 import { GulpConfig, JSBuildConfig, JSLibConfig } from "gulpfile.types.config";
+import * as _ from "lodash";
 import * as path from "path";
 import * as webpack from "webpack";
 
@@ -46,14 +47,20 @@ export default function generateConfig (config: GulpConfig, lib: JSLibConfig, en
   let libEntry = config.js.libs
     .map(l => l.requires)
     .reduce((a, b) => a.concat(b), []);
-  libEntry.push(`./${entry}`);
-  webpackConfig.entry[path.basename(lib.destFileName, path.extname(lib.destFileName))] = libEntry;
+  webpackConfig.entry[path.basename(lib.destFileName, path.extname(lib.destFileName))] = libEntry.concat([`./${entry}`]);
+
+  let providePluginOptions = {};
+  libEntry.forEach(entry => {
+    providePluginOptions[`window.${_.camelCase(entry)}`] = entry;
+  });
 
   if (config.isDev) {
     webpackConfig.debug = true;
     webpackConfig.cache = true;
     webpackConfig.devtool = "inline-source-map";
+
     webpackConfig.plugins = webpackConfig.plugins.concat([
+      new webpack.ProvidePlugin(providePluginOptions),
       // TODO: add webpack hot loader middleware
     ]);
   } else {
