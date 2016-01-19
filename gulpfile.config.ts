@@ -10,12 +10,15 @@ let config: GulpConfig = {
     libs: [
       {
         taskName: "lib",
-        entries: [],
+        entries: [
+          "client/js/lib/entry.ts",
+        ],
         requires: [
           "react",
           "react-dom",
         ],
         dest: `${distPath}/js/`,
+        destFileName: "lib.js",
         watch: [
           "client/js/lib/**/*.js",
           "client/js/lib/**/*.ts{,x}",

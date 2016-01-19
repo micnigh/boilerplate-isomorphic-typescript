@@ -45,6 +45,7 @@ declare module "gulpfile.types.config" {
 
   export interface JSLibConfig extends JSBuildConfig {
     requires: string[];
+    destFileName: string;
   }
 
   export interface CSSConfig {

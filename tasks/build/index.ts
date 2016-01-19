@@ -4,11 +4,13 @@ import { GulpConfig } from "gulpfile.types.config";
 
 import buildJSTask from "./js/";
 import buildCSSTask from "./css/";
+import buildHTMLTask from "./html/";
 
 let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
   let generatedTaskResults = [
     buildJSTask(gulp, config),
     buildCSSTask(gulp, config),
+    buildHTMLTask(gulp, config),
   ];
 
   let generatedTasks: string[] = generatedTaskResults.map(t => t.generatedTasks || []).reduce((a, b) => a.concat(b));

@@ -17,6 +17,7 @@ npm install -g gulp tsd webpack webpack-dev-server browser-sync babel-cli typesc
 npm install
 
 # every time
+browser-sync start --server ./.tmp/development/ --files './.tmp/development/**/*.(css|js|html)'
 gulp watch
 
 # when modifying gulp tasks

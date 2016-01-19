@@ -13,14 +13,19 @@
     "gulpfile.ts",
     "gulpfile.types.ts",
     "tasks/build/css/index.ts",
+    "tasks/build/html/index.ts",
     "tasks/build/index.ts",
+    "tasks/build/js/client/build/index.ts",
+    "tasks/build/js/client/build/webpack.config.ts",
     "tasks/build/js/client/index.ts",
-    "tasks/build/js/client/webpack.config.ts",
+    "tasks/build/js/client/lib/index.ts",
+    "tasks/build/js/client/lib/webpack.config.ts",
     "tasks/build/js/index.ts",
     "tasks/build/js/server/index.ts",
     "tasks/index.ts",
     "tasks/serve/index.ts",
     "server/index.ts",
+    "client/js/lib/entry.ts",
     "client/js/src/app.tsx"
   ],
   "exclude": [
@@ -30,6 +35,7 @@
     "rewriteTsconfig": true
   },
   "compilerOptions": {
-    "target": "es6"
+    "target": "es6",
+    "sourceMap": true
   }
 }

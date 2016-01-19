@@ -5,14 +5,15 @@ import * as webpack from "webpack";
 
 let WebpackNotifierPlugin = require("webpack-notifier");
 
-export default function generateConfig (config: GulpConfig, build: JSBuildConfig, entry: string) {
+export default function generateConfig (config: GulpConfig, lib: JSLibConfig, entry: string) {
   let webpackConfig: webpack.Configuration = {
     entry: {},
     output: {
-      path: build.dest,
+      path: lib.dest,
       filename: "[name].js",
       chunkFilename: "[chunkhash].js"
     },
+
     externals: {},
     module: {
       loaders: [
@@ -33,7 +34,7 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
     ],
     resolve: {
       alias: {},
-      extensions: [ "", ".webpack.js", ".web.js", ".ts", ".tsx", ".js" ]
+      extensions: [ "", ".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".jsx" ]
     },
     devServer: {
       contentBase: "server/public/",
@@ -42,14 +43,11 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
     },
   };
 
-  webpackConfig.entry[path.basename(entry, path.extname(entry))] = [`./${entry}`];
-
-  config.js.libs
+  let libEntry = config.js.libs
     .map(l => l.requires)
-    .reduce((a, b) => a.concat(b))
-    .forEach((lib: string) => {
-      webpackConfig.externals[lib] = lib;
-    });
+    .reduce((a, b) => a.concat(b), []);
+  libEntry.push(`./${entry}`);
+  webpackConfig.entry[path.basename(lib.destFileName, path.extname(lib.destFileName))] = libEntry;
 
   if (config.isDev) {
     webpackConfig.debug = true;
