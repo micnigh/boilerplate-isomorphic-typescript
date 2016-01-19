@@ -10,12 +10,13 @@ import * as chalk from "chalk";
 
 let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
   let generatedTasks: string[] = [];
+  let generatedWatchTasks: string[] = [];
 
   config.css.builds.forEach(build => {
-    let taskName = `build:css:${build.taskName}`;
-    generatedTasks.push(taskName);
-    gulp.task(taskName, [], () => {
-
+    let buildTaskName = `build:css:${build.taskName}`;
+    let watchTaskName = `watch:css:${build.taskName}`;
+    generatedTasks.push(buildTaskName);
+    gulp.task(buildTaskName, [], () => {
       let pipe = gulp.src(build.entries);
 
       if (config.isDev) {
@@ -47,16 +48,22 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
 
       pipe = pipe.pipe(size({
         showFiles: true,
-        title: taskName,
+        title: buildTaskName,
         gzip: true,
       }));
 
       return pipe;
     });
+
+    generatedWatchTasks.push(watchTaskName);
+    gulp.task(watchTaskName, [buildTaskName], () => {
+      return gulp.watch(build.watch, [buildTaskName]);
+    });
   });
 
   return {
     generatedTasks,
+    generatedWatchTasks,
   };
 };
 
