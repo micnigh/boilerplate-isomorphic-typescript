@@ -1,5 +1,5 @@
 "use strict";
-import { GulpConfig, JSBuildConfig } from "gulpfile.types.config";
+import { GulpConfig, JSBuildConfig, JSLibConfig } from "gulpfile.types.config";
 import * as path from "path";
 import * as webpack from "webpack";
 
@@ -13,10 +13,7 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
       filename: "[name].js",
       chunkFilename: "[chunkhash].js"
     },
-    externals: {
-      "react": "react",
-      "react-dom": "react-dom",
-    },
+    externals: {},
     module: {
       loaders: [
         {
@@ -46,6 +43,13 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
   };
 
   webpackConfig.entry[path.basename(entry, path.extname(entry))] = [`./${entry}`];
+
+  config.js.libs
+    .map(l => l.requires)
+    .reduce((a, b) => a.concat(b))
+    .forEach((lib: string) => {
+      webpackConfig.externals[lib] = lib;
+    });
 
   if (config.isDev) {
     webpackConfig.debug = true;

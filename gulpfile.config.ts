@@ -7,15 +7,21 @@ let config: GulpConfig = {
   isDev: isDev,
   distPath: distPath,
   js: {
-    libs: {
-      taskName: "lib",
-      entries: [],
-      requires: [
-        "react",
-      ],
-      dest: `${distPath}/js/`,
-      watch: [],
-    },
+    libs: [
+      {
+        taskName: "lib",
+        entries: [],
+        requires: [
+          "react",
+          "react-dom",
+        ],
+        dest: `${distPath}/js/`,
+        watch: [
+          "client/js/lib/**/*.js",
+          "client/js/lib/**/*.ts{,x}",
+        ],
+      },
+    ],
     builds: [
       {
         taskName: "app",
@@ -42,7 +48,9 @@ let config: GulpConfig = {
           "client/css/libs/",
           "node_modules/",
         ],
-        watch: [],
+        watch: [
+          "client/css/src/**/*.scss",
+        ],
       },
     ],
   },
@@ -54,7 +62,9 @@ let config: GulpConfig = {
           "client/src/sprites/**/*.png",
         ],
         dest: `${distPath}/css/`,
-        watch: [],
+        watch: [
+          "client/src/sprites/**/*.png",
+        ],
       },
     ],
   }

@@ -34,7 +34,7 @@ declare module "gulpfile.types.config" {
   }
 
   export interface JSConfig {
-    libs: JSLibConfig;
+    libs: JSLibConfig[];
     builds: JSBuildConfig[];
   }
 
@@ -71,6 +71,7 @@ declare module "gulpfile.types.task" {
 
   export interface GulpTaskReturn {
     generatedTasks: string[];
+    generatedWatchTasks?: string[];
   }
 
   export interface GulpTask {

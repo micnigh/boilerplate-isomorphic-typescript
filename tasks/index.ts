@@ -6,19 +6,17 @@ import buildTask from "./build/";
 import serveTask from "./serve";
 
 let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
-  let generatedTasks: string[] = [];
+  let generatedTaskResults = [
+    buildTask(gulp, config),
+    serveTask(gulp, config),
+  ];
 
-  let { generatedTasks: buildTaskResult } = buildTask(gulp, config);
-  let { generatedTasks: serveTaskResult } = serveTask(gulp, config);
-  // let { generatedTasks: watchTaskResult } = watchTask(gulp, config);
-
-  generatedTasks = generatedTasks
-    .concat(buildTaskResult)
-    .concat(serveTaskResult)
-    // .concat(watchTaskResult);
+  let generatedTasks: string[] = generatedTaskResults.map(t => t.generatedTasks || []).reduce((a, b) => a.concat(b));
+  let generatedWatchTasks: string[] = generatedTaskResults.map(t => t.generatedWatchTasks || []).reduce((a, b) => a.concat(b));
 
   return {
-    generatedTasks
+    generatedTasks,
+    generatedWatchTasks,
   };
 };
 

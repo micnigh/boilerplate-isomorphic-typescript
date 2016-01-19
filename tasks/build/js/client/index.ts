@@ -9,8 +9,10 @@ import webpackConfigGenerator from "./webpack.config";
 
 let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
   let generatedTasks: string[] = [];
-
+  let generatedWatchTasks: string[] = [];
   config.js.builds.forEach(build => {
+    let buildTaskName = `build:js:client:${build.taskName}`;
+    let watchTaskName = `watch:js:client:${build.taskName}`;
     let generatedEntryTasks: string[] = [];
     build.entries.forEach(entry => {
       let entriesFromGlob = glob.sync(entry);
@@ -28,15 +30,20 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
           });
         });
       });
-      gulp.task(`build:js:client:${build.taskName}`, generatedEntryTasks);
-      gulp.task(`watch:js:client:${build.taskName}`, generatedEntryTasks, () => {
-        return gulp.watch(build.watch, generatedEntryTasks);
+      generatedTasks.push(buildTaskName);
+      generatedWatchTasks.push(watchTaskName);
+      gulp.task(buildTaskName, generatedEntryTasks);
+      gulp.task(watchTaskName, [buildTaskName], () => {
+        return gulp.watch(build.watch, [buildTaskName]);
       });
     });
   });
 
+  gulp.task(`build:js:client`, generatedTasks);
+
   return {
     generatedTasks,
+    generatedWatchTasks,
   };
 };
 
