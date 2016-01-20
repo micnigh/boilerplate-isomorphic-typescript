@@ -10,9 +10,6 @@ let config: GulpConfig = {
     libs: [
       {
         taskName: "lib",
-        entries: [
-          "client/js/lib/entry.ts",
-        ],
         requires: [
           "react",
           "react-dom",

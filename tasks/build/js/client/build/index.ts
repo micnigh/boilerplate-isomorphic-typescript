@@ -47,9 +47,9 @@ export function browserifyBuild (browserifyOptions: Browserify.Options, buildOpt
       paths: [],
     }, browserifyOptions, true);
 
-    if (buildOptions.isLib) {
-      browserifyOptions.paths.push(`${process.cwd()}/node_modules/`);
-    }
+    // if (buildOptions.isLib) {
+    //   browserifyOptions.paths.push(`${process.cwd()}/node_modules/`);
+    // }
     browserifyOptions.paths.push(process.cwd());
 
     let b = browserify(browserifyOptions);
@@ -58,16 +58,12 @@ export function browserifyBuild (browserifyOptions: Browserify.Options, buildOpt
       config.js.libs
         .map(l => l.requires)
         .reduce((a, b) => a.concat(b))
-        .forEach(e => {
-          b.require(`node_modules/${e}`);
-        });
+        .forEach(e => b.require(e));
     } else {
       config.js.libs
         .map(l => l.requires)
         .reduce((a, b) => a.concat(b))
-        .forEach(e => {
-          b.external(e);
-        });
+        .forEach(e => b.external(e));
     }
 
     if (buildOptions.watch) {

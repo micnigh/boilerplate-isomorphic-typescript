@@ -23,49 +23,33 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
   let generatedTasks: string[] = [];
   let generatedWatchTasks: string[] = [];
   config.js.libs.forEach(lib => {
-    let buildTaskName = `build:js:client:libs:${lib.taskName}`;
-    let watchTaskName = `watch:js:client:libs:${lib.taskName}`;
-    let generatedEntryBuildTasks: string[] = [];
-    let generatedEntryWatchTasks: string[] = [];
-    lib.entries.forEach(entry => {
-      let entriesFromGlob = glob.sync(entry);
-      entriesFromGlob.forEach(entryFromGlob => {
-        entryFromGlob = `${entryFromGlob.replace(path.extname(entryFromGlob), ".js")}`;
-        let entryBuildTaskName = `build:js:client:libs:${lib.taskName}:${entryFromGlob}`;
-        let entryWatchTaskName = `watch:js:client:libs:${lib.taskName}:${entryFromGlob}`;
-        generatedEntryBuildTasks.push(entryBuildTaskName);
-        generatedEntryWatchTasks.push(entryWatchTaskName);
+    let buildTaskName = `build:js:client:libs:${lib.taskName}:${lib.destFileName}`;
+    let watchTaskName = `watch:js:client:libs:${lib.taskName}:${lib.destFileName}`;
 
-        let entryBuildBrowserifyConfig: Browserify.Options = {
-          debug: config.isDev,
-          entries: [
-            entryFromGlob,
-            // "typings/tsd.d.ts",
-          ],
-          paths: lib.includePaths,
-        };
+    let libBuildBrowserifyConfig: Browserify.Options = {
+      debug: config.isDev,
+      paths: lib.includePaths,
+    };
 
-        let entryBuildBrowserifyBuildOptions: BrowserifyBuildOptions = {
-          watch: false,
-          destFileName: lib.destFileName,
-          isLib: true,
-        };
+    let libBuildBrowserifyBuildOptions: BrowserifyBuildOptions = {
+      watch: false,
+      destFileName: lib.destFileName,
+      isLib: true,
+    };
 
-        gulp.task(entryBuildTaskName, ["build:js:client:transpile"], () => {
-          return browserifyBuild(entryBuildBrowserifyConfig, entryBuildBrowserifyBuildOptions, gulp, config);
-        });
-        gulp.task(entryWatchTaskName, ["build:js:client:transpile"], () => {
-          return browserifyBuild(entryBuildBrowserifyConfig, _.merge({}, entryBuildBrowserifyBuildOptions, {
-            watch: true,
-          }, true), gulp, config);
-        });
-      });
-      generatedTasks.push(buildTaskName);
-      generatedWatchTasks.push(watchTaskName);
-      gulp.task(buildTaskName, generatedEntryBuildTasks);
-      gulp.task(watchTaskName, [buildTaskName], () => {
-        return gulp.watch(lib.watch, [buildTaskName]);
-      });
+    gulp.task(buildTaskName, ["build:js:client:transpile"], () => {
+      return browserifyBuild(libBuildBrowserifyConfig, libBuildBrowserifyBuildOptions, gulp, config);
+    });
+    gulp.task(watchTaskName, ["build:js:client:transpile"], () => {
+      return browserifyBuild(libBuildBrowserifyConfig, _.merge({}, libBuildBrowserifyBuildOptions, {
+        watch: true,
+      }, true), gulp, config);
+    });
+    generatedTasks.push(buildTaskName);
+    generatedWatchTasks.push(watchTaskName);
+    gulp.task(buildTaskName, []);
+    gulp.task(watchTaskName, [buildTaskName], () => {
+      return gulp.watch(lib.watch, [buildTaskName]);
     });
   });
 

@@ -43,7 +43,8 @@ declare module "gulpfile.types.config" {
     includePaths?: string[];
   }
 
-  export interface JSLibConfig extends JSBuildConfig {
+  export interface JSLibConfig extends BuildConfig {
+    includePaths?: string[];
     requires: string[];
     destFileName: string;
   }
