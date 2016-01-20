@@ -1,7 +1,7 @@
 import { Gulp } from "gulp";
 import { GulpTask, GulpTaskReturn } from "gulpfile.types.task";
 import { GulpConfig } from "gulpfile.types.config";
-
+import * as changed from "gulp-changed";
 import * as typescript from "gulp-typescript";
 import * as babel from "gulp-babel";
 import * as size from "gulp-size";
@@ -19,6 +19,7 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
     module: "es6",
     target: "es6",
     jsx: "preserve",
+    isolatedModules: true,
   });
 
   gulp.task(buildTaskName, [], () => {
@@ -41,6 +42,9 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
         ],
       }))
       .pipe(rename({extname: ".js"}))
+      .pipe(changed("client/js/", {
+        hasChanged: changed.compareSha1Digest,
+      }))
       .pipe(gulp.dest("client/js/"))
       .pipe(size({ showFiles: true }));
   });

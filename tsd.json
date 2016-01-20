@@ -64,6 +64,12 @@
     },
     "gulp-rename/gulp-rename.d.ts": {
       "commit": "fab683ca77d0286b9d51aba6375deaceb41b22f5"
+    },
+    "gulp-changed/gulp-changed.d.ts": {
+      "commit": "fab683ca77d0286b9d51aba6375deaceb41b22f5"
+    },
+    "vinyl/vinyl.d.ts": {
+      "commit": "fab683ca77d0286b9d51aba6375deaceb41b22f5"
     }
   }
 }
