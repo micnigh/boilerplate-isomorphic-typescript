@@ -1,12 +1,98 @@
 "use strict";
 import { Gulp } from "gulp";
+import * as size from "gulp-size";
+import source = require("vinyl-source-stream");
 import { GulpTask } from "gulpfile.types.task";
 import { GulpConfig } from "gulpfile.types.config";
 import * as glob from "glob";
+import * as chalk from "chalk";
+import * as browserify from "browserify";
+import * as path from "path";
+import * as ts from "typescript";
+import * as _ from "lodash";
 
-let webpack = require("webpack");
-let webpackDevServer = require("webpack-dev-server");
-import webpackConfigGenerator from "./webpack.config";
+let watchify: {(instance: Browserify.BrowserifyObject): Browserify.BrowserifyObject} = require("watchify");
+let buffer = require("gulp-buffer");
+let prettyTime = require("pretty-hrtime");
+let tsify = require("tsify");
+let babelify = require("babelify");
+
+export interface BrowserifyBuildOptions {
+  watch: boolean;
+  destFileName: string;
+  isLib?: boolean;
+};
+
+function bundleBrowserifyBuild (b: Browserify.BrowserifyObject, buildOptions: BrowserifyBuildOptions, gulp: Gulp, config: GulpConfig): NodeJS.ReadWriteStream {
+  let bundleStartTime = process.hrtime();
+  let bundle = b.bundle();
+  bundle
+    .on("error", function (msg) {
+      console.log(chalk.red(msg.toString()));
+    })
+    .on("end", function () {
+      console.log(`Bundled ${chalk.cyan(buildOptions.destFileName)} ${chalk.magenta(prettyTime(process.hrtime(bundleStartTime)))}`);
+    });
+
+  return bundle
+    .pipe(source(buildOptions.destFileName))
+    .pipe(buffer())
+    .pipe(size({ showFiles: true }))
+    .pipe(gulp.dest(`${config.distPath}/js/`));
+}
+
+export function browserifyBuild (browserifyOptions: Browserify.Options, buildOptions: BrowserifyBuildOptions, gulp: Gulp, config: GulpConfig): NodeJS.ReadWriteStream {
+    browserifyOptions = _.merge({
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
+      // create empty caches - so bundles wont share cache
+      cache: {},
+      packageCache: {},
+      paths: [],
+    }, browserifyOptions, true);
+
+    if (buildOptions.isLib) {
+      browserifyOptions.paths.push(`${process.cwd()}/node_modules/`);
+    }
+    browserifyOptions.paths.push(process.cwd());
+
+    let b = browserify(browserifyOptions);
+
+    if (buildOptions.isLib) {
+      config.js.libs
+        .map(l => l.requires)
+        .reduce((a, b) => a.concat(b))
+        .forEach(e => {
+          b.require(`node_modules/${e}`);
+        });
+    } else {
+      config.js.libs
+        .map(l => l.requires)
+        .reduce((a, b) => a.concat(b))
+        .forEach(e => {
+          b.external(e);
+        });
+    }
+
+    b.require("typings/tsd.d.ts");
+
+    let tsConfigCompilerOptions: ts.CompilerOptions = {
+      target: ts.ScriptTarget.ES6,
+      jsx: ts.JsxEmit.React,
+    };
+    b.plugin(tsify, tsConfigCompilerOptions);
+    b.transform(babelify, {
+      presets: [
+        "es2015",
+        "react",
+      ],
+      plugins: [],
+    });
+    if (buildOptions.watch) {
+      b.plugin(watchify);
+      b.on("update", () => bundleBrowserifyBuild(b, buildOptions, gulp, config));
+    }
+    return bundleBrowserifyBuild(b, buildOptions, gulp, config);
+}
 
 let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
   let generatedTasks: string[] = [];
@@ -14,27 +100,42 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
   config.js.builds.forEach(build => {
     let buildTaskName = `build:js:client:builds:${build.taskName}`;
     let watchTaskName = `watch:js:client:builds:${build.taskName}`;
-    let generatedEntryTasks: string[] = [];
+    let generatedEntryBuildTasks: string[] = [];
+    let generatedEntryWatchTasks: string[] = [];
     build.entries.forEach(entry => {
       let entriesFromGlob = glob.sync(entry);
       entriesFromGlob.forEach(entryFromGlob => {
-        let entryTaskName = `build:js:client:builds:${build.taskName}:${entryFromGlob}`;
-        generatedEntryTasks.push(entryTaskName);
-        let webpackConfig = webpackConfigGenerator(config, build, entryFromGlob);
-        console.log("builds",JSON.stringify(webpackConfig, null, 2));
-        let webpackBuilder = webpack(webpackConfig);
-        gulp.task(entryTaskName, [], (doneWithGeneratedTask) => {
-          webpackBuilder.run((err: Error, stats) => {
-            console.log(stats.toString({
-              colors: true,
-            }));
-            doneWithGeneratedTask();
-          });
+        let entryBuildTaskName = `build:js:client:builds:${build.taskName}:${entryFromGlob}`;
+        let entryWatchTaskName = `watch:js:client:builds:${build.taskName}:${entryFromGlob}`;
+        generatedEntryBuildTasks.push(entryBuildTaskName);
+        generatedEntryWatchTasks.push(entryWatchTaskName);
+
+        let entryBuildBrowserifyConfig: Browserify.Options = {
+          debug: config.isDev,
+          entries: [
+            entryFromGlob,
+            // "typings/tsd.d.ts",
+          ],
+          paths: build.includePaths,
+        };
+
+        let entryBuildBrowserifyBuildOptions: BrowserifyBuildOptions = {
+          watch: false,
+          destFileName: `${path.basename(entryFromGlob, path.extname(entryFromGlob))}.js`,
+        };
+
+        gulp.task(entryBuildTaskName, [], () => {
+          return browserifyBuild(entryBuildBrowserifyConfig, entryBuildBrowserifyBuildOptions, gulp, config);
+        });
+        gulp.task(entryWatchTaskName, [], () => {
+          return browserifyBuild(entryBuildBrowserifyConfig, _.merge({}, entryBuildBrowserifyBuildOptions, {
+            watch: true,
+          }, true), gulp, config);
         });
       });
       generatedTasks.push(buildTaskName);
       generatedWatchTasks.push(watchTaskName);
-      gulp.task(buildTaskName, generatedEntryTasks);
+      gulp.task(buildTaskName, generatedEntryBuildTasks);
       gulp.task(watchTaskName, [buildTaskName], () => {
         return gulp.watch(build.watch, [buildTaskName]);
       });
@@ -42,6 +143,7 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
   });
 
   gulp.task(`build:js:client:builds`, generatedTasks);
+  gulp.task(`watch:js:client:builds`, generatedWatchTasks);
 
   return {
     generatedTasks,
