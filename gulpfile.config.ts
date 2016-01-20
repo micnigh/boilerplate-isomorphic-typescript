@@ -11,7 +11,7 @@ let config: GulpConfig = {
       {
         taskName: "lib",
         entries: [
-          "client/js/lib/entry.ts",
+          "client/js/lib/entry.js",
         ],
         requires: [
           "react",
@@ -22,7 +22,7 @@ let config: GulpConfig = {
         destFileName: "lib.js",
         watch: [
           "client/js/lib/**/*.js",
-          "client/js/lib/**/*.ts{,x}",
+          "client/js/lib/**/*.js{,x}",
         ],
       },
     ],
@@ -31,10 +31,10 @@ let config: GulpConfig = {
         taskName: "app",
         dest: `${distPath}/js/`,
         entries: [
-          "client/js/src/*.ts{,x}",
+          "client/js/src/*.js{,x}",
         ],
         watch: [
-          "client/js/src/**/*.ts{,x}",
+          "client/js/src/**/*.js{,x}",
         ],
       },
     ],

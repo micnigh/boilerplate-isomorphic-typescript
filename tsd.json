@@ -9,7 +9,7 @@
       "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
     },
     "node/node.d.ts": {
-      "commit": "6659791e2e8b77cf81a8d0cca3512fba7c818f9b"
+      "commit": "fab683ca77d0286b9d51aba6375deaceb41b22f5"
     },
     "orchestrator/orchestrator.d.ts": {
       "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
@@ -58,6 +58,12 @@
     },
     "vinyl-source-stream/vinyl-source-stream.d.ts": {
       "commit": "6659791e2e8b77cf81a8d0cca3512fba7c818f9b"
+    },
+    "gulp-babel/gulp-babel.d.ts": {
+      "commit": "fab683ca77d0286b9d51aba6375deaceb41b22f5"
+    },
+    "gulp-rename/gulp-rename.d.ts": {
+      "commit": "fab683ca77d0286b9d51aba6375deaceb41b22f5"
     }
   }
 }

@@ -8,14 +8,11 @@ import * as glob from "glob";
 import * as chalk from "chalk";
 import * as browserify from "browserify";
 import * as path from "path";
-import * as ts from "typescript";
 import * as _ from "lodash";
 
 let watchify: {(instance: Browserify.BrowserifyObject): Browserify.BrowserifyObject} = require("watchify");
 let buffer = require("gulp-buffer");
 let prettyTime = require("pretty-hrtime");
-let tsify = require("tsify");
-let babelify = require("babelify");
 
 export interface BrowserifyBuildOptions {
   watch: boolean;
@@ -43,7 +40,7 @@ function bundleBrowserifyBuild (b: Browserify.BrowserifyObject, buildOptions: Br
 
 export function browserifyBuild (browserifyOptions: Browserify.Options, buildOptions: BrowserifyBuildOptions, gulp: Gulp, config: GulpConfig): NodeJS.ReadWriteStream {
     browserifyOptions = _.merge({
-      extensions: [".js", ".jsx", ".ts", ".tsx"],
+      extensions: [".js", ".jsx" ],
       // create empty caches - so bundles wont share cache
       cache: {},
       packageCache: {},
@@ -73,20 +70,6 @@ export function browserifyBuild (browserifyOptions: Browserify.Options, buildOpt
         });
     }
 
-    b.require("typings/tsd.d.ts");
-
-    let tsConfigCompilerOptions: ts.CompilerOptions = {
-      target: ts.ScriptTarget.ES6,
-      jsx: ts.JsxEmit.React,
-    };
-    b.plugin(tsify, tsConfigCompilerOptions);
-    b.transform(babelify, {
-      presets: [
-        "es2015",
-        "react",
-      ],
-      plugins: [],
-    });
     if (buildOptions.watch) {
       b.plugin(watchify);
       b.on("update", () => bundleBrowserifyBuild(b, buildOptions, gulp, config));
@@ -124,7 +107,7 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
           destFileName: `${path.basename(entryFromGlob, path.extname(entryFromGlob))}.js`,
         };
 
-        gulp.task(entryBuildTaskName, [], () => {
+        gulp.task(entryBuildTaskName, ["build:js:client:transpile"], () => {
           return browserifyBuild(entryBuildBrowserifyConfig, entryBuildBrowserifyBuildOptions, gulp, config);
         });
         gulp.task(entryWatchTaskName, [], () => {

@@ -2,16 +2,16 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as _ from "lodash";
 
-window["React"] = React;
-//
-// ReactDOM.render((
-//   <div>
-//     <h1>Hello World</h1>
-//   </div>
-// ), document.getElementById("content"));
+import HelloWorld from "./component/HelloWorld";
 
+console.log(React);
 
+console.log(_.camelCase("react-dom"));
 
-console.log(_.camelCase("hello-world"));
+ReactDOM.render((
+  <div>
+    <h1>{`Hello World - ${HelloWorld}`}</h1>
+  </div>
+), document.getElementById("content"));
 
-export default {};
+console.log("helloworld");

@@ -3,11 +3,13 @@ import { Gulp } from "gulp";
 import { GulpTask, GulpTaskReturn } from "gulpfile.types.task";
 import { GulpConfig } from "gulpfile.types.config";
 
+import buildJSClientTranspileTask from "./transpile/";
 import buildJSClientBuildTask from "./build/";
 import buildJSClientLibTask from "./lib/";
 
 let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
   let generatedTaskResults = [
+    buildJSClientTranspileTask(gulp, config),
     buildJSClientBuildTask(gulp, config),
     buildJSClientLibTask(gulp, config),
   ];

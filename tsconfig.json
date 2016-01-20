@@ -18,13 +18,15 @@
     "tasks/build/js/client/build/index.ts",
     "tasks/build/js/client/index.ts",
     "tasks/build/js/client/lib/index.ts",
+    "tasks/build/js/client/transpile/index.ts",
     "tasks/build/js/index.ts",
     "tasks/build/js/server/index.ts",
     "tasks/index.ts",
     "tasks/serve/index.ts",
     "server/index.ts",
     "client/js/lib/entry.ts",
-    "client/js/src/app.tsx"
+    "client/js/src/app.tsx",
+    "client/js/src/component/HelloWorld.tsx"
   ],
   "exclude": [
     "node_modules"
@@ -33,7 +35,6 @@
     "rewriteTsconfig": true
   },
   "compilerOptions": {
-    "target": "es6",
-    "sourceMap": true
+    "target": "es6"
   }
 }
