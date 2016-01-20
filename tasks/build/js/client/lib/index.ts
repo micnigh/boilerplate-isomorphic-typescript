@@ -30,6 +30,7 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
     lib.entries.forEach(entry => {
       let entriesFromGlob = glob.sync(entry);
       entriesFromGlob.forEach(entryFromGlob => {
+        entryFromGlob = `${entryFromGlob.replace(path.extname(entryFromGlob), ".js")}`;
         let entryBuildTaskName = `build:js:client:libs:${lib.taskName}:${entryFromGlob}`;
         let entryWatchTaskName = `watch:js:client:libs:${lib.taskName}:${entryFromGlob}`;
         generatedEntryBuildTasks.push(entryBuildTaskName);
@@ -53,7 +54,7 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
         gulp.task(entryBuildTaskName, ["build:js:client:transpile"], () => {
           return browserifyBuild(entryBuildBrowserifyConfig, entryBuildBrowserifyBuildOptions, gulp, config);
         });
-        gulp.task(entryWatchTaskName, [], () => {
+        gulp.task(entryWatchTaskName, ["build:js:client:transpile"], () => {
           return browserifyBuild(entryBuildBrowserifyConfig, _.merge({}, entryBuildBrowserifyBuildOptions, {
             watch: true,
           }, true), gulp, config);
