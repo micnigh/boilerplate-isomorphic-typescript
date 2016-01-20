@@ -16,10 +16,8 @@
     "tasks/build/html/index.ts",
     "tasks/build/index.ts",
     "tasks/build/js/client/build/index.ts",
-    "tasks/build/js/client/build/webpack.config.ts",
     "tasks/build/js/client/index.ts",
     "tasks/build/js/client/lib/index.ts",
-    "tasks/build/js/client/lib/webpack.config.ts",
     "tasks/build/js/index.ts",
     "tasks/build/js/server/index.ts",
     "tasks/index.ts",
@@ -36,7 +34,6 @@
   },
   "compilerOptions": {
     "target": "es6",
-    "sourceMap": true,
-    "isolatedModules": true
+    "sourceMap": true
   }
 }

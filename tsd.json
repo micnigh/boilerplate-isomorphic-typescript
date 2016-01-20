@@ -9,7 +9,7 @@
       "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
     },
     "node/node.d.ts": {
-      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+      "commit": "6659791e2e8b77cf81a8d0cca3512fba7c818f9b"
     },
     "orchestrator/orchestrator.d.ts": {
       "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
@@ -50,11 +50,14 @@
     "react/react-dom.d.ts": {
       "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
     },
-    "webpack/webpack.d.ts": {
-      "commit": "70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
-    },
     "lodash/lodash.d.ts": {
       "commit": "93bae1bb4c887c1375a4c1f0c3bb849ff06b8ac6"
+    },
+    "browserify/browserify.d.ts": {
+      "commit": "6659791e2e8b77cf81a8d0cca3512fba7c818f9b"
+    },
+    "vinyl-source-stream/vinyl-source-stream.d.ts": {
+      "commit": "6659791e2e8b77cf81a8d0cca3512fba7c818f9b"
     }
   }
 }
