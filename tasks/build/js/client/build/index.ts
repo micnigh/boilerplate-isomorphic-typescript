@@ -1,6 +1,7 @@
 "use strict";
 import { Gulp } from "gulp";
 import * as size from "gulp-size";
+import * as sourcemap from "gulp-sourcemaps";
 import source = require("vinyl-source-stream");
 import { GulpTask } from "gulpfile.types.task";
 import { GulpConfig } from "gulpfile.types.config";
@@ -34,6 +35,8 @@ function bundleBrowserifyBuild (b: Browserify.BrowserifyObject, buildOptions: Br
   return bundle
     .pipe(source(buildOptions.destFileName))
     .pipe(buffer())
+    .pipe(sourcemap.init({ loadMaps: true }))
+    .pipe(sourcemap.write())
     .pipe(size({ showFiles: true }))
     .pipe(gulp.dest(`${config.distPath}/js/`));
 }
