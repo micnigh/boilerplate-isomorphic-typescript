@@ -47,9 +47,6 @@ export function browserifyBuild (browserifyOptions: Browserify.Options, buildOpt
       paths: [],
     }, browserifyOptions, true);
 
-    // if (buildOptions.isLib) {
-    //   browserifyOptions.paths.push(`${process.cwd()}/node_modules/`);
-    // }
     browserifyOptions.paths.push(process.cwd());
 
     let b = browserify(browserifyOptions);

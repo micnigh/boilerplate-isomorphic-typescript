@@ -28,8 +28,6 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
       "client/js/**/*.ts{,x}",
     ])
       .pipe(typescript(tsClientProject))
-      // .pipe(rename({extname: ".es6"}))
-      // .pipe(gulp.dest("client/js/"))
       .pipe(babel({
         sourceMaps: "inline",
         presets: [
