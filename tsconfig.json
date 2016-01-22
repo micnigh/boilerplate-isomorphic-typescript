@@ -24,7 +24,6 @@
     "tasks/index.ts",
     "tasks/serve/index.ts",
     "server/index.ts",
-    "client/js/lib/entry.ts",
     "client/js/src/app.tsx",
     "client/js/src/component/HelloWorld.tsx"
   ],
