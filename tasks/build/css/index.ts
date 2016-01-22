@@ -40,7 +40,7 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
 
       if (config.isDev) {
         pipe = pipe
-          .pipe(sourcemaps.write())
+          .pipe(sourcemaps.write("."))
           .pipe(gulp.dest(build.dest));
       }
 

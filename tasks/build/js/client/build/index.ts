@@ -36,7 +36,7 @@ function bundleBrowserifyBuild (b: Browserify.BrowserifyObject, buildOptions: Br
     .pipe(source(buildOptions.destFileName))
     .pipe(buffer())
     .pipe(sourcemap.init({ loadMaps: true }))
-    .pipe(sourcemap.write())
+    .pipe(sourcemap.write("."))
     .pipe(size({ showFiles: true }))
     .pipe(gulp.dest(`${config.distPath}/js/`));
 }
