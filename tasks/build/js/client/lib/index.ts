@@ -47,10 +47,6 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
     });
     generatedTasks.push(buildTaskName);
     generatedWatchTasks.push(watchTaskName);
-    gulp.task(buildTaskName, []);
-    gulp.task(watchTaskName, [buildTaskName], () => {
-      return gulp.watch(lib.watch, [buildTaskName]);
-    });
   });
 
   gulp.task(`build:js:client:libs`, generatedTasks);
