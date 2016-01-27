@@ -10,6 +10,7 @@
   "files": [
     "typings/tsd.d.ts",
     "gulpfile.config.ts",
+    "gulpfile.config.types.ts",
     "gulpfile.ts",
     "gulpfile.types.ts",
     "tasks/build/css/index.ts",

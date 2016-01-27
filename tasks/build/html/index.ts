@@ -1,6 +1,6 @@
 import { Gulp } from "gulp";
-import { GulpTask } from "gulpfile.types.task";
-import { GulpConfig } from "gulpfile.types.config";
+import { GulpTask } from "../../../gulpfile.types";
+import { GulpConfig } from "../../../gulpfile.config.types";
 import * as size from "gulp-size";
 import * as chalk from "chalk";
 

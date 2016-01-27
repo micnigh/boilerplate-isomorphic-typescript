@@ -1,4 +1,4 @@
-import { GulpConfig } from "gulpfile.types.config";
+import { GulpConfig } from "./gulpfile.config.types";
 
 let isDev = process.env.NODE_ENV === "production" ? false : true;
 let distPath = isDev ? ".tmp/development" : ".tmp/production";

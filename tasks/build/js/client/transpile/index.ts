@@ -1,6 +1,6 @@
 import { Gulp } from "gulp";
-import { GulpTask, GulpTaskReturn } from "gulpfile.types.task";
-import { GulpConfig } from "gulpfile.types.config";
+import { GulpTask } from "../../../../../gulpfile.types";
+import { GulpConfig } from "../../../../../gulpfile.config.types";
 import * as changed from "gulp-changed";
 import * as typescript from "gulp-typescript";
 import * as babel from "gulp-babel";

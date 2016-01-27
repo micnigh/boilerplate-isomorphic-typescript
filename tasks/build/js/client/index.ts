@@ -1,7 +1,7 @@
 "use strict";
 import { Gulp } from "gulp";
-import { GulpTask, GulpTaskReturn } from "gulpfile.types.task";
-import { GulpConfig } from "gulpfile.types.config";
+import { GulpTask } from "../../../../gulpfile.types";
+import { GulpConfig } from "../../../../gulpfile.config.types";
 
 import buildJSClientTranspileTask from "./transpile/";
 import buildJSClientBuildTask from "./build/";

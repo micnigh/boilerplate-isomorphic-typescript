@@ -1,6 +1,6 @@
 import { Gulp } from "gulp";
-import { GulpTask } from "gulpfile.types.task";
-import { GulpConfig } from "gulpfile.types.config";
+import { GulpTask } from "../../../../gulpfile.types";
+import { GulpConfig } from "../../../../gulpfile.config.types";
 
 let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
   let generatedTasks: string[] = [];
