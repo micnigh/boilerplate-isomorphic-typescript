@@ -1,29 +1,20 @@
 "use strict";
 import { Gulp } from "gulp";
-import { GulpTask } from "../../../../gulpfile.types";
+import { GulpTask, GulpBuildTask } from "../../../../gulpfile.types";
 import { GulpConfig } from "../../../../gulpfile.config.types";
 
-import buildJSClientTranspileTask from "./transpile/";
-import buildJSClientBuildTask from "./build/";
-import buildJSClientLibTask from "./lib/";
+import * as buildJSClientTranspileTask from "./transpile/";
+import * as buildJSClientBuildTask from "./build/";
+import * as buildJSClientLibTask from "./lib/";
 
-let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
-  let generatedTaskResults = [
-    buildJSClientTranspileTask(gulp, config),
-    buildJSClientBuildTask(gulp, config),
-    buildJSClientLibTask(gulp, config),
-  ];
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
+  let gulpTask = new GulpBuildTask();
+  gulpTask.addChildTask(buildJSClientTranspileTask.generateTask(gulp, config));
+  gulpTask.addChildTask(buildJSClientBuildTask.generateTask(gulp, config));
+  gulpTask.addChildTask(buildJSClientLibTask.generateTask(gulp, config));
 
-  let generatedTasks: string[] = generatedTaskResults.map(t => t.generatedTasks || []).reduce((a, b) => a.concat(b));
-  let generatedWatchTasks: string[] = generatedTaskResults.map(t => t.generatedWatchTasks || []).reduce((a, b) => a.concat(b));
+  gulp.task("build:js:client", gulpTask.childBuildTasks);
+  gulp.task("watch:js:client", gulpTask.childWatchTasks);
 
-  gulp.task("build:js:client", generatedTasks);
-  gulp.task("watch:js:client", generatedWatchTasks);
-
-  return {
-    generatedTasks,
-    generatedWatchTasks,
-  };
+  return gulpTask;
 };
-
-export default generateTask;

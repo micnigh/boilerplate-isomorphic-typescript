@@ -2,7 +2,7 @@
 import { Gulp } from "gulp";
 import * as size from "gulp-size";
 import source = require("vinyl-source-stream");
-import { GulpTask } from "../../../../../gulpfile.types";
+import { GulpTask, GulpBuildTask } from "../../../../../gulpfile.types";
 import { GulpConfig } from "../../../../../gulpfile.config.types";
 import * as glob from "glob";
 import * as chalk from "chalk";
@@ -19,9 +19,9 @@ let prettyTime = require("pretty-hrtime");
 let tsify = require("tsify");
 let babelify = require("babelify");
 
-let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
-  let generatedTasks: string[] = [];
-  let generatedWatchTasks: string[] = [];
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
+  let gulpTask = new GulpBuildTask();
+
   config.js.libs.forEach(lib => {
     let buildTaskName = `build:js:client:libs:${lib.taskName}:${lib.destFileName}`;
     let watchTaskName = `watch:js:client:libs:${lib.taskName}:${lib.destFileName}`;
@@ -45,16 +45,15 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
         watch: true,
       }, true), gulp, config);
     });
-    generatedTasks.push(buildTaskName);
-    generatedWatchTasks.push(watchTaskName);
+    gulpTask.childBuildTasks.push(buildTaskName);
+    gulpTask.childWatchTasks.push(watchTaskName);
   });
 
-  gulp.task(`build:js:client:libs`, generatedTasks);
+  gulpTask.childTasks = gulpTask.childTasks
+    .concat(gulpTask.childBuildTasks)
+    .concat(gulpTask.childWatchTasks);
 
-  return {
-    generatedTasks,
-    generatedWatchTasks,
-  };
+  gulp.task(`build:js:client:libs`, gulpTask.childBuildTasks);
+
+  return gulpTask;
 };
-
-export default generateTask;

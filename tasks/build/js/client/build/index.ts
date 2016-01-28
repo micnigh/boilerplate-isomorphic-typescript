@@ -3,7 +3,7 @@ import { Gulp } from "gulp";
 import * as size from "gulp-size";
 import * as sourcemap from "gulp-sourcemaps";
 import source = require("vinyl-source-stream");
-import { GulpTask } from "../../../../../gulpfile.types";
+import { GulpTask, GulpBuildTask } from "../../../../../gulpfile.types";
 import { GulpConfig } from "../../../../../gulpfile.config.types";
 import * as glob from "glob";
 import * as chalk from "chalk";
@@ -73,9 +73,8 @@ export function browserifyBuild (browserifyOptions: Browserify.Options, buildOpt
     return bundleBrowserifyBuild(b, buildOptions, gulp, config);
 }
 
-let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
-  let generatedTasks: string[] = [];
-  let generatedWatchTasks: string[] = [];
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
+  let gulpTask = new GulpBuildTask();
   config.js.builds.forEach(build => {
     let buildTaskName = `build:js:client:builds:${build.taskName}`;
     let watchTaskName = `watch:js:client:builds:${build.taskName}`;
@@ -113,8 +112,8 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
           }, true), gulp, config);
         });
       });
-      generatedTasks.push(buildTaskName);
-      generatedWatchTasks.push(watchTaskName);
+      gulpTask.childBuildTasks.push(buildTaskName);
+      gulpTask.childWatchTasks.push(watchTaskName);
       gulp.task(buildTaskName, generatedEntryBuildTasks);
       gulp.task(watchTaskName, [buildTaskName], () => {
         return gulp.watch(build.watch, [buildTaskName]);
@@ -122,13 +121,8 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
     });
   });
 
-  gulp.task(`build:js:client:builds`, generatedTasks);
-  gulp.task(`watch:js:client:builds`, generatedWatchTasks);
+  gulp.task(`build:js:client:builds`, gulpTask.childBuildTasks);
+  gulp.task(`watch:js:client:builds`, gulpTask.childWatchTasks);
 
-  return {
-    generatedTasks,
-    generatedWatchTasks,
-  };
+  return gulpTask;
 };
-
-export default generateTask;

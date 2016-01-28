@@ -1,17 +1,18 @@
 import { Gulp } from "gulp";
-import { GulpTask } from "../../../gulpfile.types";
+import { GulpTask, GulpBuildTask } from "../../../gulpfile.types";
 import { GulpConfig } from "../../../gulpfile.config.types";
 import * as size from "gulp-size";
 import * as chalk from "chalk";
 
-let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
+  let gulpTask = new GulpBuildTask();
   let src = "server/public";
 
   let buildTaskName = "build:html";
   let watchTaskName = "watch:html";
 
-  let generatedTasks: string[] = [buildTaskName];
-  let generatedWatchTasks: string[] = [watchTaskName];
+  gulpTask.childBuildTasks = [buildTaskName];
+  gulpTask.childWatchTasks = [watchTaskName];
 
   gulp.task(buildTaskName, [], function () {
     return gulp.src([`${src}/**/*`])
@@ -23,10 +24,7 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
     return gulp.watch([`${src}/**/*`], [buildTaskName]);
   });
 
-  return {
-    generatedTasks,
-    generatedWatchTasks,
-  };
+  return gulpTask;
 };
 
 export default generateTask;

@@ -1,5 +1,5 @@
 import { Gulp } from "gulp";
-import { GulpTask } from "../../../../../gulpfile.types";
+import { GulpTask, GulpBuildTask } from "../../../../../gulpfile.types";
 import { GulpConfig } from "../../../../../gulpfile.config.types";
 import * as changed from "gulp-changed";
 import * as typescript from "gulp-typescript";
@@ -8,12 +8,14 @@ import * as size from "gulp-size";
 import * as _ from "lodash";
 let rename = require("gulp-rename");
 
-let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
+  let gulpTask = new GulpBuildTask();
+
   let buildTaskName = `build:js:client:transpile`;
   let watchTaskName = `watch:js:client:transpile`;
 
-  let generatedTasks: string[] = [buildTaskName];
-  let generatedWatchTasks: string[] = [watchTaskName];
+  gulpTask.childBuildTasks = [buildTaskName];
+  gulpTask.childWatchTasks = [watchTaskName];
 
   let tsClientProject = typescript.createProject({
     module: "es6",
@@ -51,10 +53,9 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
     return gulp.watch(["client/js/**/*.ts{,x}"], [buildTaskName]);
   });
 
-  return {
-    generatedTasks,
-    generatedWatchTasks,
-  };
-};
+  gulpTask.childTasks = gulpTask.childTasks
+    .concat(gulpTask.childBuildTasks)
+    .concat(gulpTask.childWatchTasks);
 
-export default generateTask;
+  return gulpTask;
+};

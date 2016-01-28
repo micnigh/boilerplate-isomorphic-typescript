@@ -1,8 +1,8 @@
 import * as gulp from "gulp";
-import tasks from "./tasks/";
+import * as tasks from "./tasks/";
 import config from "./gulpfile.config";
 
-tasks(gulp, config);
+tasks.generateTask(gulp, config);
 
 gulp.task("help", [], () => {
   console.log(`

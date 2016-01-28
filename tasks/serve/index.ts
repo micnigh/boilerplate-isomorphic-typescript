@@ -2,14 +2,8 @@ import { Gulp } from "gulp";
 import { GulpTask } from "../../gulpfile.types";
 import { GulpConfig } from "../../gulpfile.config.types";
 
-let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
-  let generatedTasks: string[] = [];
-
-  gulp.task("serve", generatedTasks);
-
-  return {
-    generatedTasks
-  };
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpTask => {
+  let gulpTask = new GulpTask();
+  gulp.task("serve", gulpTask.childTasks);
+  return gulpTask;
 };
-
-export default generateTask;

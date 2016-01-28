@@ -1,21 +1,16 @@
 import { Gulp } from "gulp";
-import { GulpTask } from "../../../../gulpfile.types";
+import { GulpTask, GulpBuildTask } from "../../../../gulpfile.types";
 import { GulpConfig } from "../../../../gulpfile.config.types";
 
-let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
-  let generatedTasks: string[] = [];
-
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
+  let gulpTask = new GulpBuildTask();
   config.js.builds.forEach(build => {
     let taskName = `build:js:server:${build.taskName}`;
-    generatedTasks.push(taskName);
+    gulpTask.childTasks.push(taskName);
+    gulpTask.childBuildTasks.push(taskName);
     gulp.task(taskName, [], () => {
       console.log(taskName);
     });
   });
-
-  return {
-    generatedTasks,
-  };
+  return gulpTask;
 };
-
-export default generateTask;

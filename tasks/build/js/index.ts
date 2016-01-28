@@ -1,26 +1,17 @@
 import { Gulp } from "gulp";
-import { GulpTask } from "../../../gulpfile.types";
+import { GulpTask, GulpBuildTask } from "../../../gulpfile.types";
 import { GulpConfig } from "../../../gulpfile.config.types";
 
-import buildJSClientTask from "./client/";
-import buildJSServerTask from "./server/";
+import * as buildJSClientTask from "./client/";
+import * as buildJSServerTask from "./server/";
 
-let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
-  let generatedTaskResults = [
-    buildJSClientTask(gulp, config),
-    buildJSServerTask(gulp, config),
-  ];
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
+  let gulpTask = new GulpBuildTask();
+  gulpTask.addChildTask(buildJSClientTask.generateTask(gulp, config));
+  gulpTask.addChildTask(buildJSServerTask.generateTask(gulp, config));
 
-  let generatedTasks: string[] = generatedTaskResults.map(t => t.generatedTasks || []).reduce((a, b) => a.concat(b));
-  let generatedWatchTasks: string[] = generatedTaskResults.map(t => t.generatedWatchTasks || []).reduce((a, b) => a.concat(b));
+  gulp.task("build:js", gulpTask.childBuildTasks);
+  gulp.task("watch:js", gulpTask.childWatchTasks);
 
-  gulp.task("build:js", generatedTasks);
-  gulp.task("watch:js", generatedWatchTasks);
-
-  return {
-    generatedTasks,
-    generatedWatchTasks,
-  };
+  return gulpTask;
 };
-
-export default generateTask;

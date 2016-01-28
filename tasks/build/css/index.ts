@@ -1,5 +1,5 @@
 import { Gulp } from "gulp";
-import { GulpTask } from "../../../gulpfile.types";
+import { GulpTask, GulpBuildTask } from "../../../gulpfile.types";
 import { GulpConfig } from "../../../gulpfile.config.types";
 
 import * as sass from "gulp-sass";
@@ -8,14 +8,12 @@ import * as autoprefixer from "gulp-autoprefixer";
 import * as size from "gulp-size";
 import * as chalk from "chalk";
 
-let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
-  let generatedTasks: string[] = [];
-  let generatedWatchTasks: string[] = [];
-
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
+  let gulpTask = new GulpBuildTask();
   config.css.builds.forEach(build => {
     let buildTaskName = `build:css:${build.taskName}`;
     let watchTaskName = `watch:css:${build.taskName}`;
-    generatedTasks.push(buildTaskName);
+    gulpTask.childBuildTasks.push(buildTaskName);
     gulp.task(buildTaskName, [], () => {
       let pipe = gulp.src(build.entries);
 
@@ -55,16 +53,11 @@ let generateTask: GulpTask = (gulp: Gulp, config: GulpConfig) => {
       return pipe;
     });
 
-    generatedWatchTasks.push(watchTaskName);
+    gulpTask.childWatchTasks.push(watchTaskName);
     gulp.task(watchTaskName, [buildTaskName], () => {
       return gulp.watch(build.watch, [buildTaskName]);
     });
   });
 
-  return {
-    generatedTasks,
-    generatedWatchTasks,
-  };
+  return gulpTask;
 };
-
-export default generateTask;
