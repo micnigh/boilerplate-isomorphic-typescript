@@ -24,6 +24,10 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
     return gulp.watch([`${src}/**/*`], [buildTaskName]);
   });
 
+  gulpTask.childTasks = gulpTask.childTasks
+    .concat(gulpTask.childBuildTasks)
+    .concat(gulpTask.childWatchTasks);
+
   return gulpTask;
 };
 

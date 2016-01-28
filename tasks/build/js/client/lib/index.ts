@@ -49,11 +49,11 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
     gulpTask.childWatchTasks.push(watchTaskName);
   });
 
+  gulp.task(`build:js:client:libs`, gulpTask.childBuildTasks);
+
   gulpTask.childTasks = gulpTask.childTasks
     .concat(gulpTask.childBuildTasks)
     .concat(gulpTask.childWatchTasks);
-
-  gulp.task(`build:js:client:libs`, gulpTask.childBuildTasks);
 
   return gulpTask;
 };

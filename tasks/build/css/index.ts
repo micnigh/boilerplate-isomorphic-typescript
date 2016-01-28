@@ -59,5 +59,9 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
     });
   });
 
+  gulpTask.childTasks = gulpTask.childTasks
+    .concat(gulpTask.childBuildTasks)
+    .concat(gulpTask.childWatchTasks);
+
   return gulpTask;
 };

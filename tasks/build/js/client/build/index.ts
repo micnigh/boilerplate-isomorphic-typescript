@@ -124,5 +124,9 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
   gulp.task(`build:js:client:builds`, gulpTask.childBuildTasks);
   gulp.task(`watch:js:client:builds`, gulpTask.childWatchTasks);
 
+  gulpTask.childTasks = gulpTask.childTasks
+    .concat(gulpTask.childBuildTasks)
+    .concat(gulpTask.childWatchTasks);
+
   return gulpTask;
 };
