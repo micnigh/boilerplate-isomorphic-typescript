@@ -13,7 +13,7 @@ boilerplate isomorphic typescript
 
 ```bash
 # first time
-npm install -g gulp tsd webpack webpack-dev-server browser-sync babel-cli typescript
+npm install -g gulp tsd browser-sync
 npm install
 
 # every time
@@ -27,7 +27,6 @@ node ./npm-scripts/watch-gulp-tasks.js
 # Features
 
  - [typescript] - javascript type support
- - [webpack] - bundles browser js
  - [gulp] - automated build system
 
 ---

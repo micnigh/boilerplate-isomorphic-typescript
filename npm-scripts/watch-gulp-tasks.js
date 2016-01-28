@@ -1,12 +1,10 @@
 "use strict";
-let spawn = require("cross-spawn");
+let gulp = require("gulp");
+let gulpTasks = require("./gulp-tasks");
+let sources = gulpTasks.sources;
 
-require("./build-gulp-tasks");
+gulp.task("watch", ["build"], () => {
+  return gulp.watch(sources, ["build"]);
+});
 
-function spawnHelper(command) {
-  console.log(command.join(" "));
-  spawn(command[0], command.slice(1), { stdio: "inherit" });
-}
-
-spawnHelper(require("./config").commands.tsc.concat("--watch"));
-spawnHelper(require("./config").commands.babel.concat("--watch"));
+gulp.start("watch");
