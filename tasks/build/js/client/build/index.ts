@@ -1,15 +1,16 @@
 "use strict";
 import { Gulp } from "gulp";
-import * as size from "gulp-size";
-import * as sourcemap from "gulp-sourcemaps";
-import source = require("vinyl-source-stream");
+import size from "gulp-size";
+import sourcemap from "gulp-sourcemaps";
+import source from "vinyl-source-stream";
+import glob from "glob";
+import chalk from "chalk";
+import browserify from "browserify";
+import path from "path";
+import _ from "lodash";
+
 import { GulpTask, GulpBuildTask } from "../../../../../gulpfile.types";
 import { GulpConfig } from "../../../../../gulpfile.config.types";
-import * as glob from "glob";
-import * as chalk from "chalk";
-import * as browserify from "browserify";
-import * as path from "path";
-import * as _ from "lodash";
 
 let watchify: {(instance: Browserify.BrowserifyObject): Browserify.BrowserifyObject} = require("watchify");
 let buffer = require("gulp-buffer");

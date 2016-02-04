@@ -1,15 +1,15 @@
 "use strict";
 import { Gulp } from "gulp";
-import * as size from "gulp-size";
-import source = require("vinyl-source-stream");
+import size from "gulp-size";
+import source from "vinyl-source-stream";
+import glob from "glob";
+import chalk from "chalk";
+import browserify from "browserify";
+import path from "path";
+import ts from "typescript";
+import _ from "lodash";
 import { GulpTask, GulpBuildTask } from "../../../../../gulpfile.types";
 import { GulpConfig } from "../../../../../gulpfile.config.types";
-import * as glob from "glob";
-import * as chalk from "chalk";
-import * as browserify from "browserify";
-import * as path from "path";
-import * as ts from "typescript";
-import * as _ from "lodash";
 
 import { browserifyBuild, BrowserifyBuildOptions } from "../build/";
 

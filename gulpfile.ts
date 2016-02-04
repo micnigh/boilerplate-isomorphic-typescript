@@ -1,4 +1,4 @@
-import * as gulp from "gulp";
+import gulp from "gulp";
 import * as tasks from "./tasks/";
 import config from "./gulpfile.config";
 

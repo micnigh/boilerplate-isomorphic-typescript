@@ -1,11 +1,11 @@
 import { Gulp } from "gulp";
 import { GulpTask, GulpBuildTask } from "../../../../../gulpfile.types";
 import { GulpConfig } from "../../../../../gulpfile.config.types";
-import * as changed from "gulp-changed";
-import * as typescript from "gulp-typescript";
-import * as babel from "gulp-babel";
-import * as size from "gulp-size";
-import * as _ from "lodash";
+import changed from "gulp-changed";
+import typescript from "gulp-typescript";
+import babel from "gulp-babel";
+import size from "gulp-size";
+import _ from "lodash";
 let rename = require("gulp-rename");
 
 export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {

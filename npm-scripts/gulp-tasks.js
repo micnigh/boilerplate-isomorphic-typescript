@@ -17,6 +17,8 @@ let tsClientProject = typescript.createProject({
   target: "es6",
   jsx: "preserve",
   isolatedModules: true,
+  moduleResolution: "node",
+  allowSyntheticDefaultImports: true,
 });
 
 gulp.task("build", [], function () {

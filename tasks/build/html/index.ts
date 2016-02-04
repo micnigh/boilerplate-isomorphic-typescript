@@ -1,8 +1,8 @@
 import { Gulp } from "gulp";
 import { GulpTask, GulpBuildTask } from "../../../gulpfile.types";
 import { GulpConfig } from "../../../gulpfile.config.types";
-import * as size from "gulp-size";
-import * as chalk from "chalk";
+import size from "gulp-size";
+import chalk from "chalk";
 
 export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
   let gulpTask = new GulpBuildTask();

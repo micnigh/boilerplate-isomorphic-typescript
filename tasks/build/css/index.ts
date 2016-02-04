@@ -2,11 +2,11 @@ import { Gulp } from "gulp";
 import { GulpTask, GulpBuildTask } from "../../../gulpfile.types";
 import { GulpConfig } from "../../../gulpfile.config.types";
 
-import * as sass from "gulp-sass";
-import * as sourcemaps from "gulp-sourcemaps";
-import * as autoprefixer from "gulp-autoprefixer";
-import * as size from "gulp-size";
-import * as chalk from "chalk";
+import sass from "gulp-sass";
+import sourcemaps from "gulp-sourcemaps";
+import autoprefixer from "gulp-autoprefixer";
+import size from "gulp-size";
+import chalk from "chalk";
 
 export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
   let gulpTask = new GulpBuildTask();

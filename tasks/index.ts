@@ -10,4 +10,4 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpTask => {
   gulpTask.addChildTask(buildTask.generateTask(gulp, config));
   gulpTask.addChildTask(serveTask.generateTask(gulp, config));
   return gulpTask;
-}
+};
