@@ -24,6 +24,12 @@ gulp.task("build", [], function () {
     base: ".",
   })
     .pipe(typescript(tsClientProject))
+    .pipe(rename({extname: ".es6"}))
+    .pipe(changed("./", {
+      hasChanged: changed.compareSha1Digest,
+    }))
+    .pipe(gulp.dest("."))
+    .pipe(size({ showFiles: true }))
     .pipe(babel({
       sourceMaps: "inline",
       presets: [

@@ -3,5 +3,6 @@
 node_modules
 typings
 /*.js
+*.es6
 tasks/**/*.js
 server/**/*.js
