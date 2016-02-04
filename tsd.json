@@ -6,16 +6,16 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "q/Q.d.ts": {
-      "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
+      "commit": "5d0f2126c8dac8fce0ff020218aea06607213b0d"
     },
     "node/node.d.ts": {
-      "commit": "fab683ca77d0286b9d51aba6375deaceb41b22f5"
+      "commit": "5d0f2126c8dac8fce0ff020218aea06607213b0d"
     },
     "orchestrator/orchestrator.d.ts": {
-      "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
+      "commit": "5d0f2126c8dac8fce0ff020218aea06607213b0d"
     },
     "gulp/gulp.d.ts": {
-      "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
+      "commit": "5d0f2126c8dac8fce0ff020218aea06607213b0d"
     },
     "gulp-typescript/gulp-typescript.d.ts": {
       "commit": "b4646ff708f39d2896bcb3e3974667f92e26c5a4"
