@@ -1,3 +1,5 @@
+import "source-map-support/register";
+
 import gulp from "gulp";
 import * as tasks from "./tasks/";
 import config from "./gulpfile.config";

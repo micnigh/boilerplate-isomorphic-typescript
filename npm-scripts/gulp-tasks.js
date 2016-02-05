@@ -5,6 +5,7 @@ let babel = require("gulp-babel");
 let rename = require("gulp-rename");
 let size = require("gulp-size");
 let changed = require("gulp-changed");
+let sourcemaps = require("gulp-sourcemaps");
 
 let sources = [
   "typings/tsd.d.ts",
@@ -25,7 +26,9 @@ gulp.task("build", [], function () {
   return gulp.src(sources, {
     base: ".",
   })
+    .pipe(sourcemaps.init())
     .pipe(typescript(tsClientProject))
+    .pipe(sourcemaps.write())
     .pipe(rename({extname: ".es6"}))
     .pipe(changed("./", {
       hasChanged: changed.compareSha1Digest,
