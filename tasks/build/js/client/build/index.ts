@@ -104,10 +104,10 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
           destFileName: `${path.basename(entryFromGlob, path.extname(entryFromGlob))}.js`,
         };
 
-        gulp.task(entryBuildTaskName, ["build:js:client:transpile"], () => {
+        gulp.task(entryBuildTaskName, [], () => {
           return browserifyBuild(entryBuildBrowserifyConfig, entryBuildBrowserifyBuildOptions, gulp, config);
         });
-        gulp.task(entryWatchTaskName, ["build:js:client:transpile"], () => {
+        gulp.task(entryWatchTaskName, [], () => {
           return browserifyBuild(entryBuildBrowserifyConfig, _.merge({}, entryBuildBrowserifyBuildOptions, {
             watch: true,
           }, true), gulp, config);

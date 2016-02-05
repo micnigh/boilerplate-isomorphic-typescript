@@ -9,7 +9,7 @@
       "commit": "5d0f2126c8dac8fce0ff020218aea06607213b0d"
     },
     "node/node.d.ts": {
-      "commit": "5d0f2126c8dac8fce0ff020218aea06607213b0d"
+      "commit": "4ec3c5bf291bc02f49eb30c1077340b235165c67"
     },
     "orchestrator/orchestrator.d.ts": {
       "commit": "5d0f2126c8dac8fce0ff020218aea06607213b0d"
@@ -70,6 +70,12 @@
     },
     "vinyl/vinyl.d.ts": {
       "commit": "fab683ca77d0286b9d51aba6375deaceb41b22f5"
+    },
+    "gulp-watch/gulp-watch.d.ts": {
+      "commit": "4ec3c5bf291bc02f49eb30c1077340b235165c67"
+    },
+    "gulp-plumber/gulp-plumber.d.ts": {
+      "commit": "4ec3c5bf291bc02f49eb30c1077340b235165c67"
     }
   }
 }

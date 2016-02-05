@@ -37,10 +37,10 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
       isLib: true,
     };
 
-    gulp.task(buildTaskName, ["build:js:client:transpile"], () => {
+    gulp.task(buildTaskName, [], () => {
       return browserifyBuild(libBuildBrowserifyConfig, libBuildBrowserifyBuildOptions, gulp, config);
     });
-    gulp.task(watchTaskName, ["build:js:client:transpile"], () => {
+    gulp.task(watchTaskName, [], () => {
       return browserifyBuild(libBuildBrowserifyConfig, _.merge({}, libBuildBrowserifyBuildOptions, {
         watch: true,
       }, true), gulp, config);
