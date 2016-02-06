@@ -4,7 +4,7 @@ let watch = require("gulp-watch");
 let gulpTasks = require("./gulp-tasks");
 let sources = gulpTasks.sources;
 
-gulp.task("watch", () => {
+gulp.task("watch", ["build"], () => {
   return watch(sources, {}, () => {
     gulp.start("build");
   });
