@@ -16,6 +16,7 @@
     "./gulpfile.ts",
     "./gulpfile.types.ts",
     "./server/index.ts",
+    "./server/test/simpleTest.ts",
     "./tasks/build/css/index.ts",
     "./tasks/build/html/index.ts",
     "./tasks/build/index.ts",
@@ -24,9 +25,10 @@
     "./tasks/build/js/client/index.ts",
     "./tasks/build/js/client/lib/index.ts",
     "./tasks/build/js/index.ts",
-    "./tasks/build/js/server/index.ts",
     "./tasks/index.ts",
-    "./tasks/serve/index.ts"
+    "./tasks/serve/index.ts",
+    "./tasks/test/index.ts",
+    "./tasks/test/server/index.ts"
   ],
   "exclude": [
     "node_modules",

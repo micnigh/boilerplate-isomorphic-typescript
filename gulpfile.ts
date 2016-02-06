@@ -1,4 +1,5 @@
 import "source-map-support/register";
+import "regenerator/runtime";
 
 import gulp from "gulp";
 import * as tasks from "./tasks/";

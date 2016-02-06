@@ -1,5 +1,5 @@
 import { Gulp } from "gulp";
-import { GulpTask, GulpBuildTask } from "../../../gulpfile.types";
+import { GulpTask, GulpWatchTask } from "../../../gulpfile.types";
 import { GulpConfig } from "../../../gulpfile.config.types";
 
 import sass from "gulp-sass";
@@ -8,12 +8,12 @@ import autoprefixer from "gulp-autoprefixer";
 import size from "gulp-size";
 import chalk from "chalk";
 
-export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
-  let gulpTask = new GulpBuildTask();
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
+  let gulpTask = new GulpWatchTask();
   config.css.builds.forEach(build => {
     let buildTaskName = `build:css:${build.taskName}`;
     let watchTaskName = `watch:css:${build.taskName}`;
-    gulpTask.childBuildTasks.push(buildTaskName);
+    gulpTask.childTasks.push(buildTaskName);
     gulp.task(buildTaskName, [], () => {
       let pipe = gulp.src(build.entries);
 
@@ -58,10 +58,6 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
       return gulp.watch(build.watch, [buildTaskName]);
     });
   });
-
-  gulpTask.childTasks = gulpTask.childTasks
-    .concat(gulpTask.childBuildTasks)
-    .concat(gulpTask.childWatchTasks);
 
   return gulpTask;
 };

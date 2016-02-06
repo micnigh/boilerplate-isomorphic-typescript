@@ -1,13 +1,18 @@
 import { Gulp } from "gulp";
-import { GulpTask } from "../gulpfile.types";
+import { GulpWatchTask } from "../gulpfile.types";
 import { GulpConfig } from "../gulpfile.config.types";
 
 import * as buildTask from "./build/";
 import * as serveTask from "./serve";
+import * as testTask from "./test";
 
-export let generateTask = (gulp: Gulp, config: GulpConfig): GulpTask => {
-  let gulpTask = new GulpTask();
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
+  let gulpTask = new GulpWatchTask();
   gulpTask.addChildTask(buildTask.generateTask(gulp, config));
   gulpTask.addChildTask(serveTask.generateTask(gulp, config));
+  gulpTask.addChildTask(testTask.generateTask(gulp, config));
+
+  gulp.task("watch", gulpTask.childWatchTasks);
+
   return gulpTask;
 };

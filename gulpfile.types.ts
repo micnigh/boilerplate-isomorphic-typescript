@@ -9,12 +9,12 @@ export class GulpTask {
   }
 }
 
-export class GulpBuildTask extends GulpTask {
-  childBuildTasks: string[] = [];
+export class GulpWatchTask extends GulpTask {
   childWatchTasks: string[] = [];
-  addChildTask(childTask: GulpBuildTask) {
-    this.childTasks = this.childTasks.concat(childTask.childTasks);
-    this.childBuildTasks = this.childBuildTasks.concat(childTask.childBuildTasks);
-    this.childWatchTasks = this.childWatchTasks.concat(childTask.childWatchTasks);
+  addChildTask(childTask: GulpWatchTask | GulpTask) {
+    super.addChildTask(childTask);
+    if (childTask instanceof GulpWatchTask) {
+      this.childWatchTasks = this.childWatchTasks.concat((<GulpWatchTask>childTask).childWatchTasks);
+    }
   }
 }

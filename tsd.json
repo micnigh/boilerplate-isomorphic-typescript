@@ -82,6 +82,9 @@
     },
     "webpack/webpack.d.ts": {
       "commit": "f7164a47ffe5e9a7ea2f4bec8fc4009347c64f6d"
+    },
+    "jasmine/jasmine.d.ts": {
+      "commit": "c393f8974d44840a6c9cc6d5b5c0188a8f05143d"
     }
   }
 }

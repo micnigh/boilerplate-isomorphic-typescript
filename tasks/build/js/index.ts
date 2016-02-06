@@ -1,14 +1,14 @@
 import { Gulp } from "gulp";
-import { GulpTask, GulpBuildTask } from "../../../gulpfile.types";
+import { GulpTask, GulpWatchTask } from "../../../gulpfile.types";
 import { GulpConfig } from "../../../gulpfile.config.types";
 
 import * as buildJSClientTask from "./client/";
 
-export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
-  let gulpTask = new GulpBuildTask();
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
+  let gulpTask = new GulpWatchTask();
   gulpTask.addChildTask(buildJSClientTask.generateTask(gulp, config));
 
-  gulp.task("build:js", gulpTask.childBuildTasks);
+  gulp.task("build:js", gulpTask.childTasks);
   gulp.task("watch:js", gulpTask.childWatchTasks);
 
   return gulpTask;

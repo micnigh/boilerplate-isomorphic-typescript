@@ -9,15 +9,15 @@ import path from "path";
 import _ from "lodash";
 import webpack from "webpack";
 
-import { GulpTask, GulpBuildTask } from "../../../../../gulpfile.types";
+import { GulpTask, GulpWatchTask } from "../../../../../gulpfile.types";
 import { GulpConfig } from "../../../../../gulpfile.config.types";
 import webpackConfigGenerator from "./webpack.config";
 
 let buffer = require("gulp-buffer");
 let prettyTime = require("pretty-hrtime");
 
-export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
-  let gulpTask = new GulpBuildTask();
+export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
+  let gulpTask = new GulpWatchTask();
   config.js.builds.forEach(build => {
     let buildTaskName = `build:js:client:builds:${build.taskName}`;
     let watchTaskName = `watch:js:client:builds:${build.taskName}`;
@@ -53,19 +53,15 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
           });
         });
       });
-      gulpTask.childBuildTasks.push(buildTaskName);
+      gulpTask.childTasks.push(buildTaskName);
       gulpTask.childWatchTasks.push(watchTaskName);
       gulp.task(buildTaskName, generatedEntryBuildTasks);
       gulp.task(watchTaskName, generatedEntryWatchTasks);
     });
   });
 
-  gulp.task(`build:js:client:builds`, gulpTask.childBuildTasks);
+  gulp.task(`build:js:client:builds`, gulpTask.childTasks);
   gulp.task(`watch:js:client:builds`, gulpTask.childWatchTasks);
-
-  gulpTask.childTasks = gulpTask.childTasks
-    .concat(gulpTask.childBuildTasks)
-    .concat(gulpTask.childWatchTasks);
 
   return gulpTask;
 };
