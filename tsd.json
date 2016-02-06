@@ -53,9 +53,6 @@
     "lodash/lodash.d.ts": {
       "commit": "93bae1bb4c887c1375a4c1f0c3bb849ff06b8ac6"
     },
-    "browserify/browserify.d.ts": {
-      "commit": "6659791e2e8b77cf81a8d0cca3512fba7c818f9b"
-    },
     "vinyl-source-stream/vinyl-source-stream.d.ts": {
       "commit": "6659791e2e8b77cf81a8d0cca3512fba7c818f9b"
     },
@@ -76,6 +73,15 @@
     },
     "gulp-plumber/gulp-plumber.d.ts": {
       "commit": "4ec3c5bf291bc02f49eb30c1077340b235165c67"
+    },
+    "source-map/source-map.d.ts": {
+      "commit": "f7164a47ffe5e9a7ea2f4bec8fc4009347c64f6d"
+    },
+    "uglify-js/uglify-js.d.ts": {
+      "commit": "f7164a47ffe5e9a7ea2f4bec8fc4009347c64f6d"
+    },
+    "webpack/webpack.d.ts": {
+      "commit": "f7164a47ffe5e9a7ea2f4bec8fc4009347c64f6d"
     }
   }
 }

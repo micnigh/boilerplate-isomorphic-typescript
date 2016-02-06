@@ -10,13 +10,13 @@ let config: GulpConfig = {
     libs: [
       {
         taskName: "lib",
-        requires: [
-          "react",
-          "react-dom",
-          "lodash",
-        ],
         dest: `${distPath}/js/`,
         destFileName: "lib.js",
+        includes: [
+          { name: "react", path: "node_modules/react/dist/react.js", global: "React" },
+          { name: "react-dom", path: "node_modules/react-dom/dist/react-dom.js", global: "ReactDOM" },
+          { name: "lodash", path: "node_modules/lodash/lodash.js", global: "_" },
+        ],
         watch: [
           "client/js/lib/**/*.js",
           "client/js/lib/**/*.js{,x}",
