@@ -44,7 +44,11 @@ export interface JSBuildConfig extends BuildConfig {
 
 export interface JSLibConfig extends BuildConfig {
   includePaths?: string[];
-  requires: string[];
+  includes: {
+    name: string;
+    path: string;
+    global?: string;
+  }[];
   destFileName: string;
 }
 

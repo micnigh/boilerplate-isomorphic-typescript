@@ -6,26 +6,31 @@ let rename = require("gulp-rename");
 let size = require("gulp-size");
 let changed = require("gulp-changed");
 let sourcemaps = require("gulp-sourcemaps");
+let plumber = require("gulp-plumber");
 
 let sources = [
   "typings/tsd.d.ts",
   "*.ts{,x}",
+  "client/**/*.ts{,x}",
+  "server/**/*.ts{,x}",
   "tasks/**/*.ts{,x}",
 ];
 
 let tsClientProject = typescript.createProject({
   module: "es6",
   target: "es6",
-  jsx: "preserve",
+  jsx: "react",
   isolatedModules: true,
   moduleResolution: "node",
   allowSyntheticDefaultImports: true,
+  noExternalResolve: true,
 });
 
 gulp.task("build", [], function () {
   return gulp.src(sources, {
     base: ".",
   })
+    .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(typescript(tsClientProject))
     .pipe(sourcemaps.write())
@@ -53,8 +58,6 @@ gulp.task("build", [], function () {
     .pipe(gulp.dest("."))
     .pipe(size({ showFiles: true }));
 });
-
-gulp.start("build");
 
 module.exports = {
   sources: sources,

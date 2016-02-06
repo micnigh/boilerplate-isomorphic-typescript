@@ -1,23 +1,14 @@
-"use strict";
 import { Gulp } from "gulp";
+import concat from "gulp-concat";
+import sourcemaps from "gulp-sourcemaps";
 import size from "gulp-size";
-import source from "vinyl-source-stream";
 import glob from "glob";
 import chalk from "chalk";
-import browserify from "browserify";
 import path from "path";
-import ts from "typescript";
 import _ from "lodash";
+
 import { GulpTask, GulpBuildTask } from "../../../../../gulpfile.types";
 import { GulpConfig } from "../../../../../gulpfile.config.types";
-
-import { browserifyBuild, BrowserifyBuildOptions } from "../build/";
-
-let watchify: {(instance: Browserify.BrowserifyObject): Browserify.BrowserifyObject} = require("watchify");
-let buffer = require("gulp-buffer");
-let prettyTime = require("pretty-hrtime");
-let tsify = require("tsify");
-let babelify = require("babelify");
 
 export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
   let gulpTask = new GulpBuildTask();
@@ -26,24 +17,18 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpBuildTask => {
     let buildTaskName = `build:js:client:libs:${lib.taskName}:${lib.destFileName}`;
     let watchTaskName = `watch:js:client:libs:${lib.taskName}:${lib.destFileName}`;
 
-    let libBuildBrowserifyConfig: Browserify.Options = {
-      debug: config.isDev,
-      paths: lib.includePaths,
-    };
+    let libSources = lib.includes.map(i => i.path);
 
-    let libBuildBrowserifyBuildOptions: BrowserifyBuildOptions = {
-      watch: false,
-      destFileName: lib.destFileName,
-      isLib: true,
-    };
-
-    gulp.task(buildTaskName, ["build:js:client:transpile"], () => {
-      return browserifyBuild(libBuildBrowserifyConfig, libBuildBrowserifyBuildOptions, gulp, config);
+    gulp.task(buildTaskName, [], () => {
+      return gulp.src(libSources)
+        .pipe(sourcemaps.init())
+        .pipe(concat(lib.destFileName))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(lib.dest))
+        .pipe(size({ showFiles: true }));
     });
-    gulp.task(watchTaskName, ["build:js:client:transpile"], () => {
-      return browserifyBuild(libBuildBrowserifyConfig, _.merge({}, libBuildBrowserifyBuildOptions, {
-        watch: true,
-      }, true), gulp, config);
+    gulp.task(watchTaskName, [buildTaskName], () => {
+      return gulp.watch(lib.watch, [buildTaskName]);
     });
     gulpTask.childBuildTasks.push(buildTaskName);
     gulpTask.childWatchTasks.push(watchTaskName);
