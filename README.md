@@ -13,11 +13,11 @@ boilerplate isomorphic typescript
 
 ```bash
 # first time
-npm install -g gulp tsd browser-sync
+npm install -g gulp tsd http-server
 npm install
 
 # every time
-browser-sync start --server ./.tmp/development/ --files './.tmp/development/**/*.(css|js|html)'
+http-server .tmp/development/
 gulp watch
 
 # when modifying gulp tasks
