@@ -36,7 +36,7 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
         let webpackBuilder = webpack(webpackConfig);
 
         gulp.task(entryBuildTaskName, [], (doneWithGeneratedTask) => {
-          return webpackBuilder.run((err: Error, stats) => {
+          return webpackBuilder.run((err: Error, stats: webpack.compiler.Stats) => {
             console.log(stats.toString({
               colors: true,
             }));
@@ -46,7 +46,7 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
         gulp.task(entryWatchTaskName, [], () => {
           return webpackBuilder.watch({
             aggregateTimeout: 0,
-          }, (err: Error, stats) => {
+          }, (err: Error, stats: webpack.compiler.Stats) => {
             console.log(stats.toString({
               colors: true,
             }));
