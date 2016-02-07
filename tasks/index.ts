@@ -12,7 +12,24 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
   gulpTask.addChildTask(serveTask.generateTask(gulp, config));
   gulpTask.addChildTask(testTask.generateTask(gulp, config));
 
-  gulp.task("watch", gulpTask.childWatchTasks);
+  gulp.task("watch:initBrowsersync", [], (done) => {
+    config.watch.browsersync.forEach(bsConfig => {
+      bsConfig.instance.init({
+        logSnippet: false,
+        open: false,
+        notify: false,
+        port: bsConfig.port,
+        ui: {
+          port: bsConfig.uiPort,
+        },
+      });
+    });
+    done();
+  });
+
+  gulp.task("watch", gulpTask.childWatchTasks.concat([
+    "watch:initBrowsersync",
+  ]));
 
   return gulpTask;
 };

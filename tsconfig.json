@@ -10,6 +10,7 @@
   "files": [
     "./typings/tsd.d.ts",
     "./client/js/src/app.tsx",
+    "./client/js/src/bootstrap.ts",
     "./client/js/src/component/HelloWorld.spec.tsx",
     "./client/js/src/component/HelloWorld.tsx",
     "./client/js/src/test/bootstrap.ts",

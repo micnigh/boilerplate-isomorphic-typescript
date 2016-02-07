@@ -1,11 +1,22 @@
 import { Gulp } from "gulp";
 
+import browsersync from "browser-sync";
+
 export interface GulpConfig {
   /** are we in development mode? */
   isDev: boolean;
 
   /** path to store output */
   distPath: string;
+
+  watch?: {
+    /** browsersync instances to trigger livereload for */
+    browsersync?: {
+      port: number;
+      uiPort: number;
+      instance: browsersync.BrowserSyncInstance;
+    }[]
+  };
 
   test?: {
     /** karma browser test runner */
@@ -37,6 +48,9 @@ export interface BuildConfig {
 
   /** files to watch and trigger rebuild */
   watch?: string[];
+
+  /** browsersync instances to trigger livereload for */
+  browsersync?: browsersync.BrowserSyncInstance[];
 }
 
 export interface JSConfig {

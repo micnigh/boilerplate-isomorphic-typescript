@@ -103,6 +103,18 @@
     },
     "karma/karma.d.ts": {
       "commit": "c393f8974d44840a6c9cc6d5b5c0188a8f05143d"
+    },
+    "micromatch/micromatch.d.ts": {
+      "commit": "c393f8974d44840a6c9cc6d5b5c0188a8f05143d"
+    },
+    "chokidar/chokidar.d.ts": {
+      "commit": "c393f8974d44840a6c9cc6d5b5c0188a8f05143d"
+    },
+    "parse-glob/parse-glob.d.ts": {
+      "commit": "c393f8974d44840a6c9cc6d5b5c0188a8f05143d"
+    },
+    "browser-sync/browser-sync.d.ts": {
+      "commit": "c393f8974d44840a6c9cc6d5b5c0188a8f05143d"
     }
   }
 }

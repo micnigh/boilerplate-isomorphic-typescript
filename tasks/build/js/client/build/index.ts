@@ -15,6 +15,11 @@ import webpackConfigGenerator from "./webpack.config";
 
 let buffer = require("gulp-buffer");
 let prettyTime = require("pretty-hrtime");
+let webpackStream: {
+  (webpackConfig: webpack.Configuration, webpackModule: webpack.Webpack, cb: { (err: Error, stats: webpack.compiler.Stats) });
+  (webpackConfig: webpack.Configuration, webpackModule: webpack.Webpack);
+  (webpackConfig: webpack.Configuration);
+} = require("webpack-stream");
 
 export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
   let gulpTask = new GulpWatchTask();
@@ -24,33 +29,51 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
     let generatedEntryBuildTasks: string[] = [];
     let generatedEntryWatchTasks: string[] = [];
     build.entries.forEach(entry => {
+      let buildBootstrap = build.bootstrap || [];
       let entriesFromGlob = glob.sync(entry);
+      entriesFromGlob = entriesFromGlob
+        .map(e => `${e.replace(path.extname(e), ".js")}`)
+        .filter(e => buildBootstrap.indexOf(e) === -1);
       entriesFromGlob.forEach(entryFromGlob => {
-        entryFromGlob = `${entryFromGlob.replace(path.extname(entryFromGlob), ".js")}`;
         let entryBuildTaskName = `build:js:client:builds:${build.taskName}:${entryFromGlob}`;
         let entryWatchTaskName = `watch:js:client:builds:${build.taskName}:${entryFromGlob}`;
         generatedEntryBuildTasks.push(entryBuildTaskName);
         generatedEntryWatchTasks.push(entryWatchTaskName);
 
         let webpackConfig = webpackConfigGenerator(config, build, entryFromGlob);
+        let webpackWatchConfig = _.merge({}, webpackConfig, {
+          watch: true,
+        });
         let webpackBuilder = webpack(webpackConfig);
 
-        gulp.task(entryBuildTaskName, [], (doneWithGeneratedTask) => {
-          return webpackBuilder.run((err: Error, stats: webpack.compiler.Stats) => {
-            console.log(stats.toString({
-              colors: true,
-            }));
-            doneWithGeneratedTask();
-          });
+        let browserSyncInstances = build.browsersync || [];
+
+        gulp.task(entryBuildTaskName, [], () => {
+          return gulp.src([entryFromGlob])
+            .pipe(webpackStream(webpackConfig, webpack, (err: Error, stats: webpack.compiler.Stats) => {
+              console.log(stats.toString({
+                colors: true,
+              }));
+            }))
+            .pipe(gulp.dest(build.dest));
         });
         gulp.task(entryWatchTaskName, [], () => {
-          return webpackBuilder.watch({
-            aggregateTimeout: 0,
-          }, (err: Error, stats: webpack.compiler.Stats) => {
-            console.log(stats.toString({
-              colors: true,
-            }));
+          let pipe = gulp.src([entryFromGlob])
+            .pipe(webpackStream(webpackWatchConfig, webpack, (err: Error, stats: webpack.compiler.Stats) => {
+              console.log(stats.toString({
+                colors: true,
+              }));
+            }))
+            .pipe(gulp.dest(build.dest));
+
+          browserSyncInstances.forEach(b => {
+            pipe = pipe
+              .pipe(b.stream({
+                match: "**/*.js",
+              }));
           });
+
+          return pipe;
         });
       });
       gulpTask.childTasks.push(buildTaskName);

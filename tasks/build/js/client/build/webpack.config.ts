@@ -9,7 +9,6 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
   let webpackConfig: webpack.Configuration = {
     entry: {},
     output: {
-      path: build.dest,
       filename: "[name].js",
       chunkFilename: "[chunkhash].js"
     },
@@ -25,11 +24,6 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
     resolve: {
       alias: {},
       extensions: [ "", ".js", ".jsx" ]
-    },
-    devServer: {
-      contentBase: "server/public/",
-      hot: true,
-      inline: true,
     },
   };
 
@@ -52,6 +46,16 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
     webpackConfig.plugins = webpackConfig.plugins.concat([
       // TODO: add webpack hot loader middleware
     ]);
+
+    let browserSyncInstances = typeof build.browsersync !== "undefined" ? build.browsersync : [];
+    let browserSyncSnippets = browserSyncInstances.map(i => {
+      let browserSyncConfig = config.watch.browsersync.find(b => b.instance === i);
+      return `http://localhost:${browserSyncConfig.port}/browser-sync/browser-sync-client.js`;
+    });
+    webpackConfig.plugins.push(new webpack.DefinePlugin({
+      "process.env.BROWSER_SYNC_SNIPPETS": JSON.stringify(browserSyncSnippets),
+    }));
+
   } else {
     webpackConfig.plugins = webpackConfig.plugins.concat([
       new webpack.optimize.DedupePlugin(),

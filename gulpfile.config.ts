@@ -1,11 +1,22 @@
 import { GulpConfig } from "./gulpfile.config.types";
 
+import browsersync from "browser-sync";
+
 let isDev = process.env.NODE_ENV === "production" ? false : true;
 let distPath = isDev ? ".tmp/development" : ".tmp/production";
+
+let bsApp = browsersync.create("app");
+let bsTest = browsersync.create("test");
 
 let config: GulpConfig = {
   isDev: isDev,
   distPath: distPath,
+  watch: {
+    browsersync: [
+      { instance: bsApp, port: 3005, uiPort: 3006 },
+      { instance: bsTest, port: 3007, uiPort: 3008 },
+    ],
+  },
   test: {
     karma: {
       port: 3004,
@@ -33,16 +44,24 @@ let config: GulpConfig = {
         entries: [
           "client/js/src/*.ts{,x}",
         ],
+        bootstrap: [
+          "client/js/src/bootstrap.js",
+        ],
+        browsersync: [
+          bsApp,
+        ],
       },
       {
         taskName: "test:src",
         dest: `${distPath}/js/test/`,
         entries: [
           "client/js/src/test/**/*.ts{,x}",
-          "!client/js/src/test/bootstrap.ts",
         ],
         bootstrap: [
           "client/js/src/test/bootstrap.js",
+        ],
+        browsersync: [
+          bsTest,
         ],
       },
       {
@@ -53,6 +72,9 @@ let config: GulpConfig = {
         ],
         bootstrap: [
           "client/js/src/test/bootstrap.js",
+        ],
+        browsersync: [
+          bsTest,
         ],
       },
     ],
