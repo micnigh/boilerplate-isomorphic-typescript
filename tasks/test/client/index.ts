@@ -19,14 +19,14 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
 
   let karmaConfig = generateKarmaConfig(config);
 
-  gulp.task("test:client", (done) => {
+  gulp.task("test:client", ["build"], (done) => {
     new karma.Server(_.merge(karmaConfig, {
       singleRun: true,
     }), done).start();
   });
   gulpTask.childTasks.push("test:client");
 
-  gulp.task("watch:test:client", [],  (done) => {
+  gulp.task("watch:test:client", ["build"],  (done) => {
     new karma.Server(_.merge(karmaConfig, {
       singleRun: false,
     }), done).start();
