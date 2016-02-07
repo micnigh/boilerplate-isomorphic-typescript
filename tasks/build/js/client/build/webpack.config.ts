@@ -35,7 +35,10 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
     },
   };
 
-  webpackConfig.entry[path.basename(entry, path.extname(entry))] = [`./${entry}`];
+  let bootstrapEntries = typeof build.bootstrap !== "undefined" ? build.bootstrap.map(b => `./${b}`) : [];
+  webpackConfig.entry[path.basename(entry, path.extname(entry))] = []
+    .concat(bootstrapEntries)
+    .concat([`./${entry}`]);
 
   config.js.libs
     .map(l => l.includes)

@@ -8,10 +8,12 @@ console.log(React);
 
 console.log(_.camelCase("react-dom"));
 
-ReactDOM.render((
+let renderComponent = ReactDOM.render((
   <div>
     <h1>{`Hello World - ${HelloWorld}`}</h1>
   </div>
 ), document.getElementById("content"));
 
 console.log("helloworld");
+
+export default renderComponent;

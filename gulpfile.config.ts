@@ -6,6 +6,11 @@ let distPath = isDev ? ".tmp/development" : ".tmp/production";
 let config: GulpConfig = {
   isDev: isDev,
   distPath: distPath,
+  test: {
+    karma: {
+      port: 3004,
+    },
+  },
   js: {
     libs: [
       {
@@ -16,10 +21,8 @@ let config: GulpConfig = {
           { name: "react", path: "node_modules/react/dist/react.js", global: "React" },
           { name: "react-dom", path: "node_modules/react-dom/dist/react-dom.js", global: "ReactDOM" },
           { name: "lodash", path: "node_modules/lodash/lodash.js", global: "_" },
-        ],
-        watch: [
-          "client/js/lib/**/*.js",
-          "client/js/lib/**/*.js{,x}",
+          { name: "regenerator/runtime", path: "node_modules/regenerator/runtime.js", global: "regeneratorRuntime" },
+          { name: "bluebird", path: "node_modules/bluebird/js/browser/bluebird.js", global: "Promise" },
         ],
       },
     ],
@@ -30,8 +33,26 @@ let config: GulpConfig = {
         entries: [
           "client/js/src/*.ts{,x}",
         ],
-        watch: [
-          "client/js/src/**/*.ts{,x}",
+      },
+      {
+        taskName: "test:src",
+        dest: `${distPath}/js/test/`,
+        entries: [
+          "client/js/src/test/**/*.ts{,x}",
+          "!client/js/src/test/bootstrap.ts",
+        ],
+        bootstrap: [
+          "client/js/src/test/bootstrap.js",
+        ],
+      },
+      {
+        taskName: "test:spec",
+        dest: `${distPath}/js/`,
+        entries: [
+          "client/js/src/**/*.spec.ts{,x}",
+        ],
+        bootstrap: [
+          "client/js/src/test/bootstrap.js",
         ],
       },
     ],

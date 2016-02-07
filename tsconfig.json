@@ -10,7 +10,10 @@
   "files": [
     "./typings/tsd.d.ts",
     "./client/js/src/app.tsx",
+    "./client/js/src/component/HelloWorld.spec.tsx",
     "./client/js/src/component/HelloWorld.tsx",
+    "./client/js/src/test/bootstrap.ts",
+    "./client/js/src/test/simpleTest.ts",
     "./gulpfile.config.ts",
     "./gulpfile.config.types.ts",
     "./gulpfile.ts",
@@ -27,6 +30,8 @@
     "./tasks/build/js/index.ts",
     "./tasks/index.ts",
     "./tasks/serve/index.ts",
+    "./tasks/test/client/index.ts",
+    "./tasks/test/client/karma.conf.ts",
     "./tasks/test/index.ts",
     "./tasks/test/server/index.ts"
   ],

@@ -7,6 +7,13 @@ export interface GulpConfig {
   /** path to store output */
   distPath: string;
 
+  test?: {
+    /** karma browser test runner */
+    karma: {
+      port: number,
+    };
+  };
+
   /** js task config */
   js?: JSConfig;
 
@@ -22,17 +29,18 @@ export interface BuildConfig {
    * task name within namespace
    * for example, 'build:js' task with 'taskName'='app'
    * creates task 'build:js:app'
-  */
+   */
   taskName: string;
 
   /** path to store output */
   dest: string;
 
   /** files to watch and trigger rebuild */
-  watch: string[];
+  watch?: string[];
 }
 
 export interface JSConfig {
+
   libs: JSLibConfig[];
   builds: JSBuildConfig[];
 }
@@ -40,6 +48,12 @@ export interface JSConfig {
 export interface JSBuildConfig extends BuildConfig {
   entries: string[];
   includePaths?: string[];
+
+  /**
+   * prepended to front of bundles - good for things like
+   * hooking up livereload, disabling logs, or browser hacks
+   */
+  bootstrap?: string[];
 }
 
 export interface JSLibConfig extends BuildConfig {
