@@ -19,8 +19,6 @@ npm install
 # every time
 http-server .tmp/development/
 gulp watch
-
-# when modifying gulp tasks
 node ./npm-scripts/watch-gulp-tasks.js
 ```
 
