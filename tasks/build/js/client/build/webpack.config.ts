@@ -21,9 +21,7 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
         loader: "source-map-loader",
       }],
     },
-    plugins: [
-      new WebpackNotifierPlugin({ title: "Webpack build", excludeWarnings: true }),
-    ],
+    plugins: [],
     resolve: {
       alias: {},
       extensions: [ "", ".js", ".jsx" ]
