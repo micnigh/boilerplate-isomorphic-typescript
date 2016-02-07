@@ -14,6 +14,9 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
     let buildTaskName = `build:css:${build.taskName}`;
     let watchTaskName = `watch:css:${build.taskName}`;
     gulpTask.childTasks.push(buildTaskName);
+
+    let browserSyncInstances = build.browsersync || [];
+
     gulp.task(buildTaskName, [], () => {
       let pipe = gulp.src(build.entries);
 
@@ -43,6 +46,13 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
       }
 
       pipe = pipe.pipe(gulp.dest(build.dest));
+
+      browserSyncInstances.forEach(b => {
+        pipe = pipe
+          .pipe(b.stream({
+            match: "**/*.css",
+          }));
+      });
 
       pipe = pipe.pipe(size({
         showFiles: true,

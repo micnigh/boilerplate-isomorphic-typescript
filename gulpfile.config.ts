@@ -95,6 +95,9 @@ let config: GulpConfig = {
         watch: [
           "client/css/src/**/*.scss",
         ],
+        browsersync: [
+          bsApp,
+        ],
       },
     ],
   },
