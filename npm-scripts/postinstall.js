@@ -7,4 +7,4 @@ function execHelper(commands) {
 }
 
 execHelper(["tsd", "install"]);
-execHelper(["gulp", "--gulpfile", "npm-scripts/gulpfile.js", "--cwd", ".", "build"]);
+execHelper(["gulp", "--gulpfile", "gulpfile.transpile.js", "build"]);
