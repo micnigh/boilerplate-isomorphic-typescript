@@ -7,6 +7,7 @@ let size = require("gulp-size");
 let changed = require("gulp-changed");
 let sourcemaps = require("gulp-sourcemaps");
 let plumber = require("gulp-plumber");
+let watch = require("gulp-watch");
 
 let sources = [
   "typings/tsd.d.ts",
@@ -57,6 +58,12 @@ gulp.task("build", [], function () {
     }))
     .pipe(gulp.dest("."))
     .pipe(size({ showFiles: true }));
+});
+
+gulp.task("watch", ["build"], () => {
+  return watch(sources, {}, () => {
+    gulp.start("build");
+  });
 });
 
 module.exports = {

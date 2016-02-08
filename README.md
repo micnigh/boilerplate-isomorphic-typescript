@@ -19,7 +19,7 @@ npm install
 # every time
 http-server .tmp/development/
 gulp watch
-node ./npm-scripts/watch-gulp-tasks.js
+gulp --cwd . --gulpfile npm-scripts/gulpfile.js watch
 ```
 
 # Features

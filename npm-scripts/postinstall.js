@@ -7,4 +7,4 @@ function execHelper(commands) {
 }
 
 execHelper(["tsd", "install"]);
-require("./build-gulp-tasks");
+execHelper(["gulp", "--gulpfile", "npm-scripts/gulpfile.js", "--cwd", ".", "build"]);
