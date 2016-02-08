@@ -8,8 +8,47 @@ let changed = require("gulp-changed");
 let sourcemaps = require("gulp-sourcemaps");
 let plumber = require("gulp-plumber");
 let watch = require("gulp-watch");
+let handlebars = require("gulp-handlebars");
+let defineModule = require("gulp-define-module");
 
-let sources = [
+gulp.task("build", [
+  "build:handlebars",
+  "build:typescript",
+]);
+
+gulp.task("watch", [
+  "watch:handlebars",
+  "watch:typescript",
+]);
+
+let sourcesHandlebars = [
+  "server/**/*.hbs",
+];
+
+gulp.task("build:handlebars", [], () => {
+  return gulp.src(sourcesHandlebars, {
+    base: ".",
+  })
+    .pipe(plumber())
+    .pipe(handlebars({
+      handlebars: require("handlebars"),
+    }))
+    .pipe(defineModule("node"))
+    .pipe(rename({ extname: ".js" }))
+    .pipe(changed("./", {
+      hasChanged: changed.compareSha1Digest,
+    }))
+    .pipe(gulp.dest("."))
+    .pipe(size({ showFiles: true }));
+});
+
+gulp.task("watch:handlebars", ["build:handlebars"], () => {
+  return watch(sourcesHandlebars, {}, () => {
+    gulp.start("build:handlebars");
+  });
+});
+
+let sourcesTypescript = [
   "typings/tsd.d.ts",
   "*.ts{,x}",
   "client/**/*.ts{,x}",
@@ -27,8 +66,8 @@ let tsClientProject = typescript.createProject({
   noExternalResolve: true,
 });
 
-gulp.task("build", [], function () {
-  return gulp.src(sources, {
+gulp.task("build:typescript", [], function () {
+  return gulp.src(sourcesTypescript, {
     base: ".",
   })
     .pipe(plumber())
@@ -60,12 +99,8 @@ gulp.task("build", [], function () {
     .pipe(size({ showFiles: true }));
 });
 
-gulp.task("watch", ["build"], () => {
-  return watch(sources, {}, () => {
-    gulp.start("build");
+gulp.task("watch:typescript", ["build:typescript"], () => {
+  return watch(sourcesTypescript, {}, () => {
+    gulp.start("build:typescript");
   });
 });
-
-module.exports = {
-  sources: sources,
-};
