@@ -18,8 +18,8 @@ npm install
 
 # every time
 http-server .tmp/development/
-gulp watch
 gulp --gulpfile gulpfile.transpile.js watch
+gulp watch
 ```
 
 # Features
