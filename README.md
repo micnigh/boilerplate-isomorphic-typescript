@@ -17,7 +17,7 @@ npm install -g gulp tsd http-server
 npm install
 
 # every time
-http-server .tmp/development/
+http-server -p 3000 .tmp/development/
 gulp --gulpfile gulpfile.transpile.js watch
 gulp watch
 ```
