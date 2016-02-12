@@ -1,3 +1,4 @@
-console.log("SERVING");
+import "source-map-support/register";
+import "regenerator/runtime";
 
-export default {};
+import "./serve";

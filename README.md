@@ -13,11 +13,10 @@ boilerplate isomorphic typescript
 
 ```bash
 # first time
-npm install -g gulp tsd http-server
+npm install -g gulp tsd
 npm install
 
 # every time
-http-server -p 3000 .tmp/development/
 gulp --gulpfile gulpfile.transpile.js watch
 gulp watch
 ```
