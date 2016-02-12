@@ -20,6 +20,7 @@
     "./gulpfile.ts",
     "./gulpfile.types.ts",
     "./server/index.ts",
+    "./server/serve.ts",
     "./server/test/simpleTest.ts",
     "./tasks/build/css/index.ts",
     "./tasks/build/html/index.ts",

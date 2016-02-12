@@ -3,11 +3,21 @@ import { Gulp } from "gulp";
 import browsersync from "browser-sync";
 
 export interface GulpConfig {
-  /** are we in development mode? */
+  /**
+   *  are we in development mode?  default=true
+   *  overwrite with env var NODE_ENV
+   */
   isDev: boolean;
 
   /** path to store output */
   distPath: string;
+
+  /**
+   *  directory where content will be served
+   *  change this when serving from a subdirectory
+   *  overwrite with env var BASE_URL
+   */
+  baseUrl: string;
 
   watch?: {
     /** browsersync instances to trigger livereload for */

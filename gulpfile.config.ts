@@ -4,6 +4,9 @@ import browsersync from "browser-sync";
 
 let isDev = process.env.NODE_ENV === "production" ? false : true;
 let distPath = isDev ? ".tmp/development" : ".tmp/production";
+let baseUrl = isDev ?
+  process.env.BASE_URL || "/" :
+  process.env.BASE_URL || "/boilerplate-isomorphic-typescript/";
 
 let bsApp = browsersync.create("app");
 let bsTest = browsersync.create("test");
@@ -11,6 +14,7 @@ let bsTest = browsersync.create("test");
 let config: GulpConfig = {
   isDev: isDev,
   distPath: distPath,
+  baseUrl: baseUrl,
   watch: {
     browsersync: [
       { instance: bsApp, port: 3005, uiPort: 3006 },
