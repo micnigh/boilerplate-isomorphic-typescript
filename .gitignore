@@ -2,15 +2,18 @@
 node_modules
 typings
 *.log
+/tsconfig.json
 
 /*.js
 /client/**/*.js
 /server/**/*.js
+/shared/**/*.js
 /tasks/**/*.js
 
 /*.es6
 /client/**/*.es6
 /server/**/*.es6
+/shared/**/*.es6
 /tasks/**/*.es6
 
 !/gulpfile.transpile.js

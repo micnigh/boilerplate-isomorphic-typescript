@@ -1,0 +1,14 @@
+body {
+  color: $base-text-color;
+  font-size: $base-font-size;
+  font-family: $base-font-family;
+  font-weight: $base-font-weight;
+  line-height: 1.6;
+
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0em 1em;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

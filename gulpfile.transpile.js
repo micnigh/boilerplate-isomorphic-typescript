@@ -10,6 +10,10 @@ let plumber = require("gulp-plumber");
 let watch = require("gulp-watch");
 let handlebars = require("gulp-handlebars");
 let defineModule = require("gulp-define-module");
+let vinylPaths = require("vinyl-paths");
+let del = require("del");
+
+let isDev = process.env.NODE_ENV === "production" ? false : true;
 
 gulp.task("build", [
   "build:handlebars",
@@ -49,10 +53,11 @@ gulp.task("watch:handlebars", ["build:handlebars"], () => {
 });
 
 let sourcesTypescript = [
-  "typings/tsd.d.ts",
+  "typings/browser.d.ts",
   "*.ts{,x}",
   "client/**/*.ts{,x}",
   "server/**/*.ts{,x}",
+  "shared/**/*.ts{,x}",
   "tasks/**/*.ts{,x}",
 ];
 
@@ -64,6 +69,7 @@ let tsClientProject = typescript.createProject({
   moduleResolution: "node",
   allowSyntheticDefaultImports: true,
   noExternalResolve: true,
+  experimentalDecorators: true,
 });
 
 gulp.task("build:typescript", [], function () {
@@ -104,3 +110,28 @@ gulp.task("watch:typescript", ["build:typescript"], () => {
     gulp.start("build:typescript");
   });
 });
+
+gulp.task("clean", () => {
+  return gulp.src(
+      [].concat(sourcesTypescript)
+        .concat(sourcesHandlebars),
+      { read: false }
+    )
+      .pipe(rename({extname: ".es6"}))
+      .pipe(vinylPaths(del))
+      .pipe(rename({extname: ".js"}))
+      .pipe(vinylPaths(del));
+});
+
+gulp.task("help", [], () => {
+  console.log(`
+gulp tasks
+
+    gulp build - transpile all assets
+    gulp watch - build and watch assets
+    gulp clean - del all transpiled assets
+
+`);
+});
+
+gulp.task("default", ["help"]);

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Yet Another Isomorphic Blog</title>
+        <title>Boilerplate Isomorphic Typescript</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,12 +15,7 @@
     </head>
     <body>
         <div id="content">{{{content}}}</div>
-        {{#if isDev}}
-          <script src="{{relPathToBaseUrl}}js/lib.js"></script>
-          <script src="{{relPathToBaseUrl}}js/data.js"></script>
-          <script src="{{relPathToBaseUrl}}js/app.js"></script>
-        {{else}}
-          <script src="{{relPathToBaseUrl}}js/all.js" async></script>
-        {{/if}}
+        <script src="{{relPathToBaseUrl}}js/lib.js"></script>
+        <script src="{{relPathToBaseUrl}}js/app.js"></script>
     </body>
 </html>

@@ -27,6 +27,7 @@
         "jsdoc-format": true,
         "class-name": true,
         "member-ordering": [true, "public-before-private", "static-before-instance"],
-        "no-any": false
+        "no-any": false,
+        "no-unused-variable": [true]
     }
 }

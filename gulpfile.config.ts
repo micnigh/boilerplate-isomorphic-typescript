@@ -1,12 +1,15 @@
 import { GulpConfig } from "./gulpfile.config.types";
 
 import browsersync from "browser-sync";
+import webpack from "webpack";
 
 let isDev = process.env.NODE_ENV === "production" ? false : true;
-let distPath = isDev ? ".tmp/development" : ".tmp/production";
+let tmpPath = isDev ? `.tmp/development` : `.tmp/production`;
+let distPath = `${tmpPath}/dist`;
+
 let baseUrl = isDev ?
   process.env.BASE_URL || "/" :
-  process.env.BASE_URL || "/boilerplate-isomorphic-typescript/";
+  process.env.BASE_URL || "/";
 
 let bsApp = browsersync.create("app");
 let bsTest = browsersync.create("test");
@@ -14,6 +17,7 @@ let bsTest = browsersync.create("test");
 let config: GulpConfig = {
   isDev: isDev,
   distPath: distPath,
+  tmpPath: tmpPath,
   baseUrl: baseUrl,
   watch: {
     browsersync: [
@@ -33,11 +37,44 @@ let config: GulpConfig = {
         dest: `${distPath}/js/`,
         destFileName: "lib.js",
         includes: [
-          { name: "react", path: "node_modules/react/dist/react.js", global: "React" },
-          { name: "react-dom", path: "node_modules/react-dom/dist/react-dom.js", global: "ReactDOM" },
-          { name: "lodash", path: "node_modules/lodash/lodash.js", global: "_" },
-          { name: "regenerator/runtime", path: "node_modules/regenerator/runtime.js", global: "regeneratorRuntime" },
-          { name: "bluebird", path: "node_modules/bluebird/js/browser/bluebird.js", global: "Promise" },
+          "react",
+          "react-dom",
+          "react-redux",
+          "react-router",
+          "redux",
+          "redux-logger",
+          "redux-promise",
+          "redux-thunk",
+          "react-router-redux",
+          "lodash",
+          "regenerator/runtime",
+          "bluebird",
+          "moment",
+          "classnames",
+          "superagent",
+          "normalizr",
+          "node-uuid",
+        ].concat(isDev ?
+            // for better performance, add hmr libs
+            [
+              "babel-preset-react-hmre",
+              "webpack-hot-middleware/client-overlay",
+            ].concat(
+              Object.keys(
+                require(`${process.cwd()}/node_modules/webpack-hot-middleware/package.json`).dependencies
+              )
+                .map(d => `webpack-hot-middleware/node_modules/${d}`)
+            )
+          :
+            []
+        ),
+      },
+      {
+        taskName: "testLib",
+        dest: `${distPath}/js/`,
+        destFileName: "testLib.js",
+        includes: [
+          "deep-freeze",
         ],
       },
     ],
@@ -54,6 +91,7 @@ let config: GulpConfig = {
         browsersync: [
           bsApp,
         ],
+        hmr: true,
       },
       {
         taskName: "test:src",
@@ -67,6 +105,14 @@ let config: GulpConfig = {
         browsersync: [
           bsTest,
         ],
+        hmr: false,
+        webpack: {
+          plugins: [
+            new webpack.DefinePlugin({
+              "process.env.NODE_ENV": JSON.stringify("test"),
+            }),
+          ],
+        },
       },
       {
         taskName: "test:spec",
@@ -80,6 +126,14 @@ let config: GulpConfig = {
         browsersync: [
           bsTest,
         ],
+        hmr: false,
+        webpack: {
+          plugins: [
+            new webpack.DefinePlugin({
+              "process.env.NODE_ENV": JSON.stringify("test"),
+            }),
+          ],
+        },
       },
     ],
   },
@@ -96,8 +150,11 @@ let config: GulpConfig = {
           "client/css/libs/",
           "node_modules/",
         ],
+        dependsOn: [
+          "build:sprite",
+        ],
         watch: [
-          "client/css/src/**/*.scss",
+          "client/css/src/**/*.{,s}css",
         ],
         browsersync: [
           bsApp,
@@ -110,11 +167,14 @@ let config: GulpConfig = {
       {
         taskName: "app",
         src: [
-          "client/src/sprites/**/*.png",
+          "client/sprites/**/*.png",
         ],
         dest: `${distPath}/css/`,
+        destFileName: `spritesheet_`,
+        spriteCSSFile: `client/css/src/shared/sprites.scss`,
+        buildCSSTask: `build:css:app`,
         watch: [
-          "client/src/sprites/**/*.png",
+          "client/sprites/**/*.png",
         ],
       },
     ],

@@ -1,4 +1,4 @@
-import { Gulp } from "gulp";
+import webpack from "webpack";
 
 import browsersync from "browser-sync";
 
@@ -11,6 +11,9 @@ export interface GulpConfig {
 
   /** path to store output */
   distPath: string;
+
+  /** path to store tmp files */
+  tmpPath: string;
 
   /**
    *  directory where content will be served
@@ -61,6 +64,11 @@ export interface BuildConfig {
 
   /** browsersync instances to trigger livereload for */
   browsersync?: browsersync.BrowserSyncInstance[];
+
+  /**
+   * gulp tasks which this build depends on
+   */
+   dependsOn?: string[];
 }
 
 export interface JSConfig {
@@ -78,16 +86,20 @@ export interface JSBuildConfig extends BuildConfig {
    * hooking up livereload, disabling logs, or browser hacks
    */
   bootstrap?: string[];
+
+  webpack?: webpack.Configuration;
+
+  /**
+   * enable webpack hmr
+   */
+  hmr: boolean;
 }
 
 export interface JSLibConfig extends BuildConfig {
   includePaths?: string[];
-  includes: {
-    name: string;
-    path: string;
-    global?: string;
-  }[];
+  includes: string[];
   destFileName: string;
+  webpack?: webpack.Configuration;
 }
 
 export interface CSSConfig {
@@ -105,4 +117,7 @@ export interface SpriteConfig {
 
 export interface SpriteBuildConfig extends BuildConfig {
   src: string[];
+  spriteCSSFile: string;
+  destFileName: string;
+  buildCSSTask: string;
 }

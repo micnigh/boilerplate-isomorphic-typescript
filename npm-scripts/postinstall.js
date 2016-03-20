@@ -1,4 +1,5 @@
 "use strict";
+let fs = require("fs");
 let execSync = require("child_process").execSync;
 
 function execHelper(commands) {
@@ -6,5 +7,7 @@ function execHelper(commands) {
   execSync(commands.join(" "), { stdio: "inherit" });
 }
 
-execHelper(["tsd", "install"]);
+execHelper(["typings", "install"]);
+execHelper(["gulp", "--gulpfile", "gulpfile.transpile.js", "clean"]);
 execHelper(["gulp", "--gulpfile", "gulpfile.transpile.js", "build"]);
+try { fs.statSync("tsconfig.json"); } catch (e) { fs.writeFileSync("tsconfig.json", fs.readFileSync("tsconfig.sample.json")); }

@@ -6,9 +6,11 @@ import glob from "glob";
 import chalk from "chalk";
 import path from "path";
 import _ from "lodash";
+import webpack from "webpack";
 
 import { GulpTask, GulpWatchTask } from "../../../../../gulpfile.types";
 import { GulpConfig } from "../../../../../gulpfile.config.types";
+import webpackConfigGenerator from "./webpack.config";
 
 export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
   let gulpTask = new GulpWatchTask();
@@ -17,18 +19,31 @@ export let generateTask = (gulp: Gulp, config: GulpConfig): GulpWatchTask => {
     let buildTaskName = `build:js:client:libs:${lib.taskName}:${lib.destFileName}`;
     let watchTaskName = `watch:js:client:libs:${lib.taskName}:${lib.destFileName}`;
 
-    let libSources = lib.includes.map(i => i.path);
+    let browserSyncInstances = lib.browsersync || [];
 
-    gulp.task(buildTaskName, [], () => {
-      return gulp.src(libSources)
-        .pipe(sourcemaps.init())
-        .pipe(concat(lib.destFileName))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(lib.dest))
-        .pipe(size({ showFiles: true }));
+    gulp.task(buildTaskName, [], (doneWithGeneratedTask) => {
+      let webpackConfig = webpackConfigGenerator(config, lib);
+      let webpackBuilder = webpack(webpackConfig);
+      return webpackBuilder.run((err: Error, stats: webpack.compiler.Stats) => {
+        console.log(stats.toString({
+          colors: true,
+        }));
+        doneWithGeneratedTask();
+      });
     });
     gulp.task(watchTaskName, [buildTaskName], () => {
-      return gulp.watch(lib.watch, [buildTaskName]);
+      let webpackConfig = webpackConfigGenerator(config, lib);
+      let webpackBuilder = webpack(webpackConfig);
+      return webpackBuilder.watch({
+        aggregateTimeout: 0,
+      }, (err: Error, stats: webpack.compiler.Stats) => {
+        console.log(stats.toString({
+          colors: true,
+        }));
+        browserSyncInstances.forEach(b => {
+          b.reload([`${lib.taskName}.js`]);
+        });
+      });
     });
     gulpTask.childTasks.push(buildTaskName);
     gulpTask.childWatchTasks.push(watchTaskName);

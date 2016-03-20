@@ -1,0 +1,26 @@
+{
+  "filesGlob": [
+    "./typings/browser.d.ts",
+    "./**/*.ts{,x}"
+  ],
+  "compileOnSave": false,
+  "files": [],
+  "exclude": [
+    "./node_modules",
+    "./.tmp",
+    "./typings/main",
+    "./typings/main.d.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "compilerOptions": {
+    "module": "es6",
+    "target": "es6",
+    "jsx": "preserve",
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true
+  }
+}

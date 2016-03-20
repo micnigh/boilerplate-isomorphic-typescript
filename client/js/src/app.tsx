@@ -1,19 +1,15 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as _ from "lodash";
 
-import HelloWorld from "./component/HelloWorld";
+import { browserHistory } from "react-router";
+import Root from "./container/root";
+let { syncHistoryWithStore, routeReducer } = require("react-router-redux");
+import store from "./store/";
 
-console.log(React);
-
-console.log(_.camelCase("react-dom"));
+let history = syncHistoryWithStore(browserHistory, store);
 
 let renderComponent = ReactDOM.render((
-  <div>
-    <h1>{`Hello World - ${HelloWorld}`}</h1>
-  </div>
+  <Root store={store} history={history} />
 ), document.getElementById("content"));
-
-console.log("helloworld");
 
 export default renderComponent;

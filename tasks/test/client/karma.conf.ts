@@ -1,13 +1,29 @@
 import { GulpConfig } from "../../../gulpfile.config.types";
 
 import karma from "karma";
+import path from "path";
 
 export default function generateConfig (config: GulpConfig): karma.ConfigOptions {
   let karmaConfig: karma.ConfigOptions = {
     frameworks: ["jasmine", "source-map-support"],
     browsers: [
-      "PhantomJS",
+      "ChromeCustom",
     ],
+    customLaunchers: {
+      ChromeCustom: {
+        base: "Chrome",
+        flags: [
+          `--user-data-dir=${path.resolve(`${config.tmpPath}/.chrome`)}`,
+          `--disable-session-crashed-bubble`,
+          `--disable-infobars`,
+          `--window-size=1024,768`,
+          `--window-position=-102400,0`,
+        ],
+      },
+    },
+    client: {
+      captureConsole: false
+    },
     reporters: [
       "progress",
       "kjhtml",
@@ -42,7 +58,7 @@ export default function generateConfig (config: GulpConfig): karma.ConfigOptions
       {
         pattern: config.distPath + "/css/**/*.css",
         included: true,
-        watched: true,
+        watched: false,
         served: true,
       },
       {
