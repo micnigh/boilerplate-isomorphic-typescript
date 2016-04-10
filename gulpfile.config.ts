@@ -37,6 +37,10 @@ let config: GulpConfig = {
         dest: `${distPath}/js/`,
         destFileName: "lib.js",
         includes: [
+          "es5-shim",
+          "es5-shim/es5-sham",
+          "es6-shim",
+          "es6-shim/es6-sham",
           "react",
           "react-dom",
           "react-redux",
