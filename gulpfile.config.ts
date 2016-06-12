@@ -3,9 +3,11 @@ import { GulpConfig } from "./gulpfile.config.types";
 import browsersync from "browser-sync";
 import webpack from "webpack";
 
-let isDev = process.env.NODE_ENV === "production" ? false : true;
-let tmpPath = isDev ? `.tmp/development` : `.tmp/production`;
+process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
+let isDev = process.env.NODE_ENV === "development";
+let tmpPath = `.tmp/${process.env.NODE_ENV}`;
 let distPath = `${tmpPath}/dist`;
+let uploadPath = isDev ? `${tmpPath}/uploads/` : `//${tmpPath}/test/`;
 
 let baseUrl = isDev ?
   process.env.BASE_URL || "/" :

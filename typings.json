@@ -5,7 +5,8 @@
     "lodash": "github:typed-typings/npm-lodash#65781ee6b25562ee9b5913043a3ba249acfcee17",
     "mkdirp": "github:typed-typings/npm-mkdirp#198dc9b86004c5a4995ac28ee782c3391fb7ee56",
     "moment": "github:typed-typings/npm-moment#a4075cd50e63efbedd850f654594f293ab81a385",
-    "node-uuid": "github:rapropos/typed-node-uuid#a2ad36f2802416729eaad89559d76e0b03ba673c"
+    "node-uuid": "github:rapropos/typed-node-uuid#a2ad36f2802416729eaad89559d76e0b03ba673c",
+    "sequelize": "registry:npm/sequelize#3.0.0+20160604152601"
   },
   "ambientDependencies": {
     "body-parser": "github:DefinitelyTyped/DefinitelyTyped/body-parser/body-parser.d.ts#9a2c50ea846ee6ae36feaea0accc77ae7b08a748",
@@ -58,5 +59,9 @@
     "vinyl-paths": "github:DefinitelyTyped/DefinitelyTyped/vinyl-paths/vinyl-paths.d.ts#25b3502efc4f4750346d2d9a03667398966154b9",
     "vinyl-source-stream": "github:DefinitelyTyped/DefinitelyTyped/vinyl-source-stream/vinyl-source-stream.d.ts#6be3aa6317135b9255b000924af9d7cebe3737bf",
     "webpack": "github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#51868917c7480cc6b1187a59bbd0120effa29841"
+  },
+  "globalDependencies": {
+    "faker": "registry:dt/faker#0.0.0+20160406111603",
+    "passport": "registry:dt/passport#0.2.0+20160317120654"
   }
 }
