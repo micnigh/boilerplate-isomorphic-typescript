@@ -48,7 +48,10 @@ export default function generateConfig (config: GulpConfig, build: JSLibConfig) 
   let browserSyncInstances = typeof build.browsersync !== "undefined" ? build.browsersync : [];
   let browserSyncSnippets = browserSyncInstances.map(i => {
     let browserSyncConfig = config.watch.browsersync.find(b => b.instance === i);
-    return `http://localhost:${browserSyncConfig.port}/browser-sync/browser-sync-client.js`;
+    return {
+        port: browserSyncConfig.port,
+        path: `/browser-sync/browser-sync-client.js`,
+    };
   });
   webpackConfig.plugins.push(new webpack.DefinePlugin({
     "process.env.NODE_ENV": JSON.stringify(config.isDev ? "development" : "production"),

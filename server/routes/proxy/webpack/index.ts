@@ -2,9 +2,10 @@ import express from "express";
 import glob from "glob";
 import { get } from "lodash";
 let httpProxy = require("http-proxy");
+import chalk from "chalk";
 
-import { JSBuildConfig } from "../../gulpfile.config.types";
-import config from "../../gulpfile.config";
+import { JSBuildConfig } from "../../../../gulpfile.config.types";
+import config from "../../../../gulpfile.config";
 
 export let router = express.Router({ mergeParams: true });
 

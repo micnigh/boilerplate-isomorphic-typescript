@@ -9,7 +9,7 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
       filename: "[name].js",
       chunkFilename: "[chunkhash].js",
       path: path.resolve(dest),
-      publicPath: build.hmr ? `http://localhost:${port}${config.baseUrl}js/` : `${config.baseUrl}`,
+      publicPath: build.hmr ? `http://${process.env.HOSTNAME}:${port}${config.baseUrl}js/` : `${config.baseUrl}`,
     },
     externals: {},
     module: {
@@ -55,7 +55,7 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
     .concat([`./${entry}`])
     .map(e => path.resolve(e))
     .concat(config.isDev && build.hmr ? [
-      `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
+      `webpack-hot-middleware/client?path=http://${process.env.HOSTNAME}:${port}/__webpack_hmr`,
     ] : []);
 
   config.js.libs
@@ -73,7 +73,10 @@ export default function generateConfig (config: GulpConfig, build: JSBuildConfig
   let browserSyncInstances = typeof build.browsersync !== "undefined" ? build.browsersync : [];
   let browserSyncSnippets = browserSyncInstances.map(i => {
     let browserSyncConfig = config.watch.browsersync.find(b => b.instance === i);
-    return `http://localhost:${browserSyncConfig.port}/browser-sync/browser-sync-client.js`;
+    return {
+        port: browserSyncConfig.port,
+        path: `/browser-sync/browser-sync-client.js`,
+    };
   });
 
   if (typeof build.webpack !== "undefined" && typeof build.webpack.plugins !== "undefined") {

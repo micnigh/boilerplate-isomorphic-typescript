@@ -3,9 +3,11 @@ import { GulpConfig } from "./gulpfile.config.types";
 import browsersync from "browser-sync";
 import webpack from "webpack";
 
-let isDev = process.env.NODE_ENV === "production" ? false : true;
-let tmpPath = isDev ? `.tmp/development` : `.tmp/production`;
+process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
+let isDev = process.env.NODE_ENV === "development";
+let tmpPath = `.tmp/${process.env.NODE_ENV}`;
 let distPath = `${tmpPath}/dist`;
+let uploadPath = isDev ? `${tmpPath}/uploads/` : `//${tmpPath}/test/`;
 
 let baseUrl = isDev ?
   process.env.BASE_URL || "/" :
@@ -37,6 +39,10 @@ let config: GulpConfig = {
         dest: `${distPath}/js/`,
         destFileName: "lib.js",
         includes: [
+          "es5-shim",
+          "es5-shim/es5-sham",
+          "es6-shim",
+          "es6-shim/es6-sham",
           "react",
           "react-dom",
           "react-redux",
@@ -53,6 +59,7 @@ let config: GulpConfig = {
           "classnames",
           "superagent",
           "normalizr",
+          "denormalizr",
           "node-uuid",
         ].concat(isDev ?
             // for better performance, add hmr libs

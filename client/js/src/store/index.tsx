@@ -1,6 +1,11 @@
-import sampleState from "./sample/";
+import Redux from "redux";
 import configureStore from "./configureStore";
 
-let store = configureStore(sampleState);
+export let store: Redux.Store = undefined;
+
+export let initStore = (initialState) => {
+  store = configureStore(initialState);
+  return store;
+};
 
 export default store;
