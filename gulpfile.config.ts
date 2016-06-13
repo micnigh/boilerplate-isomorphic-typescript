@@ -53,7 +53,7 @@ let config: GulpConfig = {
           "redux-thunk",
           "react-router-redux",
           "lodash",
-          "regenerator/runtime",
+          "regenerator-runtime/runtime",
           "bluebird",
           "moment",
           "classnames",
