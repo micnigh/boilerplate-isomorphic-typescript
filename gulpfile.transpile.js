@@ -53,7 +53,6 @@ gulp.task("watch:handlebars", ["build:handlebars"], () => {
 });
 
 let sourcesTypescript = [
-  "typings/browser.d.ts",
   "*.ts{,x}",
   "client/**/*.ts{,x}",
   "server/**/*.ts{,x}",

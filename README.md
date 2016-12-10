@@ -14,7 +14,7 @@ boilerplate isomorphic typescript
 
 ```bash
 # first time
-npm install -g gulp typings bower
+npm install -g gulp bower
 npm install
 
 # every time

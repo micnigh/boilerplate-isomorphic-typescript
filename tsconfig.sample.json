@@ -5,12 +5,6 @@
   ],
   "compileOnSave": false,
   "files": [],
-  "exclude": [
-    "./node_modules",
-    "./.tmp",
-    "./typings/main",
-    "./typings/main.d.ts"
-  ],
   "atom": {
     "rewriteTsconfig": true
   },
