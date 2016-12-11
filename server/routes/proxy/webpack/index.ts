@@ -1,25 +1,18 @@
-import express from "express";
-import glob from "glob";
-import { get } from "lodash";
-let httpProxy = require("http-proxy");
-import chalk from "chalk";
-
-import { JSBuildConfig } from "../../../../gulpfile.config.types";
-import config from "../../../../gulpfile.config";
+import * as express from "express";
+import * as webpack from "webpack";
+let webpackDevMiddleware = require("webpack-dev-middleware");
+let webpackHotMiddleware = require("webpack-hot-middleware");
 
 export let router = express.Router({ mergeParams: true });
 
-let webpackConfigs: any[] = glob.sync(`${config.tmpPath}/webpackConfigs/*.json`).map(c => require(`${process.cwd()}/${c}`));
-webpackConfigs.forEach(webpackConfigOption => {
-  let { gulpfileConfigField, entry, dest, port, relativePath } = webpackConfigOption;
-  let buildConfig: JSBuildConfig = get(config, gulpfileConfigField) as any;
-  let proxy = httpProxy.createProxyServer();
-  router.get(`${config.baseUrl}js/${relativePath}*`, (req, res) => {
-    proxy.web(req, res, {
-      target: `http://localhost:${port}`,
-      ws: true,
-    });
-  });
-});
+let webpackConfig = require("../../../../webpack.config.ts").default as webpack.Configuration;
+
+let compiler = webpack(webpackConfig);
+
+router.use(webpackDevMiddleware(compiler, {
+  publicPath: "/js/",
+}));
+
+router.use(webpackHotMiddleware(compiler));
 
 export default router;

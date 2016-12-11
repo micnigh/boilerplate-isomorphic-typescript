@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { Link, IndexLink } from "react-router";
 
 let activeClassName = "current active";
 
-export class Navigation extends Component<any, any> {
+export class Navigation extends React.Component<any, any> {
   render() {
     return (
       <div className="navigation" onClick={this.props.onNavigationClick}>

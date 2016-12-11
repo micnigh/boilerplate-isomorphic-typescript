@@ -1,7 +1,7 @@
-import Sequelize from "sequelize";
+import "../../config";
+import * as Sequelize from "sequelize";
 let dotenv = require("dotenv").config({path: `./server/db/${process.env.NODE_ENV}.env`});
-import chalk from "chalk";
-import config from "../../gulpfile.config";
+import * as chalk from "chalk";
 
 let {
   MYSQL_USER,

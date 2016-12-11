@@ -1,24 +1,19 @@
 import * as path from "path";
 import * as webpack from "webpack";
 
-process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
-let isDev = process.env.NODE_ENV === "development";
-let tmpPath = `.tmp/${process.env.NODE_ENV}`;
-let distPath = `${tmpPath}/dist`;
-
-let port = 3000;
-
-let baseUrl = isDev ?
-  process.env.BASE_URL || "/" :
-  process.env.BASE_URL || "/";
+import { isDev, distPath, port, baseUrl } from "./config";
 
 let webpackConfig: webpack.Configuration = {
   entry: {
-    app: [
+    app: (isDev ? [
+      "webpack-hot-middleware/client",
+      "react-hot-loader/patch",
+    ] : []).concat([
       "./client/js/src/app",
-    ],
+    ]),
   },
-  devtool: isDev ? "inline-cheap-module-eval-source-map" : "source-map",
+  // devtool: isDev ? "cheap-module-eval-source-map" : "source-map",
+  devtool: "eval",
   debug: isDev,
   cache: isDev,
   output: {
@@ -49,7 +44,7 @@ let webpackConfig: webpack.Configuration = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "lib",
-      minChunks: (module) => isExternal(module),
+      minChunks: (module, count) => isExternal(module, count),
     }),
   ].concat(isDev ? [
     new webpack.HotModuleReplacementPlugin(),
@@ -64,16 +59,14 @@ let webpackConfig: webpack.Configuration = {
   },
 };
 
-let isExternal = (module) => {
-  let userRequest = module.userRequest;
+let isExternal = (module, count) => {
+  let { userRequest } = module;
 
   if (typeof userRequest !== "string") {
     return false;
   }
 
-  return userRequest.indexOf("bower_components") >= 0 ||
-         userRequest.indexOf("node_modules") >= 0 ||
-         userRequest.indexOf("libraries") >= 0;
+  return userRequest.indexOf("node_modules") >= 0;
 };
 
 export default webpackConfig;

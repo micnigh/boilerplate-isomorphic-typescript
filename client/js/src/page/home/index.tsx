@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import * as React from "react";
 
-export class Home extends Component<any, any> {
+export class Home extends React.Component<any, any> {
   render() {
     return (
       <div className="HomePage">

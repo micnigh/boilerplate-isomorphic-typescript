@@ -1,4 +1,4 @@
-import config from "../../../../gulpfile.config";
+import { isDev } from "../../../../config";
 
 import { loadStateFromDb } from "./db";
 import { loadStateFromFile } from "./file";
@@ -7,7 +7,7 @@ let initialState = undefined;
 
 export let loadState = async (user: any) => {
   try {
-    if (config.isDev || process.env.NODE_ENV === "staging") {
+    if (isDev || process.env.NODE_ENV === "staging") {
       let { connectedToDB } = require("../../../db/start");
       if (connectedToDB) {
         console.log(`DB Started - creating state from DB`);

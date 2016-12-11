@@ -1,4 +1,4 @@
-import Redux from "redux";
+import * as Redux from "redux";
 import configureStore from "./configureStore";
 
 export let store: Redux.Store = undefined;

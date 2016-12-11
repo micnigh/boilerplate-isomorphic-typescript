@@ -1,4 +1,4 @@
-import chalk from "chalk";
+import * as chalk from "chalk";
 
 export let serializeUser = (req, user, done) => {
   console.log(chalk.bgBlue("passport serializeUser"), JSON.stringify(user, null, 2));

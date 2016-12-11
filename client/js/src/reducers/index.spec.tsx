@@ -1,6 +1,6 @@
 import reducer from "./";
 let { routerReducer } = require("react-router-redux");
-import deepFreeze from "deep-freeze";
+import * as deepFreeze from "deep-freeze";
 
 import { merge } from "lodash";
 

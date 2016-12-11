@@ -1,7 +1,7 @@
-import chalk from "chalk";
-import util from "util";
+import * as chalk from "chalk";
+import * as util from "util";
 import { Strategy } from "passport";
-import uuid from "uuid";
+import * as uuid from "uuid";
 
 export function DevelopmentStrategy(options: any = {}) {
   Strategy.call(this);

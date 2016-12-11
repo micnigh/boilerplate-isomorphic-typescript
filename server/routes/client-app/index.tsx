@@ -1,19 +1,22 @@
-import React from "react";
-import express from "express";
+import * as React from "react";
+import * as express from "express";
 import { renderToString } from "react-dom/server";
 import { match, RouterContext } from "react-router";
-import chalk from "chalk";
-import config from "../../../gulpfile.config";
-import path from "path";
+import * as chalk from "chalk";
+import * as path from "path";
+import * as handlebars from "handlebars";
+import * as fs from "fs";
 let escape = require("regexp.escape");
 
+import { isDev, tmpPath, distPath, port, baseUrl } from "../../../config";
+
 import { Provider } from "react-redux";
-let htmlTemplate = require("./templates/index.html");
+let htmlTemplate = handlebars.compile(fs.readFileSync(__dirname + "/templates/index.html.hbs").toString());
 import { loadState } from "./load-state/";
 
 export let router = express.Router({ mergeParams: true });
 
-router.get(`${config.baseUrl}*`, async (req, res, next) => {
+router.get(`${baseUrl}*`, async (req, res, next) => {
   try {
     let initialState = undefined;
     let { user } = req;
@@ -42,7 +45,7 @@ router.get(`${config.baseUrl}*`, async (req, res, next) => {
       } else if (renderProps) {
         try {
           res.status(200).send(htmlTemplate({
-            isDev: config.isDev,
+            isDev,
             inlineJS: `
               window.initialState = ${JSON.stringify(initialState)}
             `,
@@ -56,7 +59,7 @@ router.get(`${config.baseUrl}*`, async (req, res, next) => {
         } catch (e) {
           console.log(chalk.red(e.stack));
           res.status(200).send(htmlTemplate({
-            isDev: config.isDev,
+            isDev,
             inlineJS: `
               window.initialState = ${JSON.stringify(initialState)}
             `,
@@ -75,7 +78,7 @@ router.get(`${config.baseUrl}*`, async (req, res, next) => {
 
 let relPathToBaseUrl = function (path) {
   let result = path;
-  result = result.replace(config.baseUrl, "/"); // remove baseUrl
+  result = result.replace(baseUrl, "/"); // remove baseUrl
   result = result.replace(/^.*?:\/\//, "", ""); // remove protocol
   result = "../".repeat(result.match(/\//g).length - 1); // each subdir = "../"
   return result;
