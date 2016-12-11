@@ -1,7 +1,9 @@
 {
   "filesGlob": [
-    "./typings/browser.d.ts",
-    "./**/*.ts{,x}"
+    "**/*.ts{,x}",
+    "!node_modules/**",
+    "node_modules/@types/*/index.d.ts",
+    "node_modules/*/index.d.ts"
   ],
   "compileOnSave": false,
   "files": [],
