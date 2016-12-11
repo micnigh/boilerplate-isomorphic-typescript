@@ -55,6 +55,7 @@
     "@types/faker": "^3.1.32",
     "@types/glob": "^5.0.30",
     "@types/jasmine": "^2.5.38",
+    "@types/jest": "^16.0.1",
     "@types/mime": "0.0.29",
     "@types/mkdirp": "^0.3.29",
     "@types/morgan": "^1.7.32",
