@@ -1,8 +1,0 @@
-"use strict";
-
-require("source-map-support/register");
-
-require("regenerator-runtime/runtime");
-
-require("./serve");
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNlcnZlci9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFPLEFBQTZCOztBQUM3QixBQUE2Qjs7QUFFN0IsQUFBUyIsImZpbGUiOiJzZXJ2ZXIvaW5kZXguanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgXCJzb3VyY2UtbWFwLXN1cHBvcnQvcmVnaXN0ZXJcIjtcbmltcG9ydCBcInJlZ2VuZXJhdG9yLXJ1bnRpbWUvcnVudGltZVwiO1xuXG5pbXBvcnQgXCIuL3NlcnZlXCI7XG4iXX0=
