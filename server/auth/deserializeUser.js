@@ -1,0 +1,12 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var deserializeUser = exports.deserializeUser = function deserializeUser(req, user, done) {
+    // console.log(chalk.bgCyan("passport deserializeUser"), JSON.stringify(user, null, 2));
+    // console.log(chalk.bgCyan("passport deserializeUser"), req.session);
+    done(null, user);
+};
+exports.default = deserializeUser;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNlcnZlci9hdXRoL2Rlc2VyaWFsaXplVXNlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUVPLElBQUksQUFBZSw0Q0FBRyx5QkFBQyxBQUFHLEtBQUUsQUFBSSxNQUFFLEFBQUk7QUFDM0MsQUFBd0Y7QUFDeEYsQUFBc0U7QUFDdEUsQUFBSSxTQUFDLEFBQUksTUFBRSxBQUFJLEFBQUMsQUFBQyxBQUNuQjtBQUFDLEFBQUMsQUFFRjtrQkFBZSxBQUFlLEFBQUMiLCJmaWxlIjoic2VydmVyL2F1dGgvZGVzZXJpYWxpemVVc2VyLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGNoYWxrIGZyb20gXCJjaGFsa1wiO1xuXG5leHBvcnQgbGV0IGRlc2VyaWFsaXplVXNlciA9IChyZXEsIHVzZXIsIGRvbmUpID0+IHtcbiAgLy8gY29uc29sZS5sb2coY2hhbGsuYmdDeWFuKFwicGFzc3BvcnQgZGVzZXJpYWxpemVVc2VyXCIpLCBKU09OLnN0cmluZ2lmeSh1c2VyLCBudWxsLCAyKSk7XG4gIC8vIGNvbnNvbGUubG9nKGNoYWxrLmJnQ3lhbihcInBhc3Nwb3J0IGRlc2VyaWFsaXplVXNlclwiKSwgcmVxLnNlc3Npb24pO1xuICBkb25lKG51bGwsIHVzZXIpO1xufTtcblxuZXhwb3J0IGRlZmF1bHQgZGVzZXJpYWxpemVVc2VyO1xuIl19

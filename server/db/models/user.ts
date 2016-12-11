@@ -1,6 +1,6 @@
 import Sequelize from "sequelize";
 import { sequelize } from "../start";
-// import uuid from "node-uuid";
+// import uuid from "uuid";
 
 let User = sequelize.define("user", {
   guid: {

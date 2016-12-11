@@ -1,3 +1,9 @@
+import "es5-shim";
+import "es5-shim/es5-sham";
+import "es6-shim";
+import "es6-shim/es6-sham";
+import "regenerator-runtime/runtime";
+
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 

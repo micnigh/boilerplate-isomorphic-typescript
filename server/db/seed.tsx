@@ -3,7 +3,7 @@ import chalk from "chalk";
 import config from "../../gulpfile.config";
 import fs from "fs";
 import moment from "moment";
-import uuid from "node-uuid";
+import uuid from "uuid";
 import { sequelize } from "./start";
 
 import User from "./models/user";
