@@ -2,7 +2,7 @@ boilerplate isomorphic typescript
 
 # Requirements/Recommended
 
- - [node] `v4+`
+ - [node] `v6+`
  - [atom]
     - Packages
       - [atom-typescript]
@@ -17,14 +17,15 @@ boilerplate isomorphic typescript
 npm install
 
 # every time
+docker-compose up
 npm run server:dev
+npm run test:watch
 
 ```
 
 # Features
 
  - [typescript] - javascript type support
- - [gulp] - automated build system
 
 # Misc
 
