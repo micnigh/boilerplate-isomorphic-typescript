@@ -1,4 +1,4 @@
-import express from "express";
+import * as express from "express";
 
 import apiRouter from "./api/";
 import clientAppRouter from "./client-app/";

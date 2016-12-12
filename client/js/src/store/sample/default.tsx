@@ -1,8 +1,8 @@
-import Redux from "redux";
-import moment from "moment";
+import * as Redux from "redux";
+import * as moment from "moment";
 import { minBy, random } from "lodash";
-import faker from "faker";
-import uuid from "node-uuid";
+import * as faker from "faker";
+import * as uuid from "uuid";
 
 let entities = {};
 

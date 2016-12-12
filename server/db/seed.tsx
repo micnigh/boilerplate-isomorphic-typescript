@@ -1,16 +1,17 @@
-import mkdirp from "mkdirp";
-import chalk from "chalk";
-import config from "../../gulpfile.config";
-import fs from "fs";
-import moment from "moment";
-import uuid from "node-uuid";
+import * as mkdirp from "mkdirp";
+import * as chalk from "chalk";
+import * as fs from "fs";
+import * as moment from "moment";
+import * as uuid from "uuid";
 import { sequelize } from "./start";
 
 import User from "./models/user";
 
+import { tmpPath } from "../../config";
+
 export let initialState: any = undefined;
 
-let stateDir = `${config.tmpPath}/state/`;
+let stateDir = `${tmpPath}/state/`;
 mkdirp.sync(stateDir);
 export let stateFile = `${stateDir}${moment().endOf("day").format("YYYY-MM-DD")}.json`;
 export let generatedNewState = false;

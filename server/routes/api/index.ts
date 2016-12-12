@@ -1,4 +1,4 @@
-import express from "express";
+import * as express from "express";
 
 export let router = express.Router({ mergeParams: true });
 

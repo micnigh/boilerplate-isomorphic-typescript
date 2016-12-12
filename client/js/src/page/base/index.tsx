@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import * as React from "react";
 import Navigation from "./component/navigation";
 
-export class Base extends Component<any, any> {
+export class Base extends React.Component<any, any> {
   render() {
     return (
       <div className="page">

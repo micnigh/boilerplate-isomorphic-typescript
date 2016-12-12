@@ -1,9 +1,10 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
+import * as Redux from "redux";
 let promise: Redux.Middleware = require("redux-promise");
-import createLogger from "redux-logger";
+import * as createLogger from "redux-logger";
 import { browserHistory } from "react-router";
 let { routerMiddleware } = require("react-router-redux");
+let thunk = require("redux-thunk").default;
 import { merge } from "lodash";
 
 import queryString from "../misc/querystring";
@@ -17,6 +18,7 @@ let configureStore = (initialState) => {
     rootReducer,
     initialState,
     compose(
+      // applyMiddleware(thunk, promise, createLogger(), routerMiddleware(browserHistory)),
       applyMiddleware(thunk, promise, createLogger(), routerMiddleware(browserHistory)),
       typeof window === "object" && typeof window.devToolsExtension !== "undefined" ? window.devToolsExtension() : f => f
     ) as () => any

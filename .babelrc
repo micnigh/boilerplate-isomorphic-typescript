@@ -1,0 +1,12 @@
+{
+  "env": {
+    "development": {
+      "presets": ["es2015", "react"],
+      "plugins": ["syntax-async-functions", "transform-regenerator", "react-hot-loader/babel"]
+    },
+    "production": {
+      "presets": ["es2015", "react"],
+      "plugins": ["syntax-async-functions", "transform-regenerator"]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import moment from "moment";
+import * as moment from "moment";
 import { sequelize } from "../../../db/start";
 
 export let loadStateFromDb = async function (user: any) {
@@ -10,7 +10,7 @@ export let loadStateFromDb = async function (user: any) {
 
   try {
     // load state from db
-    
+
   } catch (e) {
     await transaction.rollback();
     console.error(e.stack || e);

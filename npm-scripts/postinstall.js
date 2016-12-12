@@ -7,6 +7,5 @@ function execHelper(commands) {
   execSync(commands.join(" "), { stdio: "inherit" });
 }
 
-execHelper(["gulp", "--gulpfile", "gulpfile.transpile.js", "clean"]);
-execHelper(["gulp", "--gulpfile", "gulpfile.transpile.js", "build"]);
 try { fs.statSync("tsconfig.json"); } catch (e) { fs.writeFileSync("tsconfig.json", fs.readFileSync("tsconfig.sample.json")); }
+try { fs.statSync("server/tsconfig.json"); } catch (e) { fs.writeFileSync("server/tsconfig.json", fs.readFileSync("server/tsconfig.sample.json")); }

@@ -1,5 +1,4 @@
-import express from "express";
-import chalk from "chalk";
+import * as express from "express";
 
 export let router = express.Router({ mergeParams: true });
 

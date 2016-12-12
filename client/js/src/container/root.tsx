@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { Provider } from "react-redux";
+import * as Redux from "react-redux";
 import { Router } from "react-router";
+import * as ReactRouter from "react-router";
 
 import routes from "../routes/";
 
-class Root extends Component<{ store: Redux.Store, history: ReactRouter.History }, any> {
+class Root extends React.Component<{ store: Redux.Store, history: ReactRouter.History }, any> {
   render() {
     let { store, history } = this.props;
     return (
