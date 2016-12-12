@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "postinstall": "node ./npm-scripts/postinstall.js",
-    "server:dev": "nodemon --watch server --exec ts-node --fast --project server server/index.ts",
+    "server:dev": "nodemon --watch server --ext js,jsx,ts,tsx,hbs,json --exec ts-node --fast --project server server/index.ts",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage"
