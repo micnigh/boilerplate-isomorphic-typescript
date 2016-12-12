@@ -50,7 +50,8 @@ let webpackConfig: webpack.Configuration = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "js/lib",
-      minChunks: (module, count) => isExternal(module, count),
+      minChunks: ({ userRequest }) =>
+        typeof userRequest === "string" && userRequest.indexOf("node_modules") >= 0
     }),
   ].concat(isDev ? [
     new webpack.optimize.OccurenceOrderPlugin(true),
@@ -66,16 +67,6 @@ let webpackConfig: webpack.Configuration = {
     alias: {},
     extensions: [ "", ".js", ".jsx", ".json", ".ts", ".tsx" ]
   },
-};
-
-let isExternal = (module, count) => {
-  let { userRequest } = module;
-
-  if (typeof userRequest !== "string") {
-    return false;
-  }
-
-  return userRequest.indexOf("node_modules") >= 0;
 };
 
 export default webpackConfig;
