@@ -12,8 +12,7 @@ let webpackConfig: webpack.Configuration = {
       "./client/js/src/app",
     ]),
   },
-  // devtool: isDev ? "cheap-module-eval-source-map" : "source-map",
-  devtool: "eval",
+  devtool: isDev ? "cheap-module-source-map" : "source-map",
   debug: isDev,
   cache: isDev,
   output: {
@@ -28,7 +27,7 @@ let webpackConfig: webpack.Configuration = {
         {
           test: /\.ts(x?)$/,
           exclude: /node_modules/,
-          loader: "awesome-typescript-loader?useCache=true&useBabel=true&transpileOnly=true&useTranspileModule=true",
+          loader: "babel-loader!ts-loader?transpileOnly=true",
         },
         {
           test: /\.js$/,
@@ -47,7 +46,9 @@ let webpackConfig: webpack.Configuration = {
       minChunks: (module, count) => isExternal(module, count),
     }),
   ].concat(isDev ? [
+    new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
   ] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),

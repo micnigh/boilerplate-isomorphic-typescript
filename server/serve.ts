@@ -53,8 +53,6 @@ export let serve = async function () {
   app.use(passport.session());
   passport.serializeUser(serializeUser);
   passport.deserializeUser(deserializeUser);
-  app.use(baseUrl, express.static(`${__dirname}/public`));
-  app.use(baseUrl, express.static(`${distPath}`));
   passport.use(DevAuthStrategy);
 
   app.get("/login", (req, res) => {
@@ -65,6 +63,9 @@ export let serve = async function () {
     [].concat(process.env.NODE_ENV !== "production" ? [passport.authenticate("development", {})] : []),
     routes
   );
+
+  app.use(baseUrl, express.static(`${__dirname}/public`));
+  app.use(baseUrl, express.static(`${distPath}`));
 
   let server = app.listen(port, "0.0.0.0", () => {
     let url = "http://" + os.hostname() + ":" + server.address().port + "/";
