@@ -10,7 +10,7 @@ let webpackConfig = require("../../../../webpack.config.ts").default as webpack.
 let compiler = webpack(webpackConfig);
 
 router.use(webpackDevMiddleware(compiler, {
-  publicPath: "/js/",
+  publicPath: "/",
 }));
 
 router.use(webpackHotMiddleware(compiler));

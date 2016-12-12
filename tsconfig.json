@@ -10,7 +10,6 @@
     "client/js/src/__tests__/simpleTest.ts",
     "client/js/src/app.tsx",
     "client/js/src/container/root.tsx",
-    "client/js/src/entry.tsx",
     "client/js/src/page/base/component/navigation.tsx",
     "client/js/src/page/base/index.tsx",
     "client/js/src/page/home/index.tsx",

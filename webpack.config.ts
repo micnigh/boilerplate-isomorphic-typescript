@@ -1,11 +1,12 @@
 import * as path from "path";
 import * as webpack from "webpack";
+let ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 import { isDev, distPath, port, baseUrl } from "./config";
 
 let webpackConfig: webpack.Configuration = {
   entry: {
-    app: (isDev ? [
+    "js/app": (isDev ? [
       "webpack-hot-middleware/client",
       "react-hot-loader/patch",
     ] : []).concat([
@@ -19,7 +20,7 @@ let webpackConfig: webpack.Configuration = {
     filename: "[name].js",
     chunkFilename: "[chunkhash].js",
     path: path.resolve(distPath),
-    publicPath: isDev ? `http://${process.env.HOSTNAME}:${port}${baseUrl}js/` : `${baseUrl}`,
+    publicPath: isDev ? `http://${process.env.HOSTNAME}:${port}${baseUrl}/` : `${baseUrl}`,
   },
   module: {
     loaders:
@@ -34,7 +35,13 @@ let webpackConfig: webpack.Configuration = {
           exclude: /node_modules/,
           loader: "babel",
         },
-    ]
+        {
+          test: /\.scss$/,
+          loaders: isDev ?
+            ["style-loader", "css-loader?sourceMap=true", "sass-loader?sourceMap=true"] :
+            [ExtractTextPlugin.extract(), "css-loader?sourceMap=true", "sass-loader?sourceMap=true"]
+        }
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -42,7 +49,7 @@ let webpackConfig: webpack.Configuration = {
       "process.env.JS_ENV": JSON.stringify("browser"),
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: "lib",
+      name: "js/lib",
       minChunks: (module, count) => isExternal(module, count),
     }),
   ].concat(isDev ? [
@@ -53,6 +60,7 @@ let webpackConfig: webpack.Configuration = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.UglifyJsPlugin(),
+    new ExtractTextPlugin("css/app.css"),
   ]),
   resolve: {
     alias: {},

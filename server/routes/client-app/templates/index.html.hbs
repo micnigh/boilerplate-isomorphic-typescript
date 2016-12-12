@@ -11,7 +11,7 @@
         <link rel="icon"
               type="image/png"
               href="{{relPathToBaseUrl}}favicon.png">
-        <link rel="stylesheet" href="{{relPathToBaseUrl}}css/app.css">
+        {{#unless isDev}}<link rel="stylesheet" href="{{relPathToBaseUrl}}css/app.css">{{/unless}}
     </head>
     <body>
         <div id="content">{{{content}}}</div>

@@ -14,6 +14,8 @@ import Root from "./container/root";
 let { syncHistoryWithStore, routeReducer } = require("react-router-redux");
 import { initStore } from "./store/";
 
+require("../../css/src/app.scss");
+
 declare let window: any;
 declare let module: any;
 
