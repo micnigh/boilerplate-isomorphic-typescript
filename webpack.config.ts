@@ -1,8 +1,9 @@
 import * as path from "path";
 import * as webpack from "webpack";
 let ExtractTextPlugin = require("extract-text-webpack-plugin");
+let SpritesmithPlugin = require("webpack-spritesmith");
 
-import { isDev, distPath, port, baseUrl } from "./config";
+import { isDev, distPath, port, baseUrl, tmpPath } from "./config";
 
 let webpackConfig: webpack.Configuration = {
   entry: {
@@ -14,7 +15,6 @@ let webpackConfig: webpack.Configuration = {
     ]),
   },
   devtool: isDev ? "cheap-module-source-map" : "source-map",
-  debug: isDev,
   cache: isDev,
   output: {
     filename: "[name].js",
@@ -23,24 +23,64 @@ let webpackConfig: webpack.Configuration = {
     publicPath: isDev ? `http://${process.env.HOSTNAME}:${port}${baseUrl}/` : `${baseUrl}`,
   },
   module: {
-    loaders:
+    rules:
       [
         {
           test: /\.ts(x?)$/,
           exclude: /node_modules/,
-          loader: "babel-loader!ts-loader?transpileOnly=true",
+          use: [
+            {
+              loader: "babel-loader",
+            },
+            {
+              loader: "ts-loader",
+              options: {
+                transpileOnly: true,
+              },
+            },
+          ],
         },
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: "babel",
+          use: [{
+            loader: "babel-loader",
+          }],
         },
         {
           test: /\.scss$/,
-          loaders: isDev ?
-            ["style-loader", "css-loader?sourceMap=true", "sass-loader?sourceMap=true"] :
-            [ExtractTextPlugin.extract(), "css-loader?sourceMap=true", "sass-loader?sourceMap=true"]
-        }
+          use: [
+            {
+              loader: isDev ? "style-loader" : ExtractTextPlugin.extract({ loader: "css-loader" }),
+            },
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true,
+              },
+            },
+            {
+              loader: "resolve-url-loader",
+            },
+            {
+              loader: "sass-loader",
+              options: {
+                sourceMap: true,
+              },
+            },
+          ],
+        },
+        {
+          test: /\.(gif|png|jpe?g|svg)$/i,
+          use: [
+            {
+              loader: "file-loader",
+              options: {
+                name: "./images/[name].[hash].[ext]",
+              },
+            },
+          ],
+        },
     ],
   },
   plugins: [
@@ -50,22 +90,49 @@ let webpackConfig: webpack.Configuration = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "js/lib",
+      chunks: ["js/app"],
       minChunks: ({ userRequest }) =>
-        typeof userRequest === "string" && userRequest.indexOf("node_modules") >= 0
+        typeof userRequest === "string" && [
+          /node_modules/
+        ].some(regex => regex.test(userRequest))
+    }),
+    new SpritesmithPlugin({
+      src: {
+        cwd: path.resolve(__dirname, "client/sprites/"),
+        glob: "**/*.png",
+      },
+      target: {
+        image: path.resolve(`${tmpPath}/spritesmith-generated/sprites.png`),
+        css: path.resolve(`${tmpPath}/spritesmith-generated/sprites.scss`),
+      },
+      apiOptions: {
+        cssImageRef: "sprites.png",
+      },
     }),
   ].concat(isDev ? [
-    new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
   ] : [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(true),
-    new webpack.optimize.UglifyJsPlugin(),
-    new ExtractTextPlugin("css/app.css"),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: isDev,
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+    }),
+    new ExtractTextPlugin({
+      filename: "css/app.css",
+      disable: false,
+      allChunks: true,
+    }),
   ]),
   resolve: {
     alias: {},
-    extensions: [ "", ".js", ".jsx", ".json", ".ts", ".tsx" ]
+    extensions: [ ".js", ".jsx", ".json", ".ts", ".tsx" ],
+    modules: [
+      "node_modules",
+      `${tmpPath}/spritesmith-generated`,
+    ],
   },
 };
 

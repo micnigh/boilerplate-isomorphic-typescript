@@ -2,15 +2,22 @@ import * as express from "express";
 import * as webpack from "webpack";
 let webpackDevMiddleware = require("webpack-dev-middleware");
 let webpackHotMiddleware = require("webpack-hot-middleware");
+import { merge } from "lodash";
+
+import * as yargs from "yargs";
+let { poll } = yargs.argv;
 
 export let router = express.Router({ mergeParams: true });
 
-let webpackConfig = require("../../../../webpack.config.ts").default as webpack.Configuration;
+let webpackConfig = merge({}, require("../../../../webpack.config.ts").default) as webpack.Configuration;
 
 let compiler = webpack(webpackConfig);
 
 router.use(webpackDevMiddleware(compiler, {
   publicPath: "/",
+  watchOptions: {
+    poll,
+  },
 }));
 
 router.use(webpackHotMiddleware(compiler));

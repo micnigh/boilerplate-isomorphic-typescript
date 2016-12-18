@@ -12,7 +12,7 @@
   },
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
     "jsx": "preserve",
     "isolatedModules": false,
     "moduleResolution": "node",
