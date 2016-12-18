@@ -1,2 +1,2 @@
 require("ts-node").register({ fast: true });
-module.export = require("./webpack.config.ts");
+module.exports = require("./webpack.config.ts").default;
