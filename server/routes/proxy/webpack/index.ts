@@ -18,6 +18,7 @@ router.use(webpackDevMiddleware(compiler, {
   watchOptions: {
     poll,
   },
+  stats: "minimal",
 }));
 
 router.use(webpackHotMiddleware(compiler));

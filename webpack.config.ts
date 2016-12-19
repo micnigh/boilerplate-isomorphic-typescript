@@ -134,6 +134,9 @@ let webpackConfig: webpack.Configuration = {
       `${tmpPath}/spritesmith-generated`,
     ],
   },
+  performance: {
+    hints: false
+  },
 };
 
 export default webpackConfig;
