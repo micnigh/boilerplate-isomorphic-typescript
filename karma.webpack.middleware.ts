@@ -15,7 +15,6 @@ let karmaEmitter = null;
 
 let compiler = webpack(webpackConfig);
 compiler.plugin("done", (stats) => {
-  console.log("DEBUG", "compiler.plugin");
   if (karmaEmitter) {
     karmaEmitter.refreshFiles();
   }
