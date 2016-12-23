@@ -143,6 +143,7 @@
     "testRegex": "(/__tests__/.*|\\.spec)\\.tsx?$",
     "testPathIgnorePatterns": [
       "/node_modules/",
+      "/.tmp/",
       "(/__tests__/.*\\.browser|\\.browser\\.spec)\\.tsx?$"
     ],
     "globals": {
