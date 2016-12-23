@@ -26,23 +26,30 @@ let webpackConfig: webpack.Configuration = {
           test: /\.ts(x?)$/,
           exclude: /node_modules/,
           use: [
-            {
-              loader: "babel-loader",
-            },
-            {
-              loader: "ts-loader",
-              options: {
-                transpileOnly: true,
-              },
-            },
+            { loader: "babel-loader" },
+            { loader: "ts-loader", options: { transpileOnly: true }},
           ],
         },
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          use: [{
-            loader: "babel-loader",
-          }],
+          use: [{ loader: "babel-loader" }],
+        },
+        {
+          test: /\.css$/,
+          use: [
+            { loader: "style-loader" },
+            { loader: "raw-loader" },
+          ],
+        },
+        {
+          test: /\.scss$/,
+          include: [ path.join(__dirname, "client/js/") ],
+          use: [
+            { loader: "style-loader" },
+            { loader: "css-loader", options: { modules: true, importLoaders: true, sourceMap: true }},
+            { loader: "sass-loader", options: { sourceMap: true }}
+          ],
         },
     ],
   },

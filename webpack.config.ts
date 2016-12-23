@@ -20,7 +20,7 @@ let webpackConfig: webpack.Configuration = {
     filename: "[name].js",
     chunkFilename: "[chunkhash].js",
     path: path.resolve(distPath),
-    publicPath: isDev ? `http://${process.env.HOSTNAME}:${port}${baseUrl}/` : `${baseUrl}`,
+    publicPath: isDev ? `http://${process.env.HOSTNAME}:${port}${baseUrl}` : `${baseUrl}`,
   },
   module: {
     rules:
@@ -29,56 +29,49 @@ let webpackConfig: webpack.Configuration = {
           test: /\.ts(x?)$/,
           exclude: /node_modules/,
           use: [
-            {
-              loader: "babel-loader",
-            },
-            {
-              loader: "ts-loader",
-              options: {
-                transpileOnly: true,
-              },
-            },
+            { loader: "babel-loader" },
+            { loader: "ts-loader", options: { transpileOnly: true }},
           ],
         },
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          use: [{
-            loader: "babel-loader",
-          }],
+          use: [
+            { loader: "babel-loader" }
+          ],
+        },
+        {
+          test: /\.css$/,
+          use: [
+            { loader: "style-loader" },
+            { loader: "raw-loader" },
+          ],
         },
         {
           test: /\.scss$/,
+          include: [ path.join(__dirname, "client/js/") ],
           use: [
-            {
-              loader: isDev ? "style-loader" : ExtractTextPlugin.extract({ loader: "css-loader" }),
-            },
-            {
-              loader: "css-loader",
-              options: {
-                sourceMap: true,
-              },
-            },
-            {
-              loader: "resolve-url-loader",
-            },
-            {
-              loader: "sass-loader",
-              options: {
-                sourceMap: true,
-              },
-            },
+            { loader: "style-loader" },
+            { loader: "css-loader", options: { modules: true, importLoaders: true, sourceMap: true }},
+            { loader: "sass-loader", options: { sourceMap: true }}
           ],
+        },
+        {
+          test: /app\.scss$/,
+          include: [ path.join(__dirname, "client/css/") ],
+          use: isDev ? [
+            { loader: "style-loader" },
+            { loader: "css-loader?", options: { sourceMap: true }},
+            { loader: "sass-loader", options: { sourceMap: true }}
+          ] : [{ loader: new ExtractTextPlugin({ loader: [
+            { loader: "css-loader?", options: { sourceMap: true }},
+            { loader: "sass-loader", options: { sourceMap: true }}
+          ]})}],
         },
         {
           test: /\.(gif|png|jpe?g|svg)$/i,
           use: [
-            {
-              loader: "file-loader",
-              options: {
-                name: "./images/[name].[hash].[ext]",
-              },
-            },
+            { loader: "file-loader", options: { name: "./images/[name].[hash].[ext]" }},
           ],
         },
     ],
@@ -102,11 +95,11 @@ let webpackConfig: webpack.Configuration = {
         glob: "**/*.png",
       },
       target: {
-        image: path.resolve(`${tmpPath}/spritesmith-generated/sprites.png`),
-        css: path.resolve(`${tmpPath}/spritesmith-generated/sprites.scss`),
+        image: path.resolve(`client/css/src/app/shared/sprites.png`),
+        css: path.resolve(`client/css/src/app/shared/sprites.scss`),
       },
       apiOptions: {
-        cssImageRef: "sprites.png",
+        cssImageRef: "app/shared/sprites.png",
       },
     }),
   ].concat(isDev ? [
@@ -129,10 +122,6 @@ let webpackConfig: webpack.Configuration = {
   resolve: {
     alias: {},
     extensions: [ ".js", ".jsx", ".json", ".ts", ".tsx" ],
-    modules: [
-      "node_modules",
-      `${tmpPath}/spritesmith-generated`,
-    ],
   },
   performance: {
     hints: false
