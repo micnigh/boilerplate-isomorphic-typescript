@@ -5,6 +5,9 @@ import "es6-shim/es6-sham";
 import "es7-shim";
 import "regenerator-runtime/runtime";
 
+// allow async/await support in jasmine
+require("jasmine-co").install();
+
 const requireAll = (requireContext) => {
   requireContext.keys().forEach(path => {
     try {
