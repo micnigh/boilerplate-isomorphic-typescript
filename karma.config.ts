@@ -1,9 +1,11 @@
 import * as path from "path";
 import * as Karma from "karma";
+import * as tmp from "tmp";
 
 import { isDev, tmpPath } from "./config";
 import * as WebpackMiddleware from "./karma.webpack.middleware";
 
+let tmpDir = tmp.dirSync({ prefix: "karma-chrome", unsafeCleanup: true });
 let port = 9876;
 
 export default (config: Karma.Config) => {
@@ -38,7 +40,7 @@ export default (config: Karma.Config) => {
       ChromeCustom: {
         base: "Chrome",
         flags: [
-          `--user-data-dir=${path.resolve(`${tmpPath}/.chrome`)}`,
+          `--user-data-dir=${path.resolve(`${tmpDir.name}/.chrome`)}`,
           `--disable-session-crashed-bubble`,
           `--disable-infobars`,
           `--window-size=1024,768`,

@@ -17,8 +17,9 @@ boilerplate isomorphic typescript
 npm install
 
 # every time
-docker-compose up
 npm run server:dev
+
+# for testing - browser debugging at http://localhost:9876/debug.html
 npm run test:watch
 
 ```

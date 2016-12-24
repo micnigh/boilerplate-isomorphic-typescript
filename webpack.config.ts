@@ -2,6 +2,7 @@ import * as path from "path";
 import * as webpack from "webpack";
 let ExtractTextPlugin = require("extract-text-webpack-plugin");
 let SpritesmithPlugin = require("webpack-spritesmith");
+let CompressionPlugin = require("compression-webpack-plugin");
 
 import { isDev, distPath, port, baseUrl, tmpPath } from "./config";
 
@@ -42,9 +43,10 @@ let webpackConfig: webpack.Configuration = {
         },
         {
           test: /\.css$/,
+          include: [ path.join(__dirname, "client/js/") ],
           use: [
             { loader: "style-loader" },
-            { loader: "raw-loader" },
+            { loader: "css-loader" },
           ],
         },
         {
@@ -61,12 +63,13 @@ let webpackConfig: webpack.Configuration = {
           include: [ path.join(__dirname, "client/css/") ],
           use: isDev ? [
             { loader: "style-loader" },
-            { loader: "css-loader?", options: { sourceMap: true }},
+            { loader: "css-loader", options: { sourceMap: true }},
             { loader: "sass-loader", options: { sourceMap: true }}
-          ] : [{ loader: new ExtractTextPlugin({ loader: [
-            { loader: "css-loader?", options: { sourceMap: true }},
-            { loader: "sass-loader", options: { sourceMap: true }}
-          ]})}],
+          ] : [
+            { loader: ExtractTextPlugin.extract({ loader: "raw-loader" })},
+            { loader: "css-loader", options: { sourceMap: true }},
+            { loader: "sass-loader", options: { sourceMap: true }},
+          ],
         },
         {
           test: /\.(gif|png|jpe?g|svg)$/i,
@@ -106,6 +109,11 @@ let webpackConfig: webpack.Configuration = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
   ] : [
+    new ExtractTextPlugin({
+      filename: "css/app.css",
+      disable: false,
+      allChunks: true,
+    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: isDev,
@@ -113,10 +121,8 @@ let webpackConfig: webpack.Configuration = {
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
     }),
-    new ExtractTextPlugin({
-      filename: "css/app.css",
-      disable: false,
-      allChunks: true,
+    new CompressionPlugin({
+      test: /\.(js|html|css)(\.map)?$/,
     }),
   ]),
   resolve: {
