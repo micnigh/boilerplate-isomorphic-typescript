@@ -1,4 +1,7 @@
 {
+  "include": [
+    "**/*.ts?"
+  ],
   "filesGlob": [
     "**/*.ts{,x}",
     "!node_modules/**",
@@ -6,7 +9,6 @@
     "node_modules/*/index.d.ts"
   ],
   "compileOnSave": false,
-  "files": [],
   "atom": {
     "rewriteTsconfig": true
   },

@@ -1,4 +1,7 @@
 {
+  "include": [
+    "../**/*.ts?"
+  ],
   "filesGlob": [
     "../**/*.ts{,x}",
     "!../node_modules/**",
