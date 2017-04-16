@@ -1,7 +1,7 @@
 import * as React from "react";
 import Navigation from "./component/navigation";
 
-export class Base extends React.Component<any, any> {
+export class PageLayout extends React.Component<any, any> {
   render() {
     return (
       <div className="page">
@@ -15,4 +15,4 @@ export class Base extends React.Component<any, any> {
   }
 }
 
-export default Base;
+export default PageLayout;
