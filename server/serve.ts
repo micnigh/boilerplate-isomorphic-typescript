@@ -34,7 +34,7 @@ export let serve = async function () {
     await sequelizeStore.sync();
   } catch (err) {
     console.error(err.stack || err);
-  };
+  }
 
   let app = express()
     .use(bodyParser.urlencoded({

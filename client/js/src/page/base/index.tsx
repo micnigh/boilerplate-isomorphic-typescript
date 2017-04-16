@@ -13,6 +13,6 @@ export class Base extends React.Component<any, any> {
       </div>
     );
   }
-};
+}
 
 export default Base;

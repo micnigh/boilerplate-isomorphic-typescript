@@ -8,6 +8,6 @@ export class Home extends React.Component<any, any> {
       </div>
     );
   }
-};
+}
 
 export default Home;

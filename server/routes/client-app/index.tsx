@@ -1,76 +1,72 @@
 import * as React from "react";
 import * as express from "express";
-import { renderToString } from "react-dom/server";
-import { match, RouterContext } from "react-router";
+import * as ReactDOMServer from "react-dom/server";
+import { StaticRouter } from "react-router";
+
 import * as chalk from "chalk";
 import * as path from "path";
-import * as handlebars from "handlebars";
 import * as fs from "fs";
 let escape = require("regexp.escape");
 
 import { isDev, tmpPath, distPath, port, baseUrl } from "../../../config";
 
 import { Provider } from "react-redux";
-let htmlTemplate = handlebars.compile(fs.readFileSync(__dirname + "/templates/index.html.hbs").toString());
-import { loadState } from "./load-state/";
+import App from "../../../client/js/src/app";
 
 export let router = express.Router({ mergeParams: true });
 
 router.get(`${baseUrl}*`, async (req, res, next) => {
   try {
-    let initialState = undefined;
+    let initialState = {};
     let { user } = req;
     user = user ? user : {
       displayName: "Guest",
       role: "GUEST",
     };
     console.log(chalk.bgBlue(`clientApp user`), JSON.stringify(user, null, 2));
-    if (process.env.NODE_ENV !== "production") {
-      clearNodeModuleCache();
+
+    let context: any = {};
+    let appHtml = ReactDOMServer.renderToString(
+      <StaticRouter
+        location={req.url}
+        context={context}
+      >
+        <App/>
+      </StaticRouter>
+    );
+
+    if (context.url) {
+      res.redirect(301, context.url);
+    } else {
+      res.send(200, `
+        <!doctype html>
+        <html class="no-js" lang="">
+            <head>
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <title>Boilerplate Isomorphic Typescript</title>
+                <meta name="description" content="">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+
+                <link rel="apple-touch-icon" href="${relPathToBaseUrl(req.url)}favicon.png">
+                <link rel="icon"
+                      type="image/png"
+                      href="${relPathToBaseUrl(req.url)}favicon.png">
+                ${!isDev ? `<link rel="stylesheet" href="${relPathToBaseUrl(req.url)}css/app.css">` : ``}
+            </head>
+            <body>
+                <div id="content">${appHtml}</div>
+                <script type="text/javascript">
+                //<![CDATA[
+                  window.initialState = ${JSON.stringify(initialState)}
+                //]]>
+                </script>
+                <script src="${relPathToBaseUrl(req.url)}js/lib.js"></script>
+                <script src="${relPathToBaseUrl(req.url)}js/app.js"></script>
+            </body>
+        </html>
+      `);
     }
-    initialState = await loadState(user);
-
-    let { initStore } = require("../../../client/js/src/store/");
-    let store = initStore(initialState);
-    let routes = require("../../../client/js/src/routes/").default;
-
-    match({
-      routes,
-      location: req.url,
-    }, (error, redirectLocation, renderProps) => {
-      if (error) {
-        res.status(500).send(error.message);
-      } else if (redirectLocation) {
-        res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-      } else if (renderProps) {
-        try {
-          res.status(200).send(htmlTemplate({
-            isDev,
-            inlineJS: `
-              window.initialState = ${JSON.stringify(initialState)}
-            `,
-            content: renderToString(
-              <Provider store={store}>
-                <RouterContext {...renderProps} />
-              </Provider>
-            ),
-            relPathToBaseUrl: relPathToBaseUrl(req.url),
-          }));
-        } catch (e) {
-          console.log(chalk.red(e.stack));
-          res.status(200).send(htmlTemplate({
-            isDev,
-            inlineJS: `
-              window.initialState = ${JSON.stringify(initialState)}
-            `,
-            content: ``,
-            relPathToBaseUrl: relPathToBaseUrl(req.url),
-          }));
-        }
-      } else {
-        res.status(404).send("Not found");
-      }
-    });
   } catch (e) {
     console.error(chalk.red(e.stack || e));
   }
@@ -82,48 +78,6 @@ let relPathToBaseUrl = function (path) {
   result = result.replace(/^.*?:\/\//, "", ""); // remove protocol
   result = "../".repeat(result.match(/\//g).length - 1); // each subdir = "../"
   return result;
-};
-
-/**
- * Clears modules from node cache, so calling require will rebuild module
- */
-let clearNodeModuleCache = function (options: {
-  /** relative include paths from project dir */
-  includePaths?: string[],
-  /** relative exclude paths from project dir */
-  excludePaths?: string[]
-} = {
-  includePaths: [],
-  excludePaths: [],
-}) {
-  options = Object.assign({
-    includePaths: [],
-    excludePaths: [],
-  }, options);
-  let { includePaths, excludePaths } = options;
-  excludePaths.push("node_modules");
-  let regExpIncludePaths = includePaths.map(p => new RegExp("^" + escape(path.resolve(`${process.cwd()}/${p}`))));
-  let regExpExcludePaths = excludePaths.map(p => new RegExp("^" + escape(path.resolve(`${process.cwd()}/${p}`))));
-  let modulesToDelete = [];
-  for (let k in require.cache) {
-    if (regExpIncludePaths.length > 0) {
-      if (
-        regExpIncludePaths.some(r => r.test(k)) &&
-        !regExpExcludePaths.some(r => r.test(k))
-      ) {
-        modulesToDelete.push(k);
-      }
-    } else {
-      if (
-        !regExpExcludePaths.some(r => r.test(k))
-      ) {
-        modulesToDelete.push(k);
-      }
-    }
-  }
-  console.log(modulesToDelete);
-  modulesToDelete.forEach(m => delete require.cache[m]);
-  console.log(chalk.yellow(`Cleared module cache with RegExp - deleted ${modulesToDelete.length} modules`));
 };
 
 export default router;

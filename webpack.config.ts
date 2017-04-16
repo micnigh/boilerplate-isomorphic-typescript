@@ -12,7 +12,7 @@ let webpackConfig: webpack.Configuration = {
       "webpack-hot-middleware/client",
       "react-hot-loader/patch",
     ] : []).concat([
-      "./client/js/src/app",
+      "./client/js/src/entry",
     ]),
   },
   devtool: isDev ? "cheap-module-source-map" : "source-map",
@@ -107,7 +107,7 @@ let webpackConfig: webpack.Configuration = {
     }),
   ].concat(isDev ? [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
   ] : [
     new ExtractTextPlugin({
       filename: "css/app.css",

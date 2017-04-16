@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, IndexLink } from "react-router";
+import { Link } from "react-router-dom";
 
 let activeClassName = "current active";
 
@@ -8,13 +8,12 @@ export class Navigation extends React.Component<any, any> {
     return (
       <div className="navigation" onClick={this.props.onNavigationClick}>
         <ul className="menu">
-          <IndexLink to="/" className="menuItem" activeClassName={activeClassName}>
-            Home
-          </IndexLink>
+          <Link to="/" className="menuItem">Home</Link>
+          <Link to="/about" className="menuItem">About</Link>
         </ul>
       </div>
     );
   }
-};
+}
 
 export default Navigation;

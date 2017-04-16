@@ -1,9 +1,9 @@
-describe("Can Run Tests", () => {
-  it("can run a simple test", () => {
+describe("__tests__ node test", () => {
+  it("runs", () => {
     expect(true).toEqual(true);
   });
 
-  it("can run a simple async/await test", async () => {
+  it("runs async", async () => {
     let i = false;
     let deferred = new Promise<boolean>((resolve) => {
       setTimeout(() => resolve(true), 0);

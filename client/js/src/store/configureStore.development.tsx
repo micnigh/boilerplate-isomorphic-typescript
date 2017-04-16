@@ -1,8 +1,7 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import * as Redux from "redux";
 let promise: Redux.Middleware = require("redux-promise");
-import * as createLogger from "redux-logger";
-import { browserHistory } from "react-router";
+import { createLogger } from "redux-logger";
 let { routerMiddleware } = require("react-router-redux");
 let thunk = require("redux-thunk").default;
 
@@ -16,7 +15,7 @@ let configureStore = (initialState) => {
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(thunk, promise, createLogger(), routerMiddleware(browserHistory)),
+      applyMiddleware(thunk, promise, createLogger()),
       typeof window !== "undefined" && window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   );

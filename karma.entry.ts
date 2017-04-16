@@ -18,4 +18,3 @@ const requireAll = (requireContext) => {
   });
 };
 requireAll(require.context("./client/js/src/", true, /\.browser\.spec\.tsx?$/));
-requireAll(require.context("./client/js/src/", true, /\/__tests__\/.*\.browser\.tsx?$/));
