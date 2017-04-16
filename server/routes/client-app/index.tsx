@@ -2,6 +2,7 @@ import * as React from "react";
 import * as express from "express";
 import * as ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router";
+import * as styleSheet from "styled-components/lib/models/StyleSheet";
 
 import * as chalk from "chalk";
 import * as path from "path";
@@ -34,6 +35,7 @@ router.get(`${baseUrl}*`, async (req, res, next) => {
         <App/>
       </StaticRouter>
     );
+    const styles = styleSheet.rules().map(rule => rule.cssText).join("\n");
 
     if (context.url) {
       res.redirect(301, context.url);
@@ -52,7 +54,7 @@ router.get(`${baseUrl}*`, async (req, res, next) => {
                 <link rel="icon"
                       type="image/png"
                       href="${relPathToBaseUrl(req.url)}favicon.png">
-                ${!isDev ? `<link rel="stylesheet" href="${relPathToBaseUrl(req.url)}css/app.css">` : ``}
+                <style>${styles}</style>
             </head>
             <body>
                 <div id="content">${appHtml}</div>

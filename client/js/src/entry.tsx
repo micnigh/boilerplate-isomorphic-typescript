@@ -40,7 +40,6 @@ let render = (App) => {
   ReactDOM.render(app, document.getElementById("content"));
 };
 
-require("../../css/src/app.scss");
 window.addEventListener("load", () => {
   store = initStore(window.initialState);
   render(App);
