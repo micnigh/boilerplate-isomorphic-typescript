@@ -1,17 +1,9 @@
 {
   "include": [
-    "**/*.ts?"
-  ],
-  "filesGlob": [
-    "**/*.ts{,x}",
-    "!node_modules/**",
-    "node_modules/@types/*/index.d.ts",
-    "node_modules/*/index.d.ts"
+    "**/*.ts",
+    "**/*.tsx"
   ],
   "compileOnSave": false,
-  "atom": {
-    "rewriteTsconfig": true
-  },
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",

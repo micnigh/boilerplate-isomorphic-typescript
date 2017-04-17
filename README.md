@@ -24,6 +24,25 @@ npm run test:watch
 
 ```
 
+# Libraries
+
+Libraries can be large (~250KB gzipped) and slow down rebuild times, so we
+build them separately from application code.  We do this by using the webpack
+DLL plugin.  This allows us to reference many different libraries from one
+external webpack bundle, allowing us to cache and reduce load times.
+
+The lib file should be automatically regenerated when dependencies are updated.
+New dependencies may need to be added to the entry file `client/js/src/libs.tsx`
+
+```bash
+# to manually generate a new libs file
+npm run build:lib
+
+# to lock down npm libraries, so we can rebuild on different machines
+npm shrinkwrap --dev
+
+```
+
 # Features
 
  - [typescript] - javascript type support

@@ -9,7 +9,7 @@ import * as path from "path";
 import * as fs from "fs";
 let escape = require("regexp.escape");
 
-import { isDev, tmpPath, distPath, port, baseUrl } from "../../../config";
+import { isDev, tmpPath, distPath, port, baseUrl, dllLibFileName } from "../../../config";
 
 import { Provider } from "react-redux";
 import App from "../../../client/js/src/app";
@@ -63,6 +63,7 @@ router.get(`${baseUrl}*`, async (req, res, next) => {
                   window.initialState = ${JSON.stringify(initialState)}
                 //]]>
                 </script>
+                <script src="${relPathToBaseUrl(req.url)}js/${dllLibFileName}"></script>
                 <script src="${relPathToBaseUrl(req.url)}js/lib.js"></script>
                 <script src="${relPathToBaseUrl(req.url)}js/app.js"></script>
             </body>

@@ -1,8 +1,9 @@
 import * as path from "path";
 import * as webpack from "webpack";
 let CompressionPlugin = require("compression-webpack-plugin");
+let VisualizerPlugin = require("webpack-visualizer-plugin");
 
-import { isDev, distPath, port, baseUrl, tmpPath } from "./config";
+import { isDev, distPath, port, baseUrl, tmpPath, dllLibManifestPath } from "./config";
 
 let webpackConfig: webpack.Configuration = {
   entry: {
@@ -52,6 +53,9 @@ let webpackConfig: webpack.Configuration = {
       "process.env.NODE_ENV": JSON.stringify(isDev ? "development" : "production"),
       "process.env.JS_ENV": JSON.stringify("browser"),
     }),
+    new webpack.DllReferencePlugin({
+      manifest: require(`./${dllLibManifestPath}`),
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "js/lib",
       chunks: ["js/app"],
@@ -59,6 +63,9 @@ let webpackConfig: webpack.Configuration = {
         typeof userRequest === "string" && [
           /node_modules/
         ].some(regex => regex.test(userRequest))
+    }),
+    new VisualizerPlugin({
+      filename: `./js/app-webpack-bundle-statistics.html`,
     }),
   ].concat(isDev ? [
     new webpack.HotModuleReplacementPlugin(),

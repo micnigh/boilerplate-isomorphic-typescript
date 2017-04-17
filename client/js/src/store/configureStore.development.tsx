@@ -2,7 +2,6 @@ import { createStore, applyMiddleware, compose } from "redux";
 import * as Redux from "redux";
 let promise: Redux.Middleware = require("redux-promise");
 import { createLogger } from "redux-logger";
-let { routerMiddleware } = require("react-router-redux");
 let thunk = require("redux-thunk").default;
 
 import rootReducer from "../reducers/";

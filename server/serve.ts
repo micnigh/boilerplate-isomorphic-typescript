@@ -20,7 +20,7 @@ import DevAuthStrategy from "./auth/dev/passportStrategy";
 import serializeUser from "./auth/serializeUser";
 import deserializeUser from "./auth/deserializeUser";
 
-import { distPath, port, baseUrl } from "../config";
+import { distPath, port, baseUrl, dllLibPath } from "../config";
 
 export let serve = async function () {
 
@@ -59,13 +59,14 @@ export let serve = async function () {
     return res.status(403).send("unauthorized: please login first");
   });
 
+  app.use(`${baseUrl}`, express.static(`${__dirname}/public`));
+  app.use(`${baseUrl}`, express.static(`${distPath}`));
+  app.use(`${baseUrl}js/`, express.static(`${dllLibPath}`));
+
   app.use(
     [].concat(process.env.NODE_ENV !== "production" ? [passport.authenticate("development", {})] : []),
     routes
   );
-
-  app.use(baseUrl, express.static(`${__dirname}/public`));
-  app.use(baseUrl, express.static(`${distPath}`));
 
   let server = app.listen(port, "0.0.0.0", () => {
     let url = "http://" + os.hostname() + ":" + server.address().port + "/";
