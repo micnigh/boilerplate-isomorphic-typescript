@@ -1,0 +1,15 @@
+.git
+.vagrant
+.settings
+.externalToolBuilder
+
+node_modules
+.tmp
+
+# docker files
+Dockerfile*
+docker-compose*.yml
+
+# misc
+README.md
+docs

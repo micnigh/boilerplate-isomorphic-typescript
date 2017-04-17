@@ -1,6 +1,0 @@
-db:
-  image: mysql:latest
-  env_file:
-    - $HOME/.deploy-keys/boilerplate-isomorphic-typescript.env
-  ports:
-    - "3306:3306"

@@ -43,6 +43,32 @@ npm shrinkwrap --dev
 
 ```
 
+# Deployment
+
+We store data volumes seperate from containers, so we can push new
+versions by rebuilding images and relaunching containers.
+
+After setting some env variables, we can do the usual `docker-compose up -d`;
+
+```bash
+# staging
+export COMPOSE_PROJECT_NAME=bit_staging
+export COMPOSE_FILE=docker-compose.stag.yml
+
+# production
+export COMPOSE_PROJECT_NAME=bit_production
+export COMPOSE_FILE=docker-compose.prod.yml
+
+```
+
+## proxy/load balancing
+
+[traefik] is typically used as a front end load balancer/proxy,
+with a front loader like apache in front handling encryption, then passing
+traffick to docker on port 81
+
+See `traefik` dir for an example that can be run with `docker-compose up -d`
+
 # Features
 
  - [typescript] - javascript type support

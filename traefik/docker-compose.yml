@@ -1,0 +1,19 @@
+version: "2"
+
+services:
+  traefik:
+    image: traefik
+    command: --web --docker --docker.domain=docker.localhost --logLevel=DEBUG
+    restart: always
+    ports:
+      - "81:80"
+      - "8081:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev/null:/traefik.toml
+    networks:
+      - front
+
+networks:
+  front:
+    driver: bridge

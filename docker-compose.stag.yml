@@ -1,0 +1,49 @@
+version: "2.1"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+      args:
+        NODE_ENV: staging
+    environment:
+      NODE_ENV: staging
+      BASE_URL: /boilerplate-isomorphic-typescript/
+    env_file:
+      - server/db/development.env
+    volumes:
+      - ./tmp/staging/log/:/var/log/boilerplate-isomorphic-typescript/
+    restart: always
+    labels:
+      - "traefik.frontend.rule=PathPrefix:/boilerplate-isomorphic-typescript/"
+      - "traefik.docker.network=traefik_front"
+    networks:
+      - front
+      - application-backend
+    healthcheck:
+      test: "curl -f http://localhost/boilerplate-isomorphic-typescript/ || exit 1"
+      interval: 30s
+      retries: 10
+
+  mysql:
+    image: mysql:5
+    restart: always
+    env_file:
+      - server/db/development.env
+    networks:
+      - application-backend
+    volumes:
+      - mysql:/var/lib/mysql/
+    healthcheck:
+      test: "mysqladmin ping --silent"
+
+networks:
+  application-backend:
+    driver: bridge
+  front:
+    external:
+      name: traefik_front
+
+volumes:
+  mysql:

@@ -1,6 +1,14 @@
-db:
-  image: mysql:latest
-  env_file:
-    - server/db/development.env
-  ports:
-    - "3306:3306"
+version: "2.1"
+
+services:
+  mysql:
+    image: mysql:5
+    env_file:
+      - server/db/development.env
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql:/var/lib/mysql/
+
+volumes:
+  mysql:
