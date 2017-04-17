@@ -13,7 +13,7 @@ services:
     env_file:
       - server/db/development.env
     volumes:
-      - ./tmp/staging/log/:/var/log/boilerplate-isomorphic-typescript/
+      - .tmp/staging/log/:/var/log/boilerplate-isomorphic-typescript/
     restart: always
     labels:
       - "traefik.frontend.rule=PathPrefix:/boilerplate-isomorphic-typescript/"
