@@ -8,7 +8,7 @@ import { isDev, distPath, port, baseUrl, tmpPath, dllLibManifestPath } from "./c
 let webpackConfig: webpack.Configuration = {
   entry: {
     "js/app": (isDev ? [
-      "webpack-hot-middleware/client",
+      "webpack-hot-middleware/client?dynamicPublicPath=true",
       "react-hot-loader/patch",
     ] : []).concat([
       "./client/js/src/entry",
@@ -52,6 +52,7 @@ let webpackConfig: webpack.Configuration = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(isDev ? "development" : "production"),
       "process.env.JS_ENV": JSON.stringify("browser"),
+      "process.env.BASE_URL": JSON.stringify(`${baseUrl}`),
     }),
     new webpack.DllReferencePlugin({
       manifest: require(`./${dllLibManifestPath}`),

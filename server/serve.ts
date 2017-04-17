@@ -64,12 +64,13 @@ export let serve = async function () {
   app.use(`${baseUrl}js/`, express.static(`${dllLibPath}`));
 
   app.use(
+    `${baseUrl}`,
     [].concat(process.env.NODE_ENV !== "production" ? [passport.authenticate("development", {})] : []),
     routes
   );
 
   let server = app.listen(port, "0.0.0.0", () => {
-    let url = "http://" + os.hostname() + ":" + server.address().port + "/";
+    let url = `http://${os.hostname()}:${server.address().port}${baseUrl}`;
     console.log(`Server listening at ${chalk.green(url)}`);
   });
 };

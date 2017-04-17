@@ -15,7 +15,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import { initStore } from "./store/";
 
-import App from "./app";
+import App, { baseUrl } from "./app";
 
 declare let window: any;
 declare let module: any;
@@ -63,6 +63,7 @@ if (module.hot) {
 declare let __webpack_public_path__: any;
 if (process.env.NODE_ENV === "development") {
   // dynamically set webpacks public path, so hmr can update correctly
-  // see - https://github.com/webpack/webpack/issues/443#issuecomment-59843035
-  __webpack_public_path__ = window.location.protocol + "//" + window.location.host + "/";
+  // see webpack v1 - https://github.com/webpack/webpack/issues/443#issuecomment-59843035
+  // see webpack v2 - https://github.com/webpack/webpack/issues/2776#issuecomment-233208623
+  __webpack_public_path__ = `${window.location.protocol}//${window.location.host}${baseUrl}`;
 }

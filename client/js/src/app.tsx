@@ -10,6 +10,8 @@ import PageLayout from "./page/layout/";
 import Home from "./page/home";
 import About from "./page/about";
 
+export let baseUrl = process.env.BASE_URL ? process.env.BASE_URL : "/";
+
 export class App extends React.Component<any, any> {
   render() {
     return (
@@ -22,8 +24,8 @@ export class App extends React.Component<any, any> {
         }
       }}>
         <PageLayout>
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/about" component={About}/>
+          <Route exact path={`${baseUrl}`} component={Home}/>
+          <Route exact path={`${baseUrl}about`} component={About}/>
         </PageLayout>
       </ThemeProvider>
     );

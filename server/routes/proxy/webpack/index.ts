@@ -7,6 +7,8 @@ import { merge } from "lodash";
 import * as yargs from "yargs";
 let { poll } = yargs.argv;
 
+import { baseUrl } from "../../../../config";
+
 export let router = express.Router({ mergeParams: true });
 
 let webpackConfig = merge({}, require("../../../../webpack.config.ts").default) as webpack.Configuration;
@@ -14,7 +16,7 @@ let webpackConfig = merge({}, require("../../../../webpack.config.ts").default) 
 let compiler = webpack(webpackConfig);
 
 router.use(webpackDevMiddleware(compiler, {
-  publicPath: "/",
+  publicPath: `/`,
   watchOptions: {
     poll,
   },

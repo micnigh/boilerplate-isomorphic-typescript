@@ -16,7 +16,7 @@ import App from "../../../client/js/src/app";
 
 export let router = express.Router({ mergeParams: true });
 
-router.get(`${baseUrl}*`, async (req, res, next) => {
+router.get(`/*`, async (req, res, next) => {
   try {
     let initialState = {};
     let { user } = req;
@@ -29,7 +29,7 @@ router.get(`${baseUrl}*`, async (req, res, next) => {
     let context: any = {};
     let appHtml = ReactDOMServer.renderToString(
       <StaticRouter
-        location={req.url}
+        location={req.url.replace(/^\//, baseUrl)}
         context={context}
       >
         <App/>
@@ -40,7 +40,7 @@ router.get(`${baseUrl}*`, async (req, res, next) => {
     if (context.url) {
       res.redirect(301, context.url);
     } else {
-      res.send(200, `
+      res.status(200).send(`
         <!doctype html>
         <html class="no-js" lang="">
             <head>
