@@ -20,15 +20,15 @@ import App, { baseUrl } from "./app";
 declare let window: any;
 declare let module: any;
 
-let store = undefined;
+let store = initStore(window.initialState);
 
 let render = (App) => {
   let app =
-    <Provider store={store}>
-      <Router>
+    <Router>
+      <Provider store={store}>
         <App/>
-      </Router>
-    </Provider>;
+      </Provider>
+    </Router>;
 
   if (process.env === "development") {
     app =
@@ -39,11 +39,7 @@ let render = (App) => {
 
   ReactDOM.render(app, document.getElementById("content"));
 };
-
-window.addEventListener("load", () => {
-  store = initStore(window.initialState);
-  render(App);
-});
+render(App);
 
 if (process.env.JS_ENV === "browser") {
   WebFont.load({
