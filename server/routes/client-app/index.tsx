@@ -16,7 +16,7 @@ import App from "../../../client/js/src/app";
 
 export let router = express.Router({ mergeParams: true });
 
-router.get(`/*`, async (req, res, next) => {
+router.use(async (req, res) => {
   try {
     let initialState = {};
     let { user } = req;
