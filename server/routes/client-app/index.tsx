@@ -12,13 +12,17 @@ let escape = require("regexp.escape");
 import { isDev, tmpPath, distPath, port, baseUrl, dllLibFileName } from "../../../config";
 
 import { Provider } from "react-redux";
+import { initStore } from "../../../client/js/src/store/";
 import App from "../../../client/js/src/app";
 
 export let router = express.Router({ mergeParams: true });
 
 router.use(async (req, res) => {
   try {
+
     let initialState = {};
+    let store = initStore(initialState);
+
     let { user } = req;
     user = user ? user : {
       displayName: "Guest",
@@ -32,7 +36,9 @@ router.use(async (req, res) => {
         location={req.url.replace(/^\//, baseUrl)}
         context={context}
       >
-        <App/>
+        <Provider store={store}>
+          <App/>
+        </Provider>
       </StaticRouter>
     );
     const styles = styleSheet.rules().map(rule => rule.cssText).join("\n");
