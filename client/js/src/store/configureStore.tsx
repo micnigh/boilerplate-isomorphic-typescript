@@ -1,6 +1,6 @@
 import * as Redux from "redux";
 
-let configureStore: {(initialState): Redux.Store} = undefined;
+let configureStore: {(initialState): Redux.Store<any>} = undefined;
 
 if (process.env.NODE_ENV === "development") {
   configureStore = require("./configureStore.development").default;
