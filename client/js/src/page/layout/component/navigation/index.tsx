@@ -10,7 +10,7 @@ export class Navigation extends React.Component<any, any> {
       <div onClick={this.props.onNavigationClick}>
         <ul>
           <StyledLink to={`${baseUrl}`} exact={true}>Home</StyledLink>
-          <StyledLink to={`${baseUrl}about`}>About</StyledLink>
+          <StyledLink to={`${baseUrl}about/`}>About</StyledLink>
         </ul>
       </div>
     );
