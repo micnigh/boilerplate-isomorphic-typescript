@@ -28,7 +28,7 @@ let color = {
   link: `#2240c2`,
 };
 let generatedColor = {...color, ...{
-  linkHover: Color(color.link).lighten(0.15),
+  linkHover: Color(color.link).lighten(0.15).toString(),
 }};
 export { generatedColor as color };
 
