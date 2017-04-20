@@ -1,6 +1,4 @@
 .*/
 node_modules
 *.log
-/tsconfig.json
-/server/tsconfig.json
 /coverage
