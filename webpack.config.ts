@@ -8,7 +8,7 @@ import { isDev, distPath, port, baseUrl, tmpPath, dllLibManifestPath } from "./c
 let webpackConfig: webpack.Configuration = {
   entry: {
     "js/app": (isDev ? [
-      "webpack-hot-middleware/client?dynamicPublicPath=true",
+      "webpack-hot-middleware/client?dynamicPublicPath=true&path=__webpack_hmr",
       "react-hot-loader/patch",
     ] : []).concat([
       "./client/js/src/entry",
