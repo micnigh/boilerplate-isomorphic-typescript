@@ -30,7 +30,7 @@ let render = (App) => {
       </Provider>
     </Router>;
 
-  if (process.env === "development") {
+  if (process.env.NODE_ENV === "development") {
     app =
       <AppContainer key={Math.random()}>
         {app}
