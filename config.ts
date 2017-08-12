@@ -17,7 +17,7 @@ export const port = isDev ?
   process.env.PORT || 80;
 process.env.PORT = port;
 
-let libHash = md5(fs.readFileSync("./npm-shrinkwrap.json"));
+let libHash = md5(fs.readFileSync("./package-lock.json"));
 
 export let dllLibPath = `.tmp/lib/`;
 export let dllLibFileName = `libs.${libHash}.dll.js`;

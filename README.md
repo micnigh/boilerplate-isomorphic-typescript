@@ -2,7 +2,7 @@ boilerplate isomorphic typescript
 
 # Requirements/Recommended
 
- - [node] `v6+`
+ - [node] `v8+`
  - [atom]
     - Packages
       - [atom-typescript]

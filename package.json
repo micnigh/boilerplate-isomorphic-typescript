@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "postinstall": "cross-env node ./npm-scripts/postinstall.js",
+    "postshrinkwrap": "cross-env node ./npm-scripts/postshrinkwrap.js",
     "build": "cross-env FORCE_COLOR=1 npm-run-all build:lib build:bundle",
     "build:bundle": "cross-env webpack",
     "build:lib": "cross-env ts-node --fast tasks/lib.ts --exec",
